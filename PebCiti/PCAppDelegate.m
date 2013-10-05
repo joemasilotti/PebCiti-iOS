@@ -1,3 +1,4 @@
+#import "PCHomeViewController.h"
 #import "PCAppDelegate.h"
 
 @implementation PCAppDelegate
@@ -6,7 +7,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[UIViewController alloc] init];
+    PCHomeViewController *homeViewController = [[PCHomeViewController alloc] init];
+    self.window.rootViewController = homeViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

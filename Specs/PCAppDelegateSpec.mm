@@ -1,3 +1,4 @@
+#import "PCHomeViewController.h"
 #import "PCAppDelegate.h"
 
 using namespace Cedar::Matchers;
@@ -17,8 +18,8 @@ describe(@"PCAppDelegate", ^{
             [delegate application:nil didFinishLaunchingWithOptions:nil];
         });
 
-        it(@"should have a root view controller", ^{
-            delegate.window.rootViewController should be_instance_of([UIViewController class]);
+        it(@"should display a PCHomeViewController", ^{
+            delegate.window.rootViewController should be_instance_of([PCHomeViewController class]);
         });
     });
 });
