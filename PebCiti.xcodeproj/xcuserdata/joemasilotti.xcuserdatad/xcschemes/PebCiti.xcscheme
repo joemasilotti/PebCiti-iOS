@@ -38,6 +38,16 @@
                ReferencedContainer = "container:PebCiti.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "84D610FD1800792600403C60"
+               BuildableName = "Specs.octest"
+               BlueprintName = "Specs"
+               ReferencedContainer = "container:PebCiti.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

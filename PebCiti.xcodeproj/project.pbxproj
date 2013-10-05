@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404FF6E180085C60082F01E /* Cedar-iOS.framework */; };
+		842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842374551800864400FB7610 /* PCAppDelegateSpec.mm */; };
 		84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AE1800770D00403C60 /* CoreGraphics.framework */; };
 		84D610B11800770D00403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
@@ -14,22 +16,75 @@
 		84D610B91800770D00403C60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D610B81800770D00403C60 /* main.m */; };
 		84D610BD1800770D00403C60 /* PCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D610BC1800770D00403C60 /* PCAppDelegate.m */; };
 		84D610BF1800770D00403C60 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D610BE1800770D00403C60 /* Images.xcassets */; };
-		84D610C61800770D00403C60 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610C51800770D00403C60 /* XCTest.framework */; };
-		84D610C71800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
-		84D610C81800770D00403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
+		84D611001800792600403C60 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610FF1800792600403C60 /* SenTestingKit.framework */; };
+		84D611011800792600403C60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AE1800770D00403C60 /* CoreGraphics.framework */; };
+		84D611021800792600403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
+		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
+		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		84D610C91800770D00403C60 /* PBXContainerItemProxy */ = {
+		84D610E91800791300403C60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 84D610A11800770D00403C60 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84D610A81800770D00403C60;
-			remoteInfo = PebCiti;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEEE1FB611DC271300029872;
+			remoteInfo = Cedar;
+		};
+		84D610EB1800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEEE218611DC28E200029872;
+			remoteInfo = Specs;
+		};
+		84D610ED1800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96A07F0813F276640021974D;
+			remoteInfo = FocusedSpecs;
+		};
+		84D610EF1800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEEE222911DC2B0600029872;
+			remoteInfo = "Cedar-StaticLib";
+		};
+		84D610F11800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEEE227611DC2CF900029872;
+			remoteInfo = iOSSpecs;
+		};
+		84D610F31800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96B5F9F6144A81A7000A6A5D;
+			remoteInfo = OCUnitApp;
+		};
+		84D610F51800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96B5FA11144A81A8000A6A5D;
+			remoteInfo = OCUnitAppTests;
+		};
+		84D610F71800791300403C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96158A86144A915E005895CE;
+			remoteInfo = OCUnitAppLogicTests;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8404FF6E180085C60082F01E /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Cedar-iOS.framework"; sourceTree = "<group>"; };
+		842374551800864400FB7610 /* PCAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAppDelegateSpec.mm; sourceTree = "<group>"; };
 		84D610A91800770D00403C60 /* PebCiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PebCiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D610AC1800770D00403C60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D610AE1800770D00403C60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -41,8 +96,13 @@
 		84D610BB1800770D00403C60 /* PCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCAppDelegate.h; sourceTree = "<group>"; };
 		84D610BC1800770D00403C60 /* PCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCAppDelegate.m; sourceTree = "<group>"; };
 		84D610BE1800770D00403C60 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84D610C41800770D00403C60 /* PebCitiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PebCitiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D610C51800770D00403C60 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		84D610DD1800791100403C60 /* Cedar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cedar.xcodeproj; path = cedar/Cedar.xcodeproj; sourceTree = "<group>"; };
+		84D610FE1800792600403C60 /* Specs.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Specs.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D610FF1800792600403C60 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		84D611061800792600403C60 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
+		84D611081800792700403C60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		84D6110F1800792700403C60 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,24 +116,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84D610C11800770D00403C60 /* Frameworks */ = {
+		84D610FA1800792600403C60 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D610C61800770D00403C60 /* XCTest.framework in Frameworks */,
-				84D610C81800770D00403C60 /* UIKit.framework in Frameworks */,
-				84D610C71800770D00403C60 /* Foundation.framework in Frameworks */,
+				84D611011800792600403C60 /* CoreGraphics.framework in Frameworks */,
+				84D611021800792600403C60 /* UIKit.framework in Frameworks */,
+				8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */,
+				84D611001800792600403C60 /* SenTestingKit.framework in Frameworks */,
+				84D611031800792600403C60 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8404FF6D180085AD0082F01E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8404FF6E180085C60082F01E /* Cedar-iOS.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		84D610A01800770D00403C60 = {
 			isa = PBXGroup;
 			children = (
 				84D610B21800770D00403C60 /* PebCiti */,
+				84D611041800792600403C60 /* Specs */,
 				84D610AB1800770D00403C60 /* Frameworks */,
+				84D610DC1800782900403C60 /* Externals */,
 				84D610AA1800770D00403C60 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				84D610A91800770D00403C60 /* PebCiti.app */,
-				84D610C41800770D00403C60 /* PebCitiTests.xctest */,
+				84D610FE1800792600403C60 /* Specs.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +166,7 @@
 				84D610AE1800770D00403C60 /* CoreGraphics.framework */,
 				84D610B01800770D00403C60 /* UIKit.framework */,
 				84D610C51800770D00403C60 /* XCTest.framework */,
+				84D610FF1800792600403C60 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,6 +201,49 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		84D610DC1800782900403C60 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				84D610DD1800791100403C60 /* Cedar.xcodeproj */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		84D610DE1800791100403C60 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84D610EA1800791300403C60 /* Cedar.framework */,
+				84D610EC1800791300403C60 /* Specs */,
+				84D610EE1800791300403C60 /* FocusedSpecs */,
+				84D610F01800791300403C60 /* libCedar-StaticLib.a */,
+				84D610F21800791300403C60 /* iOSSpecs.app */,
+				84D610F41800791300403C60 /* OCUnitApp.app */,
+				84D610F61800791300403C60 /* OCUnitAppTests.octest */,
+				84D610F81800791300403C60 /* OCUnitAppLogicTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84D611041800792600403C60 /* Specs */ = {
+			isa = PBXGroup;
+			children = (
+				842374551800864400FB7610 /* PCAppDelegateSpec.mm */,
+				8404FF6D180085AD0082F01E /* Frameworks */,
+				84D611051800792600403C60 /* Supporting Files */,
+			);
+			path = Specs;
+			sourceTree = "<group>";
+		};
+		84D611051800792600403C60 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84D611061800792600403C60 /* Specs-Info.plist */,
+				84D611071800792700403C60 /* InfoPlist.strings */,
+				84D6110F1800792700403C60 /* Specs-Prefix.pch */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,23 +264,23 @@
 			productReference = 84D610A91800770D00403C60 /* PebCiti.app */;
 			productType = "com.apple.product-type.application";
 		};
-		84D610C31800770D00403C60 /* PebCitiTests */ = {
+		84D610FD1800792600403C60 /* Specs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84D610D81800770D00403C60 /* Build configuration list for PBXNativeTarget "PebCitiTests" */;
+			buildConfigurationList = 84D611101800792700403C60 /* Build configuration list for PBXNativeTarget "Specs" */;
 			buildPhases = (
-				84D610C01800770D00403C60 /* Sources */,
-				84D610C11800770D00403C60 /* Frameworks */,
-				84D610C21800770D00403C60 /* Resources */,
+				84D610F91800792600403C60 /* Sources */,
+				84D610FA1800792600403C60 /* Frameworks */,
+				84D610FB1800792600403C60 /* Resources */,
+				84D610FC1800792600403C60 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				84D610CA1800770D00403C60 /* PBXTargetDependency */,
 			);
-			name = PebCitiTests;
-			productName = PebCitiTests;
-			productReference = 84D610C41800770D00403C60 /* PebCitiTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = Specs;
+			productName = Specs;
+			productReference = 84D610FE1800792600403C60 /* Specs.octest */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -175,11 +291,6 @@
 				CLASSPREFIX = PC;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Masilotti.com;
-				TargetAttributes = {
-					84D610C31800770D00403C60 = {
-						TestTargetID = 84D610A81800770D00403C60;
-					};
-				};
 			};
 			buildConfigurationList = 84D610A41800770D00403C60 /* Build configuration list for PBXProject "PebCiti" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -191,13 +302,78 @@
 			mainGroup = 84D610A01800770D00403C60;
 			productRefGroup = 84D610AA1800770D00403C60 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 84D610DE1800791100403C60 /* Products */;
+					ProjectRef = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				84D610A81800770D00403C60 /* PebCiti */,
-				84D610C31800770D00403C60 /* PebCitiTests */,
+				84D610FD1800792600403C60 /* Specs */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		84D610EA1800791300403C60 /* Cedar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Cedar.framework;
+			remoteRef = 84D610E91800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610EC1800791300403C60 /* Specs */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Specs;
+			remoteRef = 84D610EB1800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610EE1800791300403C60 /* FocusedSpecs */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = FocusedSpecs;
+			remoteRef = 84D610ED1800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610F01800791300403C60 /* libCedar-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCedar-StaticLib.a";
+			remoteRef = 84D610EF1800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610F21800791300403C60 /* iOSSpecs.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iOSSpecs.app;
+			remoteRef = 84D610F11800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610F41800791300403C60 /* OCUnitApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OCUnitApp.app;
+			remoteRef = 84D610F31800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610F61800791300403C60 /* OCUnitAppTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCUnitAppTests.octest;
+			remoteRef = 84D610F51800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		84D610F81800791300403C60 /* OCUnitAppLogicTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCUnitAppLogicTests.octest;
+			remoteRef = 84D610F71800791300403C60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		84D610A71800770D00403C60 /* Resources */ = {
@@ -209,14 +385,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84D610C21800770D00403C60 /* Resources */ = {
+		84D610FB1800792600403C60 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D611091800792700403C60 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		84D610FC1800792600403C60 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84D610A51800770D00403C60 /* Sources */ = {
@@ -228,28 +421,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84D610C01800770D00403C60 /* Sources */ = {
+		84D610F91800792600403C60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		84D610CA1800770D00403C60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 84D610A81800770D00403C60 /* PebCiti */;
-			targetProxy = 84D610C91800770D00403C60 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		84D610B51800770D00403C60 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				84D610B61800770D00403C60 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		84D611071800792700403C60 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84D611081800792700403C60 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -355,45 +549,67 @@
 			};
 			name = Release;
 		};
-		84D610D91800770D00403C60 /* Debug */ = {
+		84D611111800792700403C60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PebCiti.app/PebCiti";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/Specs/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PebCiti/PebCiti-Prefix.pch";
+				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "PebCitiTests/PebCitiTests-Info.plist";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "Specs/Supporting Files/Specs-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
-		84D610DA1800770D00403C60 /* Release */ = {
+		84D611121800792700403C60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PebCiti.app/PebCiti";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)/Specs/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PebCiti/PebCiti-Prefix.pch";
-				INFOPLIST_FILE = "PebCitiTests/PebCitiTests-Info.plist";
+				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "Specs/Supporting Files/Specs-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -416,14 +632,16 @@
 				84D610D71800770D00403C60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		84D610D81800770D00403C60 /* Build configuration list for PBXNativeTarget "PebCitiTests" */ = {
+		84D611101800792700403C60 /* Build configuration list for PBXNativeTarget "Specs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				84D610D91800770D00403C60 /* Debug */,
-				84D610DA1800770D00403C60 /* Release */,
+				84D611111800792700403C60 /* Debug */,
+				84D611121800792700403C60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
