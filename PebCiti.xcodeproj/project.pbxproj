@@ -8,7 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404FF6E180085C60082F01E /* Cedar-iOS.framework */; };
+		840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374571800872900FB7610 /* PebbleKit.framework */; };
+		840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374581800872900FB7610 /* PebbleVendor.framework */; };
 		842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842374551800864400FB7610 /* PCAppDelegateSpec.mm */; };
+		842374591800872900FB7610 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374571800872900FB7610 /* PebbleKit.framework */; };
+		8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374581800872900FB7610 /* PebbleVendor.framework */; };
+		8423745E18008F9100FB7610 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423745D18008F9100FB7610 /* CoreBluetooth.framework */; };
+		8423746018008F9400FB7610 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423745F18008F9400FB7610 /* CoreMotion.framework */; };
+		8423746218008F9900FB7610 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746118008F9900FB7610 /* libz.dylib */; };
+		8423746418008F9F00FB7610 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746318008F9F00FB7610 /* ExternalAccessory.framework */; };
+		8423746518008FAF00FB7610 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746318008F9F00FB7610 /* ExternalAccessory.framework */; };
+		8423746618008FB300FB7610 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746118008F9900FB7610 /* libz.dylib */; };
+		8423746718008FB800FB7610 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423745D18008F9100FB7610 /* CoreBluetooth.framework */; };
+		8423746818008FBC00FB7610 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423745F18008F9400FB7610 /* CoreMotion.framework */; };
+		8423746A18008FC400FB7610 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746918008FC400FB7610 /* MessageUI.framework */; };
+		8423746B18008FC800FB7610 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746918008FC400FB7610 /* MessageUI.framework */; };
 		84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AE1800770D00403C60 /* CoreGraphics.framework */; };
 		84D610B11800770D00403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
@@ -85,6 +99,13 @@
 /* Begin PBXFileReference section */
 		8404FF6E180085C60082F01E /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Cedar-iOS.framework"; sourceTree = "<group>"; };
 		842374551800864400FB7610 /* PCAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAppDelegateSpec.mm; sourceTree = "<group>"; };
+		842374571800872900FB7610 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleKit.framework; path = pebblekit/iOS/PebbleKit.framework; sourceTree = "<group>"; };
+		842374581800872900FB7610 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = pebblekit/iOS/PebbleVendor.framework; sourceTree = "<group>"; };
+		8423745D18008F9100FB7610 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		8423745F18008F9400FB7610 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		8423746118008F9900FB7610 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		8423746318008F9F00FB7610 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		8423746918008FC400FB7610 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		84D610A91800770D00403C60 /* PebCiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PebCiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D610AC1800770D00403C60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D610AE1800770D00403C60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -110,7 +131,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8423746A18008FC400FB7610 /* MessageUI.framework in Frameworks */,
+				8423746418008F9F00FB7610 /* ExternalAccessory.framework in Frameworks */,
+				8423746218008F9900FB7610 /* libz.dylib in Frameworks */,
+				8423746018008F9400FB7610 /* CoreMotion.framework in Frameworks */,
+				8423745E18008F9100FB7610 /* CoreBluetooth.framework in Frameworks */,
 				84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */,
+				8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */,
+				842374591800872900FB7610 /* PebbleKit.framework in Frameworks */,
 				84D610B11800770D00403C60 /* UIKit.framework in Frameworks */,
 				84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */,
 			);
@@ -120,6 +148,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */,
+				840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */,
+				8423746B18008FC800FB7610 /* MessageUI.framework in Frameworks */,
+				8423746818008FBC00FB7610 /* CoreMotion.framework in Frameworks */,
+				8423746718008FB800FB7610 /* CoreBluetooth.framework in Frameworks */,
+				8423746618008FB300FB7610 /* libz.dylib in Frameworks */,
+				8423746518008FAF00FB7610 /* ExternalAccessory.framework in Frameworks */,
 				84D611011800792600403C60 /* CoreGraphics.framework in Frameworks */,
 				84D611021800792600403C60 /* UIKit.framework in Frameworks */,
 				8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */,
@@ -162,6 +197,11 @@
 		84D610AB1800770D00403C60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8423746918008FC400FB7610 /* MessageUI.framework */,
+				8423746318008F9F00FB7610 /* ExternalAccessory.framework */,
+				8423746118008F9900FB7610 /* libz.dylib */,
+				8423745F18008F9400FB7610 /* CoreMotion.framework */,
+				8423745D18008F9100FB7610 /* CoreBluetooth.framework */,
 				84D610AC1800770D00403C60 /* Foundation.framework */,
 				84D610AE1800770D00403C60 /* CoreGraphics.framework */,
 				84D610B01800770D00403C60 /* UIKit.framework */,
@@ -205,6 +245,8 @@
 			isa = PBXGroup;
 			children = (
 				84D610DD1800791100403C60 /* Cedar.xcodeproj */,
+				842374571800872900FB7610 /* PebbleKit.framework */,
+				842374581800872900FB7610 /* PebbleVendor.framework */,
 			);
 			path = Externals;
 			sourceTree = "<group>";
@@ -528,6 +570,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
@@ -541,6 +587,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
@@ -560,6 +610,7 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/Specs/Frameworks",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
@@ -594,6 +645,7 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SRCROOT)/Specs/Frameworks",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
