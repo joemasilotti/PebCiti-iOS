@@ -13,6 +13,7 @@
 {
     self = [super init];
     if (self) {
+        self.title = @"PebCiti";
         [self setupConnectToPebbleButton];
         [self setupSendToPebbleButton];
     }

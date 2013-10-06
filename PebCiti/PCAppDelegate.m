@@ -8,7 +8,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     PCHomeViewController *homeViewController = [[PCHomeViewController alloc] init];
-    self.window.rootViewController = homeViewController;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }

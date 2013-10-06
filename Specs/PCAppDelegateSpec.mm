@@ -18,8 +18,14 @@ describe(@"PCAppDelegate", ^{
             [delegate application:nil didFinishLaunchingWithOptions:nil];
         });
 
-        it(@"should display a PCHomeViewController", ^{
-            delegate.window.rootViewController should be_instance_of([PCHomeViewController class]);
+        it(@"should display a UINavigationController", ^{
+            delegate.window.rootViewController should be_instance_of([UINavigationController class]);
+        });
+
+        describe(@"the navigation controller", ^{
+            it(@"should contain a PCHomeViewController", ^{
+                delegate.window.rootViewController.childViewControllers[0] should be_instance_of([PCHomeViewController class]);
+            });
         });
     });
 });

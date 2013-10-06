@@ -14,6 +14,12 @@ describe(@"PCHomeViewController", ^{
         controller.view should_not be_nil;
     });
 
+    describe(@"-title", ^{
+        it(@"should be PebCiti", ^{
+            controller.title should equal(@"PebCiti");
+        });
+    });
+
     describe(@"-connectToPebbleButton", ^{
         it(@"should exist in the view hierarchy", ^{
             [controller.view subviews] should contain(controller.connectToPebbleButton);
