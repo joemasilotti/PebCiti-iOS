@@ -28,6 +28,7 @@
 		843C3E901800958800EB9E94 /* PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E8F1800958800EB9E94 /* PebCiti.m */; };
 		843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */; };
 		843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3EA61800972600EB9E94 /* PCPebbleManager.m */; };
+		847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */; };
 		84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AE1800770D00403C60 /* CoreGraphics.framework */; };
 		84D610B11800770D00403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
@@ -119,6 +120,7 @@
 		843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PebCitiSpec.mm; sourceTree = "<group>"; };
 		843C3EA51800972600EB9E94 /* PCPebbleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleManager.h; sourceTree = "<group>"; };
 		843C3EA61800972600EB9E94 /* PCPebbleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleManager.m; sourceTree = "<group>"; };
+		847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCPebbleManagerSpec.mm; sourceTree = "<group>"; };
 		84D610A91800770D00403C60 /* PebCiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PebCiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D610AC1800770D00403C60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D610AE1800770D00403C60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -209,6 +211,14 @@
 			children = (
 				843C3EA51800972600EB9E94 /* PCPebbleManager.h */,
 				843C3EA61800972600EB9E94 /* PCPebbleManager.m */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		847BD52018009BCB00B3D398 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -313,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				843C3E8B180093B800EB9E94 /* Controllers */,
+				847BD52018009BCB00B3D398 /* Interfaces */,
 				843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */,
 				842374551800864400FB7610 /* PCAppDelegateSpec.mm */,
 				8404FF6D180085AD0082F01E /* Frameworks */,
@@ -516,6 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */,
+				847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */,
 				842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */,
 				843C3E8D180093D200EB9E94 /* PCHomeViewControllerSpec.mm in Sources */,
 			);
