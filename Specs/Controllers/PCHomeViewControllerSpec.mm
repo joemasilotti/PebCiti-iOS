@@ -11,6 +11,7 @@ describe(@"PCHomeViewController", ^{
 
     beforeEach(^{
         controller = [[[PCHomeViewController alloc] init] autorelease];
+        controller.view should_not be_nil;
     });
 
     describe(@"-connectToPebbleButton", ^{

@@ -25,8 +25,8 @@
 {
     UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 100.0f, 320.0f, 50.0f)];
     [connectToPebbleButton setTitle:@"Connect to Pebble" forState:UIControlStateNormal];
-    [connectToPebbleButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
-    [connectToPebbleButton setTitleColor:[self.view.tintColor colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+    [connectToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
+    [connectToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [connectToPebbleButton addTarget:self action:@selector(connectToPebbleButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:connectToPebbleButton];
     self.connectToPebbleButton = connectToPebbleButton;
@@ -36,8 +36,8 @@
 {
     UIButton *sendToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 175.0f, 320.0f, 50.0f)];
     [sendToPebbleButton setTitle:@"Send Message to Pebble" forState:UIControlStateNormal];
-    [sendToPebbleButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
-    [sendToPebbleButton setTitleColor:[self.view.tintColor colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+    [sendToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
+    [sendToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [sendToPebbleButton addTarget:self action:@selector(sendToPebbleButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendToPebbleButton];
     self.sendToPebbleButton = sendToPebbleButton;
@@ -51,6 +51,20 @@
 - (void)sendToPebbleButtonWasTapped
 {
     [PebCiti.sharedInstance.pebbleManager sendMessageToPebble];
+}
+
+- (UIColor *)buttonTitleColor
+{
+    if ([self.view respondsToSelector:@selector(tintColor)]) {
+        return self.view.tintColor;
+    } else {
+        return [UIColor blueColor];
+    }
+}
+
+- (UIColor *)buttonTitleHighlightedColor
+{
+    return [[self buttonTitleColor] colorWithAlphaComponent:0.5f];
 }
 
 @end
