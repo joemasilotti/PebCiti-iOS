@@ -1,4 +1,5 @@
 #import "PCPebbleManager.h"
+#import "UIAlertView+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -70,7 +71,8 @@ describe(@"PCPebbleManager", ^{
                     manager.connectedWatch should be_nil;
                 });
 
-                xit(@"should display an alert view", ^{
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView should_not be_nil;
                 });
             });
         });

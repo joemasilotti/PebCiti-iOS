@@ -28,6 +28,12 @@
     [watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
         if (isAppMessagesSupported) {
             weakSelf.connectedWatch = watch;
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@""
+                                        message:@"This Pebble doesn't support app messages."
+                                       delegate:nil
+                              cancelButtonTitle:@"Dismiss"
+                              otherButtonTitles:nil] show];
         }
     }];
 }
