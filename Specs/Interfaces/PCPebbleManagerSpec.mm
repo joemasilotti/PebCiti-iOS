@@ -60,6 +60,12 @@ describe(@"PCPebbleManager", ^{
                 it(@"should set the connected watch property", ^{
                     manager.connectedWatch should be_same_instance_as(watch);
                 });
+
+                it(@"should set UUID on the watch", ^{
+                    uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
+                    NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+                    watch should have_received("appMessagesSetUUID:").with(UUID);
+                });
             });
 
             context(@"when the watch cannot accept app messages", ^{
