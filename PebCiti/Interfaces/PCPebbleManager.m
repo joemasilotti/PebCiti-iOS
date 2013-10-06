@@ -1,9 +1,7 @@
 #import "PCPebbleManager.h"
 
 @interface PCPebbleManager ()
-
 @property (nonatomic, strong, readwrite) PBWatch *connectedWatch;
-
 @end
 
 @implementation PCPebbleManager

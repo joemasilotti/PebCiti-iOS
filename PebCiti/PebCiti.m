@@ -2,9 +2,7 @@
 #import "PebCiti.h"
 
 @interface PebCiti ()
-
 @property (nonatomic, strong, readwrite) PCPebbleManager *pebbleManager;
-
 @end
 
 static PebCiti *_sharedPebCiti;

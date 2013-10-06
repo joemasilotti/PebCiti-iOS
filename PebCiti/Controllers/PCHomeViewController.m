@@ -3,9 +3,7 @@
 #import "PebCiti.h"
 
 @interface PCHomeViewController ()
-
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
-
 @end
 
 @implementation PCHomeViewController
