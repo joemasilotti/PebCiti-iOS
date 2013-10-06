@@ -1,4 +1,5 @@
 #import "PCPebbleManager.h"
+#import "PCPebbleCentral.h"
 
 @interface PCPebbleManager ()
 @property (nonatomic, strong, readwrite) PBWatch *connectedWatch;
@@ -10,7 +11,7 @@
 {
     self = [super init];
     if (self) {
-        PBPebbleCentral.defaultCentral.delegate = self;
+        PCPebbleCentral.defaultCentral.delegate = self;
     }
     return self;
 }
@@ -27,8 +28,7 @@
             }
         }];
     } else {
-        self.connectedWatch = PBPebbleCentral.defaultCentral.lastConnectedWatch;
-//        [self displayAlertWithMessage:@"No Pebble connected."];
+        [self displayAlertWithMessage:@"No Pebble connected."];
     }
 }
 

@@ -1,5 +1,6 @@
-#import "PCPebbleManager.h"
 #import "UIAlertView+Spec.h"
+#import "PCPebbleManager.h"
+#import "PCPebbleCentral.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -21,9 +22,8 @@ describe(@"PCPebbleManager", ^{
         [manager conformsToProtocol:@protocol(PBPebbleCentralDelegate)] should be_truthy;
     });
 
-    // Always fails because PebbleKit.framework is linked under Specs.
-    xit(@"should be the default pebble central's delegate", ^{
-        PBPebbleCentral.defaultCentral.delegate should be_same_instance_as(manager);
+    it(@"should be the default pebble central's delegate", ^{
+        PCPebbleCentral.defaultCentral.delegate should be_same_instance_as(manager);
     });
 
     describe(@"<PBPebbleCentralDelegate>", ^{
