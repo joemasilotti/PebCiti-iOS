@@ -18,13 +18,16 @@
 
 - (void)connectToPebble
 {
+    self.connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
+    [self.connectedWatch appMessagesSetUUID:self.UUID];
 }
 
 - (void)sendMessageToPebble
 {
     if (self.connectedWatch) {
         __weak PCPebbleManager *weakSelf = self;
-        [self.connectedWatch appMessagesPushUpdate:nil onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+        NSDictionary *update = @{ @1: @"Hello Pebble!" };
+        [self.connectedWatch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
             if (!error) {
                 [weakSelf displayAlertWithMessage:@"Message sent to Pebble successfully."];
             } else {
@@ -43,6 +46,7 @@
     __weak PCPebbleManager *weakSelf = self;
     [watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
         if (isAppMessagesSupported) {
+            [self displayAlertWithMessage:@"Pebble successfully connected."];
             weakSelf.connectedWatch = watch;
             [weakSelf.connectedWatch appMessagesSetUUID:weakSelf.UUID];
         } else {

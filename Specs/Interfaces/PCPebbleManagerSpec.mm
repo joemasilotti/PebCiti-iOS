@@ -57,6 +57,10 @@ describe(@"PCPebbleManager", ^{
                     completionBlock(watch, YES);
                 });
 
+                it(@"should display an alert view letting the user know a watch has successfully connected", ^{
+                    UIAlertView.currentAlertView.message should equal(@"Pebble successfully connected.");
+                });
+
                 it(@"should ask the watch if it can receive app messages", ^{
                     watch should have_received("appMessagesGetIsSupported:");
                 });
@@ -88,6 +92,28 @@ describe(@"PCPebbleManager", ^{
         });
     });
 
+    describe(@"-connectToPebble", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            watch = nice_fake_for([PBWatch class]);
+            spy_on(PCPebbleCentral.defaultCentral);
+            PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
+
+            [manager connectToPebble];
+        });
+
+        it(@"should set the watch property to the most recently connected one", ^{
+            manager.connectedWatch should be_same_instance_as(watch);
+        });
+
+        it(@"should set UUID on the watch", ^{
+            uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
+            NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+            watch should have_received("appMessagesSetUUID:").with(UUID);
+        });
+    });
+
     describe(@"-sendMessageToPebble", ^{
         __block PBWatch *watch;
 
@@ -102,7 +128,7 @@ describe(@"PCPebbleManager", ^{
             });
 
             it(@"should tell the connected watch to display a message", ^{
-                watch should have_received("appMessagesPushUpdate:onSent:");
+                watch should have_received("appMessagesPushUpdate:onSent:").with(@{ @1: @"Hello Pebble!" }, Arguments::anything);
             });
 
             describe(@"when the update completes", ^{
