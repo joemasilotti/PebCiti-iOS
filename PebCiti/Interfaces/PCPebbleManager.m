@@ -27,7 +27,8 @@
             }
         }];
     } else {
-        [self displayAlertWithMessage:@"No Pebble connected."];
+        self.connectedWatch = PBPebbleCentral.defaultCentral.lastConnectedWatch;
+//        [self displayAlertWithMessage:@"No Pebble connected."];
     }
 }
 

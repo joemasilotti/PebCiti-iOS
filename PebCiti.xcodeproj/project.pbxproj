@@ -41,6 +41,7 @@
 		84D611021800792600403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
 		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
+		84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6113418020FF700403C60 /* PCPebbleCentral.m */; };
 		84F05AA01801D4210096EA4B /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 /* End PBXBuildFile section */
@@ -184,6 +185,8 @@
 		84D611061800792600403C60 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
 		84D611081800792700403C60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84D6110F1800792700403C60 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
+		84D6113318020FF700403C60 /* PCPebbleCentral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleCentral.h; sourceTree = "<group>"; };
+		84D6113418020FF700403C60 /* PCPebbleCentral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleCentral.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +261,8 @@
 			children = (
 				843C3EA51800972600EB9E94 /* PCPebbleManager.h */,
 				843C3EA61800972600EB9E94 /* PCPebbleManager.m */,
+				84D6113318020FF700403C60 /* PCPebbleCentral.h */,
+				84D6113418020FF700403C60 /* PCPebbleCentral.m */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -611,6 +616,7 @@
 				84D610B91800770D00403C60 /* main.m in Sources */,
 				843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */,
 				843C3E8A1800937E00EB9E94 /* PCHomeViewController.m in Sources */,
+				84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */,
 				84D610BD1800770D00403C60 /* PCAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
