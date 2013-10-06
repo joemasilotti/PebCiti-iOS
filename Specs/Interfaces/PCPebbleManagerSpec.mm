@@ -4,6 +4,10 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
+@interface PCPebbleManager (Specs)
+@property (nonatomic, strong, readwrite) PBWatch *connectedWatch;
+@end
+
 SPEC_BEGIN(PCPebbleManagerSpec)
 
 describe(@"PCPebbleManager", ^{
@@ -82,6 +86,86 @@ describe(@"PCPebbleManager", ^{
                 });
             });
         });
+    });
+
+    describe(@"-sendMessageToPebble", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            watch = nice_fake_for([PBWatch class]);
+        });
+
+        context(@"when a watch with a UUID is connected", ^{
+            beforeEach(^{
+                manager.connectedWatch = watch;
+                [manager sendMessageToPebble];
+            });
+
+            it(@"should tell the connected watch to display a message", ^{
+                watch should have_received("appMessagesPushUpdate:onSent:");
+            });
+
+            describe(@"when the update completes", ^{
+                __block void(^completionBlock)(PBWatch *, NSDictionary *, NSError *);
+
+                beforeEach(^{
+                    [(id<CedarDouble>)watch reset_sent_messages];
+
+                    [manager sendMessageToPebble];
+
+                    NSArray *sentMessages = [(id<CedarDouble>)watch sent_messages];
+                    sentMessages = [sentMessages filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                        return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
+                    }]];
+                    NSInvocation *lastMessage = [sentMessages lastObject];
+
+                    void(^localCompletionBlock)(PBWatch *, BOOL);
+                    [lastMessage getArgument:&localCompletionBlock atIndex:3];
+                    completionBlock = [localCompletionBlock copy];
+                });
+
+                afterEach(^{
+                    [completionBlock release];
+                    completionBlock = nil;
+                });
+
+                context(@"when the push update succeeds", ^{
+                    beforeEach(^{
+                        completionBlock(watch, nil, nil);
+                    });
+
+                    it(@"should display an alert view saying the update succeeded", ^{
+                        UIAlertView.currentAlertView.message should equal(@"Message sent to Pebble successfully.");
+                    });
+                });
+
+                context(@"when the push update fails", ^{
+                    beforeEach(^{
+                        completionBlock(watch, nil, [NSError errorWithDomain:@"" code:12 userInfo:nil]);
+                    });
+
+                    it(@"should display an alert view with an error message", ^{
+                        UIAlertView.currentAlertView.message should equal(@"An error occurred updating the Pebble.");
+                    });
+                });
+            });
+        });
+
+        context(@"when no watch is connected", ^{
+            beforeEach(^{
+                manager.connectedWatch should be_nil;
+                [manager sendMessageToPebble];
+            });
+
+            it(@"should not send any messages to the watch reference", ^{
+                watch should_not have_received("appMessagesPushUpdate:onSent:");
+            });
+
+            it(@"should display an alert view", ^{
+                UIAlertView.currentAlertView should_not be_nil;
+            });
+        });
+
     });
 });
 
