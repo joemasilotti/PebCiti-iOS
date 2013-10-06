@@ -5,6 +5,7 @@
 
 @property (nonatomic, strong, readonly) PBWatch *connectedWatch;
 
+- (void)connectToPebble;
 - (void)sendMessageToPebble;
 
 @end

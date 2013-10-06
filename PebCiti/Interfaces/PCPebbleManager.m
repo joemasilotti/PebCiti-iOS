@@ -16,6 +16,10 @@
     return self;
 }
 
+- (void)connectToPebble
+{
+}
+
 - (void)sendMessageToPebble
 {
     if (self.connectedWatch) {
