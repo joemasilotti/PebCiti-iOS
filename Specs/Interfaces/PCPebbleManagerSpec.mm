@@ -97,21 +97,41 @@ describe(@"PCPebbleManager", ^{
         __block PBWatch *watch;
 
         beforeEach(^{
-            watch = nice_fake_for([PBWatch class]);
             spy_on(PCPebbleCentral.defaultCentral);
-            PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
-
-            [manager connectToPebble];
+            manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
         });
 
-        it(@"should set the watch property to the most recently connected one", ^{
-            manager.connectedWatch should be_same_instance_as(watch);
+        context(@"when there was already a connected watch", ^{
+            beforeEach(^{
+                watch = nice_fake_for([PBWatch class]);
+                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
+
+                [manager connectToPebble];
+            });
+
+            it(@"should set the watch property to the most recently connected one", ^{
+                manager.connectedWatch should be_same_instance_as(watch);
+            });
+
+            it(@"should set UUID on the watch", ^{
+                uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
+                NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+                watch should have_received("appMessagesSetUUID:").with(UUID);
+            });
+
+            it(@"should tell the delegate which watch successfully connected", ^{
+                manager.delegate should have_received("watchDidConnect:").with(watch);
+            });
         });
 
-        it(@"should set UUID on the watch", ^{
-            uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
-            NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-            watch should have_received("appMessagesSetUUID:").with(UUID);
+        context(@"when there wasn't a previously connected watch", ^{
+            beforeEach(^{
+                [manager connectToPebble];
+            });
+
+            it(@"should display an alert view", ^{
+                UIAlertView.currentAlertView should_not be_nil;
+            });
         });
     });
 

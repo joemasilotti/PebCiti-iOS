@@ -19,7 +19,12 @@
 - (void)connectToPebble
 {
     self.connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
-    [self.connectedWatch appMessagesSetUUID:self.UUID];
+    if (self.connectedWatch) {
+        [self.connectedWatch appMessagesSetUUID:self.UUID];
+        [self.delegate watchDidConnect:self.connectedWatch];
+    } else {
+        [self displayAlertWithMessage:@"No connected Pebble."];
+    }
 }
 
 - (void)sendMessageToPebble
