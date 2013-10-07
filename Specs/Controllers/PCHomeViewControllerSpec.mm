@@ -65,6 +65,8 @@ describe(@"PCHomeViewController", ^{
     describe(@"-connectToPebbleButton", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
         });
 
         it(@"should exist in the view hierarchy", ^{
@@ -74,15 +76,17 @@ describe(@"PCHomeViewController", ^{
         describe(@"when the button is tapped", ^{
             beforeEach(^{
                 spy_on(PebCiti.sharedInstance.pebbleManager);
-                [controller.connectToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-            });
+                controller.activityIndicator.isAnimating should_not be_truthy;
 
-            it(@"should tell the Pebble manager to send a message", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received("connectToPebble");
+                [controller.connectToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
             });
 
             it(@"should start spinning the activity indicator", ^{
                 controller.activityIndicator.isAnimating should be_truthy;
+            });
+
+            it(@"should tell the Pebble manager to send a message", ^{
+                PebCiti.sharedInstance.pebbleManager should have_received("connectToPebble");
             });
         });
     });
@@ -118,15 +122,22 @@ describe(@"PCHomeViewController", ^{
         });
 
         it(@"should be hidden", ^{
-            controller.activityIndicator.hidden should equal(YES);
+            controller.activityIndicator.hidden should be_truthy;
         });
 
         it(@"should not be spinning", ^{
-            controller.activityIndicator.isAnimating should equal(NO);
+            controller.activityIndicator.isAnimating should_not be_truthy;
         });
     });
 
     describe(@"<PCPebbleManagerDelegate", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            watch = nice_fake_for([PBWatch class]);
+            watch stub_method("name").and_return(@"PB12");
+        });
+
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
         });
@@ -135,16 +146,12 @@ describe(@"PCHomeViewController", ^{
             PebCiti.sharedInstance.pebbleManager.delegate should be_same_instance_as(controller);
         });
 
-        describe(@"-watchDidConnect:", ^{
-            __block PBWatch *watch;
-
+        describe(@"-pebbleManagerConnectedToWatch:", ^{
             beforeEach(^{
-                watch = nice_fake_for([PBWatch class]);
-                watch stub_method("name").and_return(@"PB12");
-                controller.connectedPebbleLabel.text should equal(@"");
                 [controller.activityIndicator startAnimating];
+                controller.connectedPebbleLabel.text should equal(@"");
 
-                [controller watchDidConnect:watch];
+                [controller pebbleManagerConnectedToWatch:watch];
             });
 
             it(@"should clear the spinner", ^{
@@ -156,19 +163,39 @@ describe(@"PCHomeViewController", ^{
             });
         });
 
-        describe(@"-watchDoesNotSupportAppMessages", ^{
-            beforeEach(^{
-                [controller.activityIndicator startAnimating];
+        describe(@"-pebbleManagerFailedToConnectToWatch:", ^{
+            context(@"when the watch doesn't support app messages", ^{
+                beforeEach(^{
+                    [controller.activityIndicator startAnimating];
+                    controller.activityIndicator.isAnimating should be_truthy;
 
-                [controller watchDoesNotSupportAppMessages];
+                    [controller pebbleManagerFailedToConnectToWatch:watch];
+                });
+
+                it(@"should clear the spinner", ^{
+                    controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView.message should equal(@"Pebble doesn't support app messages.");
+                });
             });
 
-            it(@"should clear the spinner", ^{
-                controller.activityIndicator.isAnimating should_not be_truthy;
-            });
+            context(@"when the manager failed to connect to any watch", ^{
+                beforeEach(^{
+                    [controller.activityIndicator startAnimating];
+                    controller.activityIndicator.isAnimating should be_truthy;
 
-            it(@"should display an alert view", ^{
-                UIAlertView.currentAlertView should_not be_nil;
+                    [controller pebbleManagerFailedToConnectToWatch:nil];
+                });
+
+                it(@"should clear the spinner", ^{
+                    controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView.message should equal(@"No connected Pebble recognized.");
+                });
             });
         });
     });

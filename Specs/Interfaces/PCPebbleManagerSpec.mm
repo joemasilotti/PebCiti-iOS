@@ -73,7 +73,7 @@ describe(@"PCPebbleManager", ^{
                 });
 
                 it(@"should tell the delegate which watch successfully connected", ^{
-                    manager.delegate should have_received("watchDidConnect:").with(watch);
+                    manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
                 });
             });
 
@@ -87,7 +87,7 @@ describe(@"PCPebbleManager", ^{
                 });
 
                 it(@"should tell the delegate the watch does not support app messages", ^{
-                    manager.delegate should have_received("watchDoesNotSupportAppMessages");
+                    manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(watch);
                 });
             });
         });
@@ -120,7 +120,7 @@ describe(@"PCPebbleManager", ^{
             });
 
             it(@"should tell the delegate which watch successfully connected", ^{
-                manager.delegate should have_received("watchDidConnect:").with(watch);
+                manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
             });
         });
 
@@ -129,8 +129,8 @@ describe(@"PCPebbleManager", ^{
                 [manager connectToPebble];
             });
 
-            it(@"should display an alert view", ^{
-                UIAlertView.currentAlertView should_not be_nil;
+            it(@"should tell the delegate there is no connected Pebble", ^{
+                manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
             });
         });
     });

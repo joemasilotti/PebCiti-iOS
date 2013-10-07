@@ -21,9 +21,9 @@
     self.connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
     if (self.connectedWatch) {
         [self.connectedWatch appMessagesSetUUID:self.UUID];
-        [self.delegate watchDidConnect:self.connectedWatch];
+        [self.delegate pebbleManagerConnectedToWatch:self.connectedWatch];
     } else {
-        [self displayAlertWithMessage:@"No connected Pebble."];
+        [self.delegate pebbleManagerFailedToConnectToWatch:nil];
     }
 }
 
@@ -53,9 +53,9 @@
         if (isAppMessagesSupported) {
             weakSelf.connectedWatch = watch;
             [weakSelf.connectedWatch appMessagesSetUUID:weakSelf.UUID];
-            [self.delegate watchDidConnect:watch];
+            [self.delegate pebbleManagerConnectedToWatch:watch];
         } else {
-            [self.delegate watchDoesNotSupportAppMessages];
+            [self.delegate pebbleManagerFailedToConnectToWatch:watch];
         }
     }];
 }

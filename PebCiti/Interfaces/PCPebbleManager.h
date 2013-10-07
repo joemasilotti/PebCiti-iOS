@@ -2,8 +2,8 @@
 #import <PebbleKit/PebbleKit.h>
 
 @protocol PCPebbleManagerDelegate
-- (void)watchDidConnect:(PBWatch *)watch;
-- (void)watchDoesNotSupportAppMessages;
+- (void)pebbleManagerConnectedToWatch:(PBWatch *)watch;
+- (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch;
 @end
 
 @interface PCPebbleManager : NSObject <PBPebbleCentralDelegate>

@@ -29,17 +29,18 @@
 
 #pragma mark - <PCPebbleManagerDelegate>
 
-- (void)watchDidConnect:(PBWatch *)watch
+- (void)pebbleManagerConnectedToWatch:(PBWatch *)watch
 {
     self.connectedPebbleLabel.text = watch.name;
     [self.activityIndicator stopAnimating];
 }
 
-- (void)watchDoesNotSupportAppMessages
+- (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch
 {
     [self.activityIndicator stopAnimating];
+    NSString *message = watch ? @"Pebble doesn't support app messages." : @"No connected Pebble recognized.";
     [[[UIAlertView alloc] initWithTitle:@"Cannot Connect to Pebble"
-                                message:@"Watch doesn't support app messages."
+                                message:message
                                delegate:nil
                       cancelButtonTitle:@"Dismiss"
                       otherButtonTitles: nil] show];
