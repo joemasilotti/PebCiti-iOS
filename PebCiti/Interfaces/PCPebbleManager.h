@@ -4,6 +4,7 @@
 @protocol PCPebbleManagerDelegate
 - (void)pebbleManagerConnectedToWatch:(PBWatch *)watch;
 - (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch;
+- (void)pebbleManagerSentMessageWithError:(NSError *)error;
 @end
 
 @interface PCPebbleManager : NSObject <PBPebbleCentralDelegate>

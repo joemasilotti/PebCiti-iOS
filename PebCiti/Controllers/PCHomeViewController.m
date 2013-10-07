@@ -39,11 +39,14 @@
 {
     [self.activityIndicator stopAnimating];
     NSString *message = watch ? @"Pebble doesn't support app messages." : @"No connected Pebble recognized.";
-    [[[UIAlertView alloc] initWithTitle:@"Cannot Connect to Pebble"
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"Dismiss"
-                      otherButtonTitles: nil] show];
+    [self displayAlertViewWithTitle:@"Cannot Connect to Pebble" message:message];
+}
+
+- (void)pebbleManagerSentMessageWithError:(NSError *)error
+{
+    [self.activityIndicator stopAnimating];
+    NSString *message = error ? error.localizedDescription : @"Message sent to Pebble successfully.";
+    [self displayAlertViewWithTitle:@"" message:message];
 }
 
 #pragma mark - Private
@@ -102,7 +105,17 @@
 
 - (void)sendToPebbleButtonWasTapped
 {
+    [self.activityIndicator startAnimating];
     [PebCiti.sharedInstance.pebbleManager sendMessageToPebble];
+}
+
+- (void)displayAlertViewWithTitle:(NSString *)title message:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"Dismiss"
+                      otherButtonTitles:nil] show];
 }
 
 - (UIColor *)buttonTitleColor

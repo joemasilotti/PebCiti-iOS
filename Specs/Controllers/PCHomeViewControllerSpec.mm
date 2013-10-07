@@ -103,7 +103,13 @@ describe(@"PCHomeViewController", ^{
         describe(@"when the button is tapped", ^{
             beforeEach(^{
                 spy_on(PebCiti.sharedInstance.pebbleManager);
+                controller.activityIndicator.isAnimating should_not be_truthy;
+
                 [controller.sendToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            });
+
+            it(@"should start spinning the activity indicator", ^{
+                controller.activityIndicator.isAnimating should be_truthy;
             });
 
             it(@"should tell the Pebble manager to send a message", ^{
@@ -195,6 +201,43 @@ describe(@"PCHomeViewController", ^{
 
                 it(@"should display an alert view", ^{
                     UIAlertView.currentAlertView.message should equal(@"No connected Pebble recognized.");
+                });
+            });
+        });
+
+        describe(@"-pebbleManagerSentMessageWithError:", ^{
+            context(@"when the message was sent successfully", ^{
+                beforeEach(^{
+                    [controller.activityIndicator startAnimating];
+                    controller.activityIndicator.isAnimating should be_truthy;
+
+                    [controller pebbleManagerSentMessageWithError:nil];
+                });
+
+                it(@"should stop the spinner", ^{
+                    controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should show an alert view to the user noting the successful message send", ^{
+                    UIAlertView.currentAlertView.message should equal(@"Message sent to Pebble successfully.");
+                });
+            });
+
+            context(@"when the message sending reported an error", ^{
+                beforeEach(^{
+                    [controller.activityIndicator startAnimating];
+                    controller.activityIndicator.isAnimating should be_truthy;
+                    NSError *error = [NSError errorWithDomain:@"Pebble Error" code:1234 userInfo:@{ NSLocalizedDescriptionKey: @"Pebble had a problem." }];
+
+                    [controller pebbleManagerSentMessageWithError:error];
+                });
+
+                it(@"should clear the spinner", ^{
+                    controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should show an alert view to the user with the error message", ^{
+                    UIAlertView.currentAlertView.message should equal(@"Pebble had a problem.");
                 });
             });
         });
