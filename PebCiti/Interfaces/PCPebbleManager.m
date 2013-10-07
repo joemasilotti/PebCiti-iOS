@@ -46,11 +46,11 @@
     __weak PCPebbleManager *weakSelf = self;
     [watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
         if (isAppMessagesSupported) {
-            [self displayAlertWithMessage:@"Pebble successfully connected."];
             weakSelf.connectedWatch = watch;
             [weakSelf.connectedWatch appMessagesSetUUID:weakSelf.UUID];
+            [self.delegate watchDidConnect:watch];
         } else {
-            [self displayAlertWithMessage:@"This Pebble doesn't support app messages."];
+            [self.delegate watchDoesNotSupportAppMessages];
         }
     }];
 }

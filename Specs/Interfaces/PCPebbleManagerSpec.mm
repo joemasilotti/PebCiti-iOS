@@ -32,6 +32,7 @@ describe(@"PCPebbleManager", ^{
             __block void(^completionBlock)(PBWatch *, BOOL);
 
             beforeEach(^{
+                manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
                 watch = nice_fake_for([PBWatch class]);
 
                 [manager pebbleCentral:nil watchDidConnect:watch isNew:YES];
@@ -57,10 +58,6 @@ describe(@"PCPebbleManager", ^{
                     completionBlock(watch, YES);
                 });
 
-                it(@"should display an alert view letting the user know a watch has successfully connected", ^{
-                    UIAlertView.currentAlertView.message should equal(@"Pebble successfully connected.");
-                });
-
                 it(@"should ask the watch if it can receive app messages", ^{
                     watch should have_received("appMessagesGetIsSupported:");
                 });
@@ -74,6 +71,10 @@ describe(@"PCPebbleManager", ^{
                     NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
                     watch should have_received("appMessagesSetUUID:").with(UUID);
                 });
+
+                it(@"should tell the delegate which watch successfully connected", ^{
+                    manager.delegate should have_received("watchDidConnect:").with(watch);
+                });
             });
 
             context(@"when the watch cannot accept app messages", ^{
@@ -85,8 +86,8 @@ describe(@"PCPebbleManager", ^{
                     manager.connectedWatch should be_nil;
                 });
 
-                it(@"should display an alert view", ^{
-                    UIAlertView.currentAlertView should_not be_nil;
+                it(@"should tell the delegate the watch does not support app messages", ^{
+                    manager.delegate should have_received("watchDoesNotSupportAppMessages");
                 });
             });
         });
