@@ -1,8 +1,10 @@
+#import <PebbleKit/PebbleKit.h>
 #import "PCHomeViewController.h"
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
 @interface PCHomeViewController ()
+@property (nonatomic, weak, readwrite) UILabel *connectedPebbleLabel;
 @property (nonatomic, weak, readwrite) UIButton *connectToPebbleButton;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
 @end
@@ -14,6 +16,7 @@
     self = [super init];
     if (self) {
         self.title = @"PebCiti";
+        [self setupConnectedPebbleLabel];
         [self setupConnectToPebbleButton];
         [self setupSendToPebbleButton];
     }
@@ -21,6 +24,20 @@
 }
 
 #pragma mark - Private
+
+- (void)setupConnectedPebbleLabel
+{
+    UILabel *connectedPebbleLabelStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, 160.0f, 50.0f)];
+    connectedPebbleLabelStaticLabel.text = @"Connected Pebble: ";
+    [self.view addSubview:connectedPebbleLabelStaticLabel];
+
+    UILabel *connectedPebbleLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.0f, 0, 140.0f, 50.0f)];
+    connectedPebbleLabel.textAlignment = NSTextAlignmentRight;
+    PBWatch *watch = PebCiti.sharedInstance.pebbleManager.connectedWatch;
+    connectedPebbleLabel.text = watch ? watch.name : @"";
+    [self.view addSubview:connectedPebbleLabel];
+    self.connectedPebbleLabel = connectedPebbleLabel;
+}
 
 - (void)setupConnectToPebbleButton
 {
