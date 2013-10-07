@@ -94,6 +94,8 @@ describe(@"PCHomeViewController", ^{
     describe(@"-sendToPebbleButton", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
         });
 
         it(@"should exist in the view hierarchy", ^{

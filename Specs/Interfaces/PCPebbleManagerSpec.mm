@@ -157,6 +157,7 @@ describe(@"PCPebbleManager", ^{
 
                 beforeEach(^{
                     [(id<CedarDouble>)watch reset_sent_messages];
+                    manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
 
                     [manager sendMessageToPebble];
 
@@ -181,18 +182,21 @@ describe(@"PCPebbleManager", ^{
                         completionBlock(watch, nil, nil);
                     });
 
-                    it(@"should display an alert view saying the update succeeded", ^{
-                        UIAlertView.currentAlertView.message should equal(@"Message sent to Pebble successfully.");
+                    it(@"should tell the delegate the update succeeded", ^{
+                        manager.delegate should have_received("pebbleManagerSentMessageWithError:").with(nil);
                     });
                 });
 
                 context(@"when the push update fails", ^{
+                    __block NSError *error;
+
                     beforeEach(^{
-                        completionBlock(watch, nil, [NSError errorWithDomain:@"" code:12 userInfo:nil]);
+                        error = [NSError errorWithDomain:@"PebbleError" code:12 userInfo:nil];
+                        completionBlock(watch, nil, error);
                     });
 
-                    it(@"should display an alert view with an error message", ^{
-                        UIAlertView.currentAlertView.message should equal(@"An error occurred updating the Pebble.");
+                    it(@"should tell the delegate the update failed with the error", ^{
+                        manager.delegate should have_received("pebbleManagerSentMessageWithError:").with(error);
                     });
                 });
             });
@@ -201,6 +205,8 @@ describe(@"PCPebbleManager", ^{
         context(@"when no watch is connected", ^{
             beforeEach(^{
                 manager.connectedWatch should be_nil;
+                manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
+
                 [manager sendMessageToPebble];
             });
 
@@ -208,8 +214,8 @@ describe(@"PCPebbleManager", ^{
                 watch should_not have_received("appMessagesPushUpdate:onSent:");
             });
 
-            it(@"should display an alert view", ^{
-                UIAlertView.currentAlertView should_not be_nil;
+            it(@"should tell the delegate no watch is connected", ^{
+                manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
             });
         });
 
