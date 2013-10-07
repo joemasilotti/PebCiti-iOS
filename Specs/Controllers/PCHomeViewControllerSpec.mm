@@ -1,5 +1,6 @@
 #import "PCHomeViewController.h"
 #import "UIAlertView+Spec.h"
+#import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
@@ -10,6 +11,56 @@ SPEC_BEGIN(PCHomeViewControllerSpec)
 
 describe(@"PCHomeViewController", ^{
     __block PCHomeViewController *controller;
+
+    describe(@"-viewDidAppear:", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+            watch = nice_fake_for([PBWatch class]);
+            spy_on(PCPebbleCentral.defaultCentral);
+        });
+
+        context(@"when a Pebble is connected", ^{
+            beforeEach(^{
+                watch stub_method("isConnected").and_return(YES);
+                watch stub_method("name").and_return(@"UI93");
+                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
+
+                [controller viewDidAppear:NO];
+            });
+
+            it(@"should set the connected Pebble label to the Pebble's name", ^{
+                controller.connectedPebbleLabel.text should equal(@"UI93");
+            });
+        });
+
+        context(@"when a Pebble is not connected", ^{
+            beforeEach(^{
+                controller.connectedPebbleLabel.text = @"XA43";
+                watch stub_method("isConnected").and_return(NO);
+                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
+
+                [controller viewDidAppear:NO];
+            });
+
+            it(@"should set the connected Pebble label to blank", ^{
+                controller.connectedPebbleLabel.text should equal(@"");
+            });
+        });
+
+        context(@"when a Pebble was never connected", ^{
+            beforeEach(^{
+                controller.connectedPebbleLabel.text = @"XA43";
+
+                [controller viewDidAppear:NO];
+            });
+
+            it(@"should set the connected Pebble label to blank", ^{
+                controller.connectedPebbleLabel.text should equal(@"");
+            });
+        });
+    });
 
     describe(@"-title", ^{
         beforeEach(^{

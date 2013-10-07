@@ -1,5 +1,6 @@
 #import <PebbleKit/PebbleKit.h>
 #import "PCHomeViewController.h"
+#import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
@@ -25,6 +26,14 @@
         PebCiti.sharedInstance.pebbleManager.delegate = self;
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    PBWatch *connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
+    self.connectedPebbleLabel.text = connectedWatch.isConnected ? connectedWatch.name : @"";
 }
 
 #pragma mark - <PCPebbleManagerDelegate>
