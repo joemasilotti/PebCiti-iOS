@@ -174,6 +174,7 @@ describe(@"PCHomeViewController", ^{
         describe(@"-pebbleManagerFailedToConnectToWatch:", ^{
             context(@"when the watch doesn't support app messages", ^{
                 beforeEach(^{
+                    controller.connectedPebbleLabel.text = @"AB98";
                     [controller.activityIndicator startAnimating];
                     controller.activityIndicator.isAnimating should be_truthy;
 
@@ -184,6 +185,10 @@ describe(@"PCHomeViewController", ^{
                     controller.activityIndicator.isAnimating should_not be_truthy;
                 });
 
+                it(@"should set the connected Pebble label to be blank", ^{
+                    controller.connectedPebbleLabel.text should equal(@"");
+                });
+
                 it(@"should display an alert view", ^{
                     UIAlertView.currentAlertView.message should equal(@"Pebble doesn't support app messages.");
                 });
@@ -191,6 +196,7 @@ describe(@"PCHomeViewController", ^{
 
             context(@"when the manager failed to connect to any watch", ^{
                 beforeEach(^{
+                    controller.connectedPebbleLabel.text = @"AB98";
                     [controller.activityIndicator startAnimating];
                     controller.activityIndicator.isAnimating should be_truthy;
 
@@ -199,6 +205,10 @@ describe(@"PCHomeViewController", ^{
 
                 it(@"should clear the spinner", ^{
                     controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should set the connected Pebble label to be blank", ^{
+                    controller.connectedPebbleLabel.text should equal(@"");
                 });
 
                 it(@"should display an alert view", ^{

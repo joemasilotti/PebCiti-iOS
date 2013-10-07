@@ -99,28 +99,46 @@ describe(@"PCPebbleManager", ^{
         beforeEach(^{
             spy_on(PCPebbleCentral.defaultCentral);
             manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
+            watch = nice_fake_for([PBWatch class]);
         });
 
         context(@"when there was already a connected watch", ^{
             beforeEach(^{
-                watch = nice_fake_for([PBWatch class]);
                 PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
-
-                [manager connectToPebble];
             });
 
-            it(@"should set the watch property to the most recently connected one", ^{
-                manager.connectedWatch should be_same_instance_as(watch);
+            context(@"when that watch is still connected", ^{
+                beforeEach(^{
+                    watch stub_method("isConnected").and_return(YES);
+
+                    [manager connectToPebble];
+                });
+
+                it(@"should set the watch property to the most recently connected one", ^{
+                    manager.connectedWatch should be_same_instance_as(watch);
+                });
+
+                it(@"should set UUID on the watch", ^{
+                    uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
+                    NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+                    watch should have_received("appMessagesSetUUID:").with(UUID);
+                });
+
+                it(@"should tell the delegate which watch successfully connected", ^{
+                    manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
+                });
             });
 
-            it(@"should set UUID on the watch", ^{
-                uint8_t bytes[] = {0x42, 0xc8, 0x6e, 0xa4, 0x1c, 0x3e, 0x4a, 0x07, 0xb8, 0x89, 0x2c, 0xcc, 0xca, 0x91, 0x41, 0x98};
-                NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-                watch should have_received("appMessagesSetUUID:").with(UUID);
-            });
+            context(@"when that watch is no longer connected", ^{
+                beforeEach(^{
+                    watch stub_method("isConnected").and_return(NO);
 
-            it(@"should tell the delegate which watch successfully connected", ^{
-                manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
+                    [manager connectToPebble];
+                });
+
+                it(@"should tell the delegate there is no connected Pebble", ^{
+                    manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
+                });
             });
         });
 

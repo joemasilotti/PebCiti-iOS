@@ -38,6 +38,7 @@
 - (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch
 {
     [self.activityIndicator stopAnimating];
+    self.connectedPebbleLabel.text = @"";
     NSString *message = watch ? @"Pebble doesn't support app messages." : @"No connected Pebble recognized.";
     [self displayAlertViewWithTitle:@"Cannot Connect to Pebble" message:message];
 }
