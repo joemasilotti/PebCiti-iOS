@@ -7,6 +7,7 @@
 @property (nonatomic, weak, readwrite) UILabel *connectedPebbleLabel;
 @property (nonatomic, weak, readwrite) UIButton *connectToPebbleButton;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
+@property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation PCHomeViewController
@@ -19,8 +20,29 @@
         [self setupConnectedPebbleLabel];
         [self setupConnectToPebbleButton];
         [self setupSendToPebbleButton];
+        [self setupActivityIndicator];
+
+        PebCiti.sharedInstance.pebbleManager.delegate = self;
     }
     return self;
+}
+
+#pragma mark - <PCPebbleManagerDelegate>
+
+- (void)watchDidConnect:(PBWatch *)watch
+{
+    self.connectedPebbleLabel.text = watch.name;
+    [self.activityIndicator stopAnimating];
+}
+
+- (void)watchDoesNotSupportAppMessages
+{
+    [self.activityIndicator stopAnimating];
+    [[[UIAlertView alloc] initWithTitle:@"Cannot Connect to Pebble"
+                                message:@"Watch doesn't support app messages."
+                               delegate:nil
+                      cancelButtonTitle:@"Dismiss"
+                      otherButtonTitles: nil] show];
 }
 
 #pragma mark - Private
@@ -61,8 +83,19 @@
     self.sendToPebbleButton = sendToPebbleButton;
 }
 
+- (void)setupActivityIndicator
+{
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    activityIndicator.color = [UIColor blackColor];
+    activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview:activityIndicator];
+    self.activityIndicator = activityIndicator;
+}
+
 - (void)connectToPebbleButtonWasTapped
 {
+    [self.activityIndicator startAnimating];
     [PebCiti.sharedInstance.pebbleManager connectToPebble];
 }
 

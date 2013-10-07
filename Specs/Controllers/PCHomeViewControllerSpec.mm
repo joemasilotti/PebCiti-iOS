@@ -1,4 +1,5 @@
 #import "PCHomeViewController.h"
+#import "UIAlertView+Spec.h"
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
@@ -79,6 +80,10 @@ describe(@"PCHomeViewController", ^{
             it(@"should tell the Pebble manager to send a message", ^{
                 PebCiti.sharedInstance.pebbleManager should have_received("connectToPebble");
             });
+
+            it(@"should start spinning the activity indicator", ^{
+                controller.activityIndicator.isAnimating should be_truthy;
+            });
         });
     });
 
@@ -99,6 +104,71 @@ describe(@"PCHomeViewController", ^{
 
             it(@"should tell the Pebble manager to send a message", ^{
                 PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble");
+            });
+        });
+    });
+
+    describe(@"-activityIndicator", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.activityIndicator);
+        });
+
+        it(@"should be hidden", ^{
+            controller.activityIndicator.hidden should equal(YES);
+        });
+
+        it(@"should not be spinning", ^{
+            controller.activityIndicator.isAnimating should equal(NO);
+        });
+    });
+
+    describe(@"<PCPebbleManagerDelegate", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should be the default manager's delegate", ^{
+            PebCiti.sharedInstance.pebbleManager.delegate should be_same_instance_as(controller);
+        });
+
+        describe(@"-watchDidConnect:", ^{
+            __block PBWatch *watch;
+
+            beforeEach(^{
+                watch = nice_fake_for([PBWatch class]);
+                watch stub_method("name").and_return(@"PB12");
+                controller.connectedPebbleLabel.text should equal(@"");
+                [controller.activityIndicator startAnimating];
+
+                [controller watchDidConnect:watch];
+            });
+
+            it(@"should clear the spinner", ^{
+                controller.activityIndicator.isAnimating should_not be_truthy;
+            });
+
+            it(@"should update the connected Pebble label", ^{
+                controller.connectedPebbleLabel.text should equal(@"PB12");
+            });
+        });
+
+        describe(@"-watchDoesNotSupportAppMessages", ^{
+            beforeEach(^{
+                [controller.activityIndicator startAnimating];
+
+                [controller watchDoesNotSupportAppMessages];
+            });
+
+            it(@"should clear the spinner", ^{
+                controller.activityIndicator.isAnimating should_not be_truthy;
+            });
+
+            it(@"should display an alert view", ^{
+                UIAlertView.currentAlertView should_not be_nil;
             });
         });
     });
