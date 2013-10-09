@@ -101,6 +101,7 @@
     UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 130.0f, 270.0f, 40.0f)];
     messageTextField.delegate = self;
     messageTextField.returnKeyType = UIReturnKeyDone;
+    messageTextField.text = @"";
     messageTextField.borderStyle = UITextBorderStyleRoundedRect;
     messageTextField.textAlignment = NSTextAlignmentCenter;
     messageTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

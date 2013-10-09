@@ -159,6 +159,10 @@ describe(@"PCHomeViewController", ^{
         it(@"should have it's delegate be the controller", ^{
             controller.messageTextField.delegate should be_same_instance_as(controller);
         });
+
+        it(@"should initialize with an empty string", ^{
+            controller.messageTextField.text should equal(@"");
+        });
     });
 
     describe(@"<UITextFieldDelegate>", ^{
