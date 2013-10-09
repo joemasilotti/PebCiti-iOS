@@ -13,6 +13,6 @@
 @property (nonatomic, strong, readonly) PBWatch *connectedWatch;
 
 - (void)connectToPebble;
-- (void)sendMessageToPebble;
+- (void)sendMessageToPebble:(NSString *)message;
 
 @end

@@ -163,11 +163,11 @@ describe(@"PCPebbleManager", ^{
         context(@"when a watch with a UUID is connected", ^{
             beforeEach(^{
                 manager.connectedWatch = watch;
-                [manager sendMessageToPebble];
             });
 
             it(@"should tell the connected watch to display a message", ^{
-                watch should have_received("appMessagesPushUpdate:onSent:").with(@{ @1: @"Hello Pebble!" }, Arguments::anything);
+                [manager sendMessageToPebble:@"message"];
+                watch should have_received("appMessagesPushUpdate:onSent:").with(@{ @1: @"message" }, Arguments::anything);
             });
 
             describe(@"when the update completes", ^{
@@ -177,7 +177,7 @@ describe(@"PCPebbleManager", ^{
                     [(id<CedarDouble>)watch reset_sent_messages];
                     manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
 
-                    [manager sendMessageToPebble];
+                    [manager sendMessageToPebble:@"message"];
 
                     NSArray *sentMessages = [(id<CedarDouble>)watch sent_messages];
                     sentMessages = [sentMessages filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
@@ -225,7 +225,7 @@ describe(@"PCPebbleManager", ^{
                 manager.connectedWatch should be_nil;
                 manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
 
-                [manager sendMessageToPebble];
+                [manager sendMessageToPebble:@"message"];
             });
 
             it(@"should not send any messages to the watch reference", ^{

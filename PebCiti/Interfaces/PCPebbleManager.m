@@ -27,11 +27,11 @@
     }
 }
 
-- (void)sendMessageToPebble
+- (void)sendMessageToPebble:(NSString *)message
 {
     if (self.connectedWatch) {
         __weak PCPebbleManager *weakSelf = self;
-        NSDictionary *update = @{ @1: @"Hello Pebble!" };
+        NSDictionary *update = @{ @1: message };
         [self.connectedWatch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
             [weakSelf.delegate pebbleManagerSentMessageWithError:error];
         }];

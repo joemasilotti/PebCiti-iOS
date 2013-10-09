@@ -81,7 +81,7 @@ describe(@"PCHomeViewController", ^{
             PebCiti.sharedInstance stub_method("pebbleManager").and_return(pebbleManager);
         });
 
-        it(@"should exist in the view heirarchy", ^{
+        it(@"should exist in the view hierarchy", ^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view.subviews should contain(controller.connectedPebbleLabel);
         });
@@ -142,6 +142,41 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"-messageTextField", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.messageTextField);
+        });
+
+        it(@"should have a done button", ^{
+            controller.messageTextField.returnKeyType should equal(UIReturnKeyDone);
+        });
+
+        it(@"should have it's delegate be the controller", ^{
+            controller.messageTextField.delegate should be_same_instance_as(controller);
+        });
+    });
+
+    describe(@"<UITextFieldDelegate>", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should return NO", ^{
+            [controller textFieldShouldReturn:controller.messageTextField] should_not be_truthy;
+        });
+
+        it(@"should tell the text field to resign as first responder", ^{
+            spy_on(controller.messageTextField);
+            [controller textFieldShouldReturn:controller.messageTextField];
+            controller.messageTextField should have_received("resignFirstResponder");
+        });
+    });
+
     describe(@"-sendToPebbleButton", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -157,6 +192,7 @@ describe(@"PCHomeViewController", ^{
             beforeEach(^{
                 spy_on(PebCiti.sharedInstance.pebbleManager);
                 controller.activityIndicator.isAnimating should_not be_truthy;
+                controller.messageTextField.text = @"TEXT";
 
                 [controller.sendToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
             });
@@ -165,8 +201,8 @@ describe(@"PCHomeViewController", ^{
                 controller.activityIndicator.isAnimating should be_truthy;
             });
 
-            it(@"should tell the Pebble manager to send a message", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble");
+            it(@"should tell the Pebble manager to send the text from the input field", ^{
+                PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble:").with(@"TEXT");
             });
         });
     });

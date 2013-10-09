@@ -7,6 +7,7 @@
 @interface PCHomeViewController ()
 @property (nonatomic, weak, readwrite) UILabel *connectedPebbleLabel;
 @property (nonatomic, weak, readwrite) UIButton *connectToPebbleButton;
+@property (nonatomic, weak, readwrite) UITextField *messageTextField;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
 @property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
@@ -20,6 +21,7 @@
         self.title = @"PebCiti";
         [self setupConnectedPebbleLabel];
         [self setupConnectToPebbleButton];
+        [self setupMessageTextField];
         [self setupSendToPebbleButton];
         [self setupActivityIndicator];
 
@@ -59,6 +61,14 @@
     [self displayAlertViewWithTitle:@"" message:message];
 }
 
+#pragma mark - <UITextFieldDelegate>
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
+
 #pragma mark - Private
 
 - (void)setupConnectedPebbleLabel
@@ -77,13 +87,25 @@
 
 - (void)setupConnectToPebbleButton
 {
-    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 100.0f, 320.0f, 50.0f)];
+    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 40.0f, 320.0f, 50.0f)];
     [connectToPebbleButton setTitle:@"Connect to Pebble" forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [connectToPebbleButton addTarget:self action:@selector(connectToPebbleButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:connectToPebbleButton];
     self.connectToPebbleButton = connectToPebbleButton;
+}
+
+- (void)setupMessageTextField
+{
+    UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 130.0f, 270.0f, 40.0f)];
+    messageTextField.delegate = self;
+    messageTextField.returnKeyType = UIReturnKeyDone;
+    messageTextField.borderStyle = UITextBorderStyleRoundedRect;
+    messageTextField.textAlignment = NSTextAlignmentCenter;
+    messageTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [self.view addSubview:messageTextField];
+    self.messageTextField = messageTextField;
 }
 
 - (void)setupSendToPebbleButton
@@ -116,7 +138,7 @@
 - (void)sendToPebbleButtonWasTapped
 {
     [self.activityIndicator startAnimating];
-    [PebCiti.sharedInstance.pebbleManager sendMessageToPebble];
+    [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:self.messageTextField.text];
 }
 
 - (void)displayAlertViewWithTitle:(NSString *)title message:(NSString *)message
