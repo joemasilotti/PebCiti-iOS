@@ -748,7 +748,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
+					"$(SRCROOT)/Externals/pebblekit/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
@@ -765,7 +765,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/joemasilotti/Dropbox/dev/PebCiti/Externals/pebblekit/iOS,
+					"$(SRCROOT)/Externals/pebblekit/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
