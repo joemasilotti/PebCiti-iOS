@@ -1,5 +1,6 @@
 #import <PebbleKit/PebbleKit.h>
 #import "PCHomeViewController.h"
+#import "UIAlertView+PebCiti.h"
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
@@ -51,14 +52,14 @@
     [self.activityIndicator stopAnimating];
     self.connectedPebbleLabel.text = @"";
     NSString *message = watch ? @"Pebble doesn't support app messages." : @"No connected Pebble recognized.";
-    [self displayAlertViewWithTitle:@"Cannot Connect to Pebble" message:message];
+    [UIAlertView displayAlertViewWithTitle:@"Cannot Connect to Pebble" message:message];
 }
 
 - (void)pebbleManagerSentMessageWithError:(NSError *)error
 {
     [self.activityIndicator stopAnimating];
     NSString *message = error ? error.localizedDescription : @"Message sent to Pebble successfully.";
-    [self displayAlertViewWithTitle:@"" message:message];
+    [UIAlertView displayAlertViewWithTitle:@"" message:message];
 }
 
 #pragma mark - <UITextFieldDelegate>
@@ -140,15 +141,6 @@
 {
     [self.activityIndicator startAnimating];
     [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:self.messageTextField.text];
-}
-
-- (void)displayAlertViewWithTitle:(NSString *)title message:(NSString *)message
-{
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"Dismiss"
-                      otherButtonTitles:nil] show];
 }
 
 - (UIColor *)buttonTitleColor
