@@ -1,7 +1,9 @@
+#import "PCStationsViewController.h"
 #import "PCHomeViewController.h"
 #import "UIAlertView+Spec.h"
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
+#import "UIControl+Spec.h"
 #import "PebCiti.h"
 
 using namespace Cedar::Matchers;
@@ -165,6 +167,34 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"-viewStationsButton", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.viewStationsButton);
+        });
+
+        describe(@"tapping the button", ^{
+            beforeEach(^{
+                [controller.viewStationsButton tap];
+            });
+
+            it(@"should display a UINavigationController", ^{
+                controller.presentedViewController should be_instance_of([UINavigationController class]);
+            });
+
+            it(@"should have the root of the nav controller be a PCStationsViewController", ^{
+                [(UINavigationController *)controller.presentedViewController topViewController] should be_instance_of([PCStationsViewController class]);
+            });
+
+            it(@"should be the stationsVC's delegate", ^{
+                [(PCStationsViewController *)[(UINavigationController *)controller.presentedViewController topViewController] delegate] should be_same_instance_as(controller);
+            });
+        });
+    });
+
     describe(@"<UITextFieldDelegate>", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -178,6 +208,23 @@ describe(@"PCHomeViewController", ^{
             spy_on(controller.messageTextField);
             [controller textFieldShouldReturn:controller.messageTextField];
             controller.messageTextField should have_received("resignFirstResponder");
+        });
+    });
+
+    describe(@"<PCStationsViewControllerDelegate>", ^{
+        describe(@"-stationsViewControllerIsDone", ^{
+            beforeEach(^{
+                controller = [[[PCHomeViewController alloc] init] autorelease];
+                UIViewController *viewController = nice_fake_for([UIViewController class]);
+                [controller presentViewController:viewController animated:NO completion:nil];
+                controller.presentedViewController should_not be_nil;
+
+                [controller stationsViewControllerIsDone];
+            });
+
+            it(@"should dismiss the presented view controller", ^{
+                controller.presentedViewController should be_nil;
+            });
         });
     });
 

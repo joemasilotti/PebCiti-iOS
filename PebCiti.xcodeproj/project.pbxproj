@@ -28,6 +28,8 @@
 		843C3E901800958800EB9E94 /* PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E8F1800958800EB9E94 /* PebCiti.m */; };
 		843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */; };
 		843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3EA61800972600EB9E94 /* PCPebbleManager.m */; };
+		8462A98A180DC82000E66B4A /* PCStationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8462A989180DC82000E66B4A /* PCStationsViewController.m */; };
+		8462A98C180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8462A98B180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm */; };
 		8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */; };
 		8473CA2B180DC40100961C86 /* UIAlertView+PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */; };
 		847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */; };
@@ -168,6 +170,9 @@
 		843C3EA51800972600EB9E94 /* PCPebbleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleManager.h; sourceTree = "<group>"; };
 		843C3EA61800972600EB9E94 /* PCPebbleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleManager.m; sourceTree = "<group>"; };
 		8448130B1801D39800183D89 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
+		8462A988180DC82000E66B4A /* PCStationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCStationsViewController.h; sourceTree = "<group>"; };
+		8462A989180DC82000E66B4A /* PCStationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCStationsViewController.m; sourceTree = "<group>"; };
+		8462A98B180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCStationsViewControllerSpec.mm; sourceTree = "<group>"; };
 		8473CA24180DC36B00961C86 /* UIAlertView+PebCiti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+PebCiti.h"; sourceTree = "<group>"; };
 		8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PebCiti.m"; sourceTree = "<group>"; };
 		8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIAlertView+PebCitiSpec.mm"; sourceTree = "<group>"; };
@@ -249,6 +254,8 @@
 			children = (
 				843C3E881800937E00EB9E94 /* PCHomeViewController.h */,
 				843C3E891800937E00EB9E94 /* PCHomeViewController.m */,
+				8462A988180DC82000E66B4A /* PCStationsViewController.h */,
+				8462A989180DC82000E66B4A /* PCStationsViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -257,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				843C3E8C180093D200EB9E94 /* PCHomeViewControllerSpec.mm */,
+				8462A98B180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -640,6 +648,7 @@
 				84D610B91800770D00403C60 /* main.m in Sources */,
 				8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */,
 				843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */,
+				8462A98A180DC82000E66B4A /* PCStationsViewController.m in Sources */,
 				843C3E8A1800937E00EB9E94 /* PCHomeViewController.m in Sources */,
 				84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */,
 				84D610BD1800770D00403C60 /* PCAppDelegate.m in Sources */,
@@ -651,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8473CA2B180DC40100961C86 /* UIAlertView+PebCitiSpec.mm in Sources */,
+				8462A98C180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm in Sources */,
 				843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */,
 				847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */,
 				842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */,

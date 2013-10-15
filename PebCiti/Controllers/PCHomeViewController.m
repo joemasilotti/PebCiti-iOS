@@ -1,5 +1,5 @@
-#import <PebbleKit/PebbleKit.h>
 #import "PCHomeViewController.h"
+#import <PebbleKit/PebbleKit.h>
 #import "UIAlertView+PebCiti.h"
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
@@ -10,6 +10,7 @@
 @property (nonatomic, weak, readwrite) UIButton *connectToPebbleButton;
 @property (nonatomic, weak, readwrite) UITextField *messageTextField;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
+@property (nonatomic, weak, readwrite) UIButton *viewStationsButton;
 @property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
 
@@ -24,6 +25,7 @@
         [self setupConnectToPebbleButton];
         [self setupMessageTextField];
         [self setupSendToPebbleButton];
+        [self setupViewStationsButton];
         [self setupActivityIndicator];
 
         PebCiti.sharedInstance.pebbleManager.delegate = self;
@@ -70,7 +72,16 @@
     return NO;
 }
 
+#pragma mark - <PCStationsViewControllerDelegate>
+
+- (void)stationsViewControllerIsDone
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Private
+
+#pragma mark Setup UI Elements
 
 - (void)setupConnectedPebbleLabel
 {
@@ -121,6 +132,19 @@
     self.sendToPebbleButton = sendToPebbleButton;
 }
 
+- (void)setupViewStationsButton
+{
+    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 215.0f, 320.0f, 50.0f)];
+    [viewStationsButton setTitle:@"View CitiBike Stations" forState:UIControlStateNormal];
+    [viewStationsButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
+    [viewStationsButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
+    [viewStationsButton addTarget:self action:@selector(viewStationsButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:viewStationsButton];
+    self.viewStationsButton = viewStationsButton;
+}
+
+#pragma mark UI Element Actions
+
 - (void)setupActivityIndicator
 {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -142,6 +166,15 @@
     [self.activityIndicator startAnimating];
     [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:self.messageTextField.text];
 }
+
+- (void)viewStationsButtonWasTapped
+{
+    PCStationsViewController *stationsViewController = [[PCStationsViewController alloc] initWithDelegate:self];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stationsViewController];
+    [self presentViewController:navController animated:YES completion:nil];
+}
+
+#pragma mark UIButton Color Helpers
 
 - (UIColor *)buttonTitleColor
 {
