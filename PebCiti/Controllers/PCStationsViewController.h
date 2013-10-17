@@ -4,7 +4,7 @@
 - (void)stationsViewControllerIsDone;
 @end
 
-@interface PCStationsViewController : UITableViewController
+@interface PCStationsViewController : UITableViewController <NSURLConnectionDataDelegate>
 
 @property (nonatomic, weak, readonly) id<PCStationsViewControllerDelegate> delegate;
 
