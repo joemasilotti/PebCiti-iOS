@@ -29,7 +29,6 @@
 		843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3EA61800972600EB9E94 /* PCPebbleManager.m */; };
 		8462A98A180DC82000E66B4A /* PCStationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8462A989180DC82000E66B4A /* PCStationsViewController.m */; };
 		8462A98C180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8462A98B180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm */; };
-		8462A9A7180DD4B100E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		8462A9B0180E1E9700E66B4A /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9AE180E1E9200E66B4A /* libxml2.2.dylib */; };
 		8462A9B4180E1ED500E66B4A /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9AE180E1E9200E66B4A /* libxml2.2.dylib */; };
 		8462A9B8180E1EF400E66B4A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8423746918008FC400FB7610 /* MessageUI.framework */; };
@@ -49,9 +48,10 @@
 		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
 		84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6113418020FF700403C60 /* PCPebbleCentral.m */; };
-		84F05AA01801D4210096EA4B /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
-		84FD023618108E0D00D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
+		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
+		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
+		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,13 +125,6 @@
 			remoteGlobalIDString = AEA96C74168B640B00861DF1;
 			remoteInfo = "Foundation-StaticLibSpec";
 		};
-		8462A9A5180DD4A700E66B4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8462A98D180DD48000E66B4A /* Foundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AEA96C63168B63BD00861DF1;
-			remoteInfo = "Foundation+PivotalSpecHelper-StaticLib";
-		};
 		84D610E91800791300403C60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84D610DD1800791100403C60 /* Cedar.xcodeproj */;
@@ -202,12 +195,19 @@
 			remoteGlobalIDString = AEC40C88174C203700474D2D;
 			remoteInfo = "UIKit+PivotalSpecHelperStubs-StaticLib";
 		};
-		84FD023418108E0500D41A36 /* PBXContainerItemProxy */ = {
+		84FD02371811764200D41A36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8462A98D180DD48000E66B4A /* Foundation.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = AEA96C53168B636E00861DF1;
 			remoteInfo = "Foundation+PivotalCore-StaticLib";
+		};
+		84FD023A1811766900D41A36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8462A98D180DD48000E66B4A /* Foundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEA96C63168B63BD00861DF1;
+			remoteInfo = "Foundation+PivotalSpecHelper-StaticLib";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -267,7 +267,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FD023618108E0D00D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
 				8462A9B8180E1EF400E66B4A /* MessageUI.framework in Frameworks */,
 				8462A9B4180E1ED500E66B4A /* libxml2.2.dylib in Frameworks */,
 				8423746418008F9F00FB7610 /* ExternalAccessory.framework in Frameworks */,
@@ -286,9 +285,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
+				84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
+				84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
 				8462A9B0180E1E9700E66B4A /* libxml2.2.dylib in Frameworks */,
-				8462A9A7180DD4B100E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
-				84F05AA01801D4210096EA4B /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
 				840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */,
 				840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */,
@@ -559,7 +559,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				84FD023518108E0500D41A36 /* PBXTargetDependency */,
 			);
 			name = PebCiti;
 			productName = PebCiti;
@@ -578,7 +577,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8462A9A6180DD4A700E66B4A /* PBXTargetDependency */,
+				84FD023B1811766900D41A36 /* PBXTargetDependency */,
+				84FD02381811764200D41A36 /* PBXTargetDependency */,
 				84F05AB01801D4B70096EA4B /* PBXTargetDependency */,
 				84F05AB21801D4B70096EA4B /* PBXTargetDependency */,
 			);
@@ -826,11 +826,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8462A9A6180DD4A700E66B4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Foundation+PivotalSpecHelper-StaticLib";
-			targetProxy = 8462A9A5180DD4A700E66B4A /* PBXContainerItemProxy */;
-		};
 		84F05AB01801D4B70096EA4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "UIKit+PivotalSpecHelper-StaticLib";
@@ -841,10 +836,15 @@
 			name = "UIKit+PivotalSpecHelperStubs-StaticLib";
 			targetProxy = 84F05AB11801D4B70096EA4B /* PBXContainerItemProxy */;
 		};
-		84FD023518108E0500D41A36 /* PBXTargetDependency */ = {
+		84FD02381811764200D41A36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Foundation+PivotalCore-StaticLib";
-			targetProxy = 84FD023418108E0500D41A36 /* PBXContainerItemProxy */;
+			targetProxy = 84FD02371811764200D41A36 /* PBXContainerItemProxy */;
+		};
+		84FD023B1811766900D41A36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Foundation+PivotalSpecHelper-StaticLib";
+			targetProxy = 84FD023A1811766900D41A36 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
