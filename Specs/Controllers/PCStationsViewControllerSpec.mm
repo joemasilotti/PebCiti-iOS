@@ -1,4 +1,5 @@
 #import "PCStationsViewController.h"
+#import "UIAlertView+Spec.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -70,31 +71,65 @@ describe(@"PCStationsViewController", ^{
             });
 
             context(@"when the network request returns successfully", ^{
+                context(@"when the response is valid JSON", ^{
+                    beforeEach(^{
+                        PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
+                        [connection receiveResponse:successResponse];
+                    });
+
+                    it(@"should set the table cell's to the station's names", ^{
+                        UITableViewCell *cell = controller.tableView.visibleCells[0];
+                        cell.textLabel.text should equal(@"W 52 St & 11 Ave");
+
+                        cell = controller.tableView.visibleCells[1];
+                        cell.textLabel.text should equal(@"Franklin St & W Broadway");
+
+                        cell = controller.tableView.visibleCells[2];
+                        cell.textLabel.text should equal(@"St James Pl & Pearl St");
+                    });
+
+                    it(@"should set the table cell's detail text to the number of docks available", ^{
+                        UITableViewCell *cell = controller.tableView.visibleCells[0];
+                        cell.detailTextLabel.text should equal(@"37");
+
+                        cell = controller.tableView.visibleCells[1];
+                        cell.detailTextLabel.text should equal(@"7");
+
+                        cell = controller.tableView.visibleCells[2];
+                        cell.detailTextLabel.text should equal(@"25");
+                    });
+                });
+
+                context(@"when the response returns invalid JSON", ^{
+                    beforeEach(^{
+                        PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations_invalid.json"] success];
+                        [connection receiveResponse:successResponse];
+                    });
+
+                    it(@"should display an alert view", ^{
+                        UIAlertView.currentAlertView should_not be_nil;
+                    });
+                });
+            });
+
+            context(@"when the request encounters a network error", ^{
                 beforeEach(^{
-                    PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
-                    [connection receiveResponse:successResponse];
+                    [controller connection:connection didFailWithError:[NSError errorWithDomain:@"Network Error" code:3 userInfo:nil]];
                 });
 
-                it(@"should set the table cell's to the station's names", ^{
-                    UITableViewCell *cell = controller.tableView.visibleCells[0];
-                    cell.textLabel.text should equal(@"W 52 St & 11 Ave");
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView should_not be_nil;
+                });
+            });
 
-                    cell = controller.tableView.visibleCells[1];
-                    cell.textLabel.text should equal(@"Franklin St & W Broadway");
-
-                    cell = controller.tableView.visibleCells[2];
-                    cell.textLabel.text should equal(@"St James Pl & Pearl St");
+            context(@"when the request encounters a server error", ^{
+                beforeEach(^{
+                    PSHKFakeHTTPURLResponse *failureResponse = [PSHKFakeHTTPURLResponse responseFromFixtureNamed:@"/stations.json" statusCode:404];
+                    [connection receiveResponse:failureResponse];
                 });
 
-                it(@"should set the table cell's detail text to the number of docks available", ^{
-                    UITableViewCell *cell = controller.tableView.visibleCells[0];
-                    cell.detailTextLabel.text should equal(@"37");
-
-                    cell = controller.tableView.visibleCells[1];
-                    cell.detailTextLabel.text should equal(@"7");
-
-                    cell = controller.tableView.visibleCells[2];
-                    cell.detailTextLabel.text should equal(@"25");
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView should_not be_nil;
                 });
             });
         });

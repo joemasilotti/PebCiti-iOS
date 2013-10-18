@@ -1,4 +1,5 @@
 #import "PCStationsViewController.h"
+#import "UIAlertView+PebCiti.h"
 
 @interface PCStationsViewController ()
 @property (nonatomic, weak, readwrite) id<PCStationsViewControllerDelegate> delegate;
@@ -65,6 +66,13 @@
     return cell;
 }
 
+#pragma mark - <NSURLConnectionDelegate>
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
+}
+
 #pragma mark - <NSURLConnectionDataDelegate>
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -79,6 +87,10 @@
 {
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.data options:0 error:nil];
     self.stations = json[@"stationBeanList"];
+
+    if (!self.stations) {
+        [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
+    }
 
     [self.tableView reloadData];
 }

@@ -52,6 +52,8 @@
 		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
 		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
+		84FD0246181177FF00D41A36 /* 200.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0245181177FF00D41A36 /* 200.txt */; };
+		84FD025A181179E800D41A36 /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0259181179E800D41A36 /* 404.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +262,8 @@
 		84D6113318020FF700403C60 /* PCPebbleCentral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleCentral.h; sourceTree = "<group>"; };
 		84D6113418020FF700403C60 /* PCPebbleCentral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleCentral.m; sourceTree = "<group>"; };
 		84FD022D181088BE00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
+		84FD0245181177FF00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
+		84FD0259181179E800D41A36 /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				84FD022C181088BE00D41A36 /* stations.json */,
+				84FD0244181177FF00D41A36 /* stations_invalid.json */,
 			);
 			path = FakeResponses;
 			sourceTree = "<group>";
@@ -541,8 +546,17 @@
 			isa = PBXGroup;
 			children = (
 				84FD022D181088BE00D41A36 /* 200.txt */,
+				84FD0259181179E800D41A36 /* 404.txt */,
 			);
 			path = stations.json;
+			sourceTree = "<group>";
+		};
+		84FD0244181177FF00D41A36 /* stations_invalid.json */ = {
+			isa = PBXGroup;
+			children = (
+				84FD0245181177FF00D41A36 /* 200.txt */,
+			);
+			path = stations_invalid.json;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -772,7 +786,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FD025A181179E800D41A36 /* 404.txt in Resources */,
 				84D611091800792700403C60 /* InfoPlist.strings in Resources */,
+				84FD0246181177FF00D41A36 /* 200.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

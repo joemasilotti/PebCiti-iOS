@@ -1,0 +1,9 @@
+{
+  "executionTime":"2013-10-17 04:26:01 PM",
+  "stationBeanList":[
+    {
+      "id":72,
+      "stationName":"W 52 St & 11 Ave",
+      "availableDocks":37,
+      "totalDocks":39,
+      "latitude":40.76727216,
