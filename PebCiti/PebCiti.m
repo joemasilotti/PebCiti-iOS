@@ -1,8 +1,10 @@
+#import <CoreLocation/CoreLocation.h>
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
 @interface PebCiti ()
 @property (nonatomic, strong, readwrite) PCPebbleManager *pebbleManager;
+@property (nonatomic, strong, readwrite) CLLocationManager *locationManager;
 @end
 
 static PebCiti *_sharedPebCiti;
@@ -22,6 +24,7 @@ static PebCiti *_sharedPebCiti;
     self = [super init];
     if (self) {
         self.pebbleManager = [[PCPebbleManager alloc] init];
+        self.locationManager = [[CLLocationManager alloc] init];
     }
     return  self;
 }

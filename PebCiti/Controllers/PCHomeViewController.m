@@ -10,6 +10,8 @@
 @property (nonatomic, weak, readwrite) UIButton *connectToPebbleButton;
 @property (nonatomic, weak, readwrite) UITextField *messageTextField;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
+@property (nonatomic, weak, readwrite) UILabel *currentLocationLabel;
+@property (nonatomic, weak, readwrite) UILabel *closestStationLabel;
 @property (nonatomic, weak, readwrite) UIButton *viewStationsButton;
 @property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
@@ -25,10 +27,13 @@
         [self setupConnectToPebbleButton];
         [self setupMessageTextField];
         [self setupSendToPebbleButton];
+        [self setupCurrentLocationLabel];
+        [self setupClosestStationLabel];
         [self setupViewStationsButton];
         [self setupActivityIndicator];
 
         PebCiti.sharedInstance.pebbleManager.delegate = self;
+        PebCiti.sharedInstance.locationManager.delegate = self;
     }
     return self;
 }
@@ -39,6 +44,8 @@
 
     PBWatch *connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
     self.connectedPebbleLabel.text = connectedWatch.isConnected ? connectedWatch.name : @"";
+
+    [PebCiti.sharedInstance.locationManager startUpdatingLocation];
 }
 
 #pragma mark - <PCPebbleManagerDelegate>
@@ -77,6 +84,14 @@
 - (void)stationsViewControllerIsDone
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - <CLLocationManagerDelegate>
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *lastLocation = locations.lastObject;
+    self.currentLocationLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
 }
 
 #pragma mark - Private
@@ -140,10 +155,31 @@
     [self.view addSubview:horizontalRule];
 }
 
+- (void)setupCurrentLocationLabel
+{
+    UILabel *currentLocationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 235.0f, 140.0f, 50.0f)];
+    currentLocationStaticLabel.text = @"Current Location: ";
+    [self.view addSubview:currentLocationStaticLabel];
+
+    UILabel *currentLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 235.0f, 160.0f, 50.0f)];
+    currentLocationLabel.textAlignment = NSTextAlignmentRight;
+    currentLocationLabel.text = @"";
+    [self.view addSubview:currentLocationLabel];
+    self.currentLocationLabel = currentLocationLabel;
+}
+
+- (void)setupClosestStationLabel
+{
+    UILabel *closestStationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 270.0f, 320.0f, 50.0f)];
+    [self.view addSubview:closestStationLabel];
+    self.closestStationLabel = closestStationLabel;
+//    closestStationLabel.textAlignment = NSTextAlignmentCenter;
+}
+
 - (void)setupViewStationsButton
 {
-    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 235.0f, 320.0f, 50.0f)];
-    [viewStationsButton setTitle:@"View CitiBike Stations" forState:UIControlStateNormal];
+    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 270.0f, 320.0f, 50.0f)];
+    [viewStationsButton setTitle:@"View All Stations" forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [viewStationsButton addTarget:self action:@selector(viewStationsButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];

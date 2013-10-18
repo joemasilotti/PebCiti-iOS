@@ -21,6 +21,13 @@ describe(@"PCHomeViewController", ^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
             watch = nice_fake_for([PBWatch class]);
             spy_on(PCPebbleCentral.defaultCentral);
+            spy_on(PebCiti.sharedInstance.locationManager);
+        });
+
+        it(@"should tell the location manager to start updating the user's location", ^{
+            [controller viewDidAppear:NO];
+
+            PebCiti.sharedInstance.locationManager should have_received("startUpdatingLocation");
         });
 
         context(@"when a Pebble is connected", ^{
@@ -164,6 +171,20 @@ describe(@"PCHomeViewController", ^{
 
         it(@"should initialize with an empty string", ^{
             controller.messageTextField.text should equal(@"");
+        });
+    });
+
+    describe(@"-currentLocationLabel", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.currentLocationLabel);
+        });
+
+        it(@"should display an empty string", ^{
+            controller.currentLocationLabel.text should equal(@"");
         });
     });
 
@@ -389,6 +410,28 @@ describe(@"PCHomeViewController", ^{
                 it(@"should show an alert view to the user with the error message", ^{
                     UIAlertView.currentAlertView.message should equal(@"Pebble had a problem.");
                 });
+            });
+        });
+    });
+
+    describe(@"<CLLocationManagerDelegate>", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should be the location manager's delegate", ^{
+            PebCiti.sharedInstance.locationManager.delegate should be_same_instance_as(controller);
+        });
+
+        describe(@"-locationManager:didUpdateLocations:", ^{
+            beforeEach(^{
+                CLLocation *firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
+                CLLocation *secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
+                [controller locationManager:nil didUpdateLocations:@[ firstLocation, secondLocation ]];
+            });
+
+            it(@"should set the location label to the most recent location's lat and long", ^{
+                controller.currentLocationLabel.text should equal(@"-24.0260, 64.4450");
             });
         });
     });

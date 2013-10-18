@@ -54,6 +54,8 @@
 		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 		84FD0246181177FF00D41A36 /* 200.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0245181177FF00D41A36 /* 200.txt */; };
 		84FD025A181179E800D41A36 /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0259181179E800D41A36 /* 404.txt */; };
+		84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
+		84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +266,7 @@
 		84FD022D181088BE00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0245181177FF00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0259181179E800D41A36 /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
+		84FD026418118C5D00D41A36 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */,
 				8462A9B8180E1EF400E66B4A /* MessageUI.framework in Frameworks */,
 				8462A9B4180E1ED500E66B4A /* libxml2.2.dylib in Frameworks */,
 				8423746418008F9F00FB7610 /* ExternalAccessory.framework in Frameworks */,
@@ -289,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */,
 				84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
@@ -431,6 +436,7 @@
 		84D610AB1800770D00403C60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84FD026418118C5D00D41A36 /* CoreLocation.framework */,
 				8462A9AE180E1E9200E66B4A /* libxml2.2.dylib */,
 				8423746918008FC400FB7610 /* MessageUI.framework */,
 				8423746318008F9F00FB7610 /* ExternalAccessory.framework */,

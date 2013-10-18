@@ -1,3 +1,4 @@
+#import <CoreLocation/CoreLocation.h>
 #import "PCPebbleManager.h"
 #import "PebCiti.h"
 
@@ -24,6 +25,16 @@ describe(@"PebCiti", ^{
 
         it(@"should always return the same manager", ^{
             pebCiti.pebbleManager should be_same_instance_as(pebCiti.pebbleManager);
+        });
+    });
+
+    describe(@"-locationManager", ^{
+        it(@"should be a CLLocationManager", ^{
+            pebCiti.locationManager should be_instance_of([CLLocationManager class]);
+        });
+
+        it(@"should always return the same manager", ^{
+            pebCiti.locationManager should be_same_instance_as(pebCiti.locationManager);
         });
     });
 });
