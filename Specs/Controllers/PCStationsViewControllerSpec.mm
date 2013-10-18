@@ -57,6 +57,7 @@ describe(@"PCStationsViewController", ^{
             __block NSURLConnection *connection;
 
             beforeEach(^{
+                [PSHKFixtures setDirectory:@FIXTURESDIR];
                 connection = NSURLConnection.connections[0];
             });
 
@@ -66,6 +67,35 @@ describe(@"PCStationsViewController", ^{
 
             it(@"should delegate to the stations controller", ^{
                 connection.delegate should be_same_instance_as(controller);
+            });
+
+            context(@"when the network request returns successfully", ^{
+                beforeEach(^{
+                    PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
+                    [connection receiveResponse:successResponse];
+                });
+
+                it(@"should set the table cell's to the station's names", ^{
+                    UITableViewCell *cell = controller.tableView.visibleCells[0];
+                    cell.textLabel.text should equal(@"W 52 St & 11 Ave");
+
+                    cell = controller.tableView.visibleCells[1];
+                    cell.textLabel.text should equal(@"Franklin St & W Broadway");
+
+                    cell = controller.tableView.visibleCells[2];
+                    cell.textLabel.text should equal(@"St James Pl & Pearl St");
+                });
+
+                it(@"should set the table cell's detail text to the number of docks available", ^{
+                    UITableViewCell *cell = controller.tableView.visibleCells[0];
+                    cell.detailTextLabel.text should equal(@"37");
+
+                    cell = controller.tableView.visibleCells[1];
+                    cell.detailTextLabel.text should equal(@"7");
+
+                    cell = controller.tableView.visibleCells[2];
+                    cell.detailTextLabel.text should equal(@"25");
+                });
             });
         });
     });
