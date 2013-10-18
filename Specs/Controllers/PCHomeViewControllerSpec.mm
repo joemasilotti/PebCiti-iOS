@@ -174,6 +174,36 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"-sendToPebbleButton", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.sendToPebbleButton);
+        });
+
+        describe(@"when the button is tapped", ^{
+            beforeEach(^{
+                spy_on(PebCiti.sharedInstance.pebbleManager);
+                controller.activityIndicator.isAnimating should_not be_truthy;
+                controller.messageTextField.text = @"TEXT";
+
+                [controller.sendToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            });
+
+            it(@"should start spinning the activity indicator", ^{
+                controller.activityIndicator.isAnimating should be_truthy;
+            });
+
+            it(@"should tell the Pebble manager to send the text from the input field", ^{
+                PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble:").with(@"TEXT");
+            });
+        });
+    });
+
     describe(@"-currentLocationLabel", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -216,6 +246,24 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"-activityIndicator", ^{
+        beforeEach(^{
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.activityIndicator);
+        });
+
+        it(@"should be hidden", ^{
+            controller.activityIndicator.hidden should be_truthy;
+        });
+
+        it(@"should not be spinning", ^{
+            controller.activityIndicator.isAnimating should_not be_truthy;
+        });
+    });
+
     describe(@"<UITextFieldDelegate>", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -249,55 +297,7 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
-    describe(@"-sendToPebbleButton", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            spy_on(PebCiti.sharedInstance);
-            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.sendToPebbleButton);
-        });
-
-        describe(@"when the button is tapped", ^{
-            beforeEach(^{
-                spy_on(PebCiti.sharedInstance.pebbleManager);
-                controller.activityIndicator.isAnimating should_not be_truthy;
-                controller.messageTextField.text = @"TEXT";
-
-                [controller.sendToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-            });
-
-            it(@"should start spinning the activity indicator", ^{
-                controller.activityIndicator.isAnimating should be_truthy;
-            });
-
-            it(@"should tell the Pebble manager to send the text from the input field", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble:").with(@"TEXT");
-            });
-        });
-    });
-
-    describe(@"-activityIndicator", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.activityIndicator);
-        });
-
-        it(@"should be hidden", ^{
-            controller.activityIndicator.hidden should be_truthy;
-        });
-
-        it(@"should not be spinning", ^{
-            controller.activityIndicator.isAnimating should_not be_truthy;
-        });
-    });
-
-    describe(@"<PCPebbleManagerDelegate", ^{
+    describe(@"<PCPebbleManagerDelegate>", ^{
         __block PBWatch *watch;
 
         beforeEach(^{
