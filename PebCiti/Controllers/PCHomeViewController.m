@@ -99,18 +99,22 @@
 
 - (void)setupConnectToPebbleButton
 {
-    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 40.0f, 320.0f, 50.0f)];
+    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 35.0f, 320.0f, 50.0f)];
     [connectToPebbleButton setTitle:@"Connect to Pebble" forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [connectToPebbleButton addTarget:self action:@selector(connectToPebbleButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:connectToPebbleButton];
     self.connectToPebbleButton = connectToPebbleButton;
+
+    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 95.0f, 300.0f, 2.0f)];
+    horizontalRule.backgroundColor = [self buttonTitleColor];
+    [self.view addSubview:horizontalRule];
 }
 
 - (void)setupMessageTextField
 {
-    UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 130.0f, 270.0f, 40.0f)];
+    UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 125.0f, 270.0f, 40.0f)];
     messageTextField.delegate = self;
     messageTextField.returnKeyType = UIReturnKeyDone;
     messageTextField.text = @"";
@@ -123,18 +127,22 @@
 
 - (void)setupSendToPebbleButton
 {
-    UIButton *sendToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 175.0f, 320.0f, 50.0f)];
+    UIButton *sendToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 165.0f, 320.0f, 50.0f)];
     [sendToPebbleButton setTitle:@"Send Message to Pebble" forState:UIControlStateNormal];
     [sendToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [sendToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
     [sendToPebbleButton addTarget:self action:@selector(sendToPebbleButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendToPebbleButton];
     self.sendToPebbleButton = sendToPebbleButton;
+
+    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 225.0f, 300.0f, 2.0f)];
+    horizontalRule.backgroundColor = [self buttonTitleColor];
+    [self.view addSubview:horizontalRule];
 }
 
 - (void)setupViewStationsButton
 {
-    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 215.0f, 320.0f, 50.0f)];
+    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 235.0f, 320.0f, 50.0f)];
     [viewStationsButton setTitle:@"View CitiBike Stations" forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
