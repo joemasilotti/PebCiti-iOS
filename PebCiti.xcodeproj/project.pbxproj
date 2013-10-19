@@ -56,6 +56,9 @@
 		84FD025A181179E800D41A36 /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0259181179E800D41A36 /* 404.txt */; };
 		84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 		84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
+		84FD027C18119EE400D41A36 /* PCStationList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FD027B18119EE400D41A36 /* PCStationList.m */; };
+		84FD029D1811A5B800D41A36 /* PCStationListSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84FD029C1811A5B800D41A36 /* PCStationListSpec.mm */; };
+		84FD02A01811C8B400D41A36 /* PCStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FD029F1811C8B400D41A36 /* PCStation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +270,11 @@
 		84FD0245181177FF00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0259181179E800D41A36 /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
 		84FD026418118C5D00D41A36 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		84FD027A18119EE400D41A36 /* PCStationList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCStationList.h; sourceTree = "<group>"; };
+		84FD027B18119EE400D41A36 /* PCStationList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCStationList.m; sourceTree = "<group>"; };
+		84FD029C1811A5B800D41A36 /* PCStationListSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCStationListSpec.mm; sourceTree = "<group>"; };
+		84FD029E1811C8B400D41A36 /* PCStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCStation.h; sourceTree = "<group>"; };
+		84FD029F1811C8B400D41A36 /* PCStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCStation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +463,7 @@
 		84D610B21800770D00403C60 /* PebCiti */ = {
 			isa = PBXGroup;
 			children = (
+				84FD027918119EB500D41A36 /* Models */,
 				843C3E7E1800936400EB9E94 /* Controllers */,
 				843C3EA41800970A00EB9E94 /* Interfaces */,
 				8473CA16180DC32F00961C86 /* Extensions */,
@@ -517,6 +526,7 @@
 		84D611041800792600403C60 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				84FD02891811A5A500D41A36 /* Models */,
 				843C3E8B180093B800EB9E94 /* Controllers */,
 				847BD52018009BCB00B3D398 /* Interfaces */,
 				8473CA27180DC39E00961C86 /* Extensions */,
@@ -563,6 +573,26 @@
 				84FD0245181177FF00D41A36 /* 200.txt */,
 			);
 			path = stations_invalid.json;
+			sourceTree = "<group>";
+		};
+		84FD027918119EB500D41A36 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84FD029E1811C8B400D41A36 /* PCStation.h */,
+				84FD029F1811C8B400D41A36 /* PCStation.m */,
+				84FD027A18119EE400D41A36 /* PCStationList.h */,
+				84FD027B18119EE400D41A36 /* PCStationList.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		84FD02891811A5A500D41A36 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84FD029C1811A5B800D41A36 /* PCStationListSpec.mm */,
+			);
+			name = Models;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -825,8 +855,10 @@
 				84D610B91800770D00403C60 /* main.m in Sources */,
 				8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */,
 				843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */,
+				84FD027C18119EE400D41A36 /* PCStationList.m in Sources */,
 				8462A98A180DC82000E66B4A /* PCStationsViewController.m in Sources */,
 				843C3E8A1800937E00EB9E94 /* PCHomeViewController.m in Sources */,
+				84FD02A01811C8B400D41A36 /* PCStation.m in Sources */,
 				84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */,
 				84D610BD1800770D00403C60 /* PCAppDelegate.m in Sources */,
 			);
@@ -840,6 +872,7 @@
 				8462A98C180DCB9E00E66B4A /* PCStationsViewControllerSpec.mm in Sources */,
 				843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */,
 				847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */,
+				84FD029D1811A5B800D41A36 /* PCStationListSpec.mm in Sources */,
 				842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */,
 				843C3E8D180093D200EB9E94 /* PCHomeViewControllerSpec.mm in Sources */,
 			);

@@ -11,7 +11,6 @@
 @property (nonatomic, weak, readwrite) UITextField *messageTextField;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
 @property (nonatomic, weak, readwrite) UILabel *currentLocationLabel;
-@property (nonatomic, weak, readwrite) UILabel *closestStationLabel;
 @property (nonatomic, weak, readwrite) UIButton *viewStationsButton;
 @property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
@@ -28,7 +27,6 @@
         [self setupMessageTextField];
         [self setupSendToPebbleButton];
         [self setupCurrentLocationLabel];
-        [self setupClosestStationLabel];
         [self setupViewStationsButton];
         [self setupActivityIndicator];
 
@@ -166,14 +164,6 @@
     currentLocationLabel.text = @"";
     [self.view addSubview:currentLocationLabel];
     self.currentLocationLabel = currentLocationLabel;
-}
-
-- (void)setupClosestStationLabel
-{
-    UILabel *closestStationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 270.0f, 320.0f, 50.0f)];
-    [self.view addSubview:closestStationLabel];
-    self.closestStationLabel = closestStationLabel;
-//    closestStationLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 - (void)setupViewStationsButton

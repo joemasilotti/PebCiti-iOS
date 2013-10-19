@@ -1,10 +1,11 @@
 #import <UIKit/UIKit.h>
+#import "PCStationList.h"
 
 @protocol PCStationsViewControllerDelegate <NSObject>
 - (void)stationsViewControllerIsDone;
 @end
 
-@interface PCStationsViewController : UITableViewController <NSURLConnectionDataDelegate>
+@interface PCStationsViewController : UITableViewController <PCStationListDelegate>
 
 @property (nonatomic, weak, readonly) id<PCStationsViewControllerDelegate> delegate;
 

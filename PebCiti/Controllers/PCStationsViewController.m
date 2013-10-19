@@ -1,5 +1,7 @@
 #import "PCStationsViewController.h"
 #import "UIAlertView+PebCiti.h"
+#import "PCStation.h"
+#import "PebCiti.h"
 
 @interface PCStationsViewController ()
 @property (nonatomic, weak, readwrite) id<PCStationsViewControllerDelegate> delegate;
@@ -29,8 +31,47 @@
     self.title = @"Stations";
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonWasTapped)];
     self.navigationItem.leftBarButtonItem = doneButton;
+}
 
-    [self requestStationList];
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    PebCiti.sharedInstance.stationList.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    PebCiti.sharedInstance.stationList.delegate = nil;
+}
+
+#pragma mark - <UITableViewDataSource>
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return PebCiti.sharedInstance.stationList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StationCellIdentifier"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"StationCellIdentifier"];
+    }
+
+    PCStation *station = PebCiti.sharedInstance.stationList[indexPath.row];
+    cell.textLabel.text = station.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", station.docksAvailable];
+    return cell;
+}
+
+#pragma mark - <PCStationListDelegate>
+
+- (void)stationListWasUpdated:(PCStationList *)stationList
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - Private
@@ -38,61 +79,6 @@
 - (void)doneButtonWasTapped
 {
     [self.delegate stationsViewControllerIsDone];
-}
-
-- (void)requestStationList
-{
-    NSURL *URL = [NSURL URLWithString:@"http://citibikenyc.com/stations/json"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    [connection start];
-}
-
-#pragma mark - <UITableViewDataSource>
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.stations.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELL"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CELL"];
-    }
-    cell.textLabel.text = self.stations[indexPath.row][@"stationName"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [self.stations[indexPath.row][@"availableDocks"] integerValue]];
-    return cell;
-}
-
-#pragma mark - <NSURLConnectionDelegate>
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
-}
-
-#pragma mark - <NSURLConnectionDataDelegate>
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    if (!self.data) {
-        self.data = [[NSMutableData alloc] init];
-    }
-    [self.data appendData:data];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:self.data options:0 error:nil];
-    self.stations = json[@"stationBeanList"];
-
-    if (!self.stations) {
-        [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
-    }
-
-    [self.tableView reloadData];
 }
 
 @end

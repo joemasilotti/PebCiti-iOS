@@ -10,7 +10,6 @@
 @property (nonatomic, weak, readonly) UITextField *messageTextField;
 @property (nonatomic, weak, readonly) UIButton *sendToPebbleButton;
 @property (nonatomic, weak, readonly) UILabel *currentLocationLabel;
-@property (nonatomic, weak, readonly) UILabel *closestStationLabel;
 @property (nonatomic, weak, readonly) UIButton *viewStationsButton;
 @property (nonatomic, weak, readonly) UIActivityIndicatorView *activityIndicator;
 

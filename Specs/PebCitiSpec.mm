@@ -1,5 +1,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PCPebbleManager.h"
+#import "PCStationList.h"
 #import "PebCiti.h"
 
 using namespace Cedar::Matchers;
@@ -35,6 +36,16 @@ describe(@"PebCiti", ^{
 
         it(@"should always return the same manager", ^{
             pebCiti.locationManager should be_same_instance_as(pebCiti.locationManager);
+        });
+    });
+
+    describe(@"-stations", ^{
+        it(@"should be a PCStationList", ^{
+            pebCiti.stationList should be_instance_of([PCStationList class]);
+        });
+
+        it(@"should always return the same list", ^{
+            pebCiti.stationList should be_same_instance_as(pebCiti.stationList);
         });
     });
 });
