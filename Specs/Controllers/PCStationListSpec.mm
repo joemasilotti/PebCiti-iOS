@@ -2,6 +2,7 @@
 #import "UIAlertView+Spec.h"
 #import "PCStationList.h"
 #import "PCStation.h"
+#import "PebCiti.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -100,6 +101,35 @@ describe(@"PCStationList", ^{
                 it(@"should display an alert view", ^{
                     UIAlertView.currentAlertView should_not be_nil;
                 });
+            });
+        });
+    });
+
+    describe(@"-closestStation:", ^{
+        beforeEach(^{
+            spy_on(PebCiti.sharedInstance.locationManager);
+            PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
+            [NSURLConnection.connections[0] receiveResponse:successResponse];
+        });
+
+        context(@"when the user has reported a location", ^{
+            beforeEach(^{
+                CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.71117415f longitude:-74.00016544f] autorelease];
+                PebCiti.sharedInstance.locationManager stub_method("location").and_return(userLocation);
+            });
+
+            it(@"should return the station with the smallest distance to the user's location", ^{
+                stationList.closestStation.name should equal(@"St James Pl & Pearl St");
+            });
+        });
+
+        context(@"when the user has not yet reported a location", ^{
+            beforeEach(^{
+                PebCiti.sharedInstance.locationManager stub_method("location");
+            });
+
+            it(@"should return nil", ^{
+                stationList.closestStation should be_nil;
             });
         });
     });

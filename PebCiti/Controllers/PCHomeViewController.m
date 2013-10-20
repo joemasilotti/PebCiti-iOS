@@ -3,6 +3,7 @@
 #import "UIAlertView+PebCiti.h"
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
+#import "PCStation.h"
 #import "PebCiti.h"
 
 @interface PCHomeViewController ()
@@ -11,6 +12,7 @@
 @property (nonatomic, weak, readwrite) UITextField *messageTextField;
 @property (nonatomic, weak, readwrite) UIButton *sendToPebbleButton;
 @property (nonatomic, weak, readwrite) UILabel *currentLocationLabel;
+@property (nonatomic, weak, readwrite) UILabel *closestStationLabel;
 @property (nonatomic, weak, readwrite) UIButton *viewStationsButton;
 @property (nonatomic, weak, readwrite) UIActivityIndicatorView *activityIndicator;
 @end
@@ -27,6 +29,7 @@
         [self setupMessageTextField];
         [self setupSendToPebbleButton];
         [self setupCurrentLocationLabel];
+        [self setupClosestStationLabel];
         [self setupViewStationsButton];
         [self setupActivityIndicator];
 
@@ -166,9 +169,22 @@
     self.currentLocationLabel = currentLocationLabel;
 }
 
+- (void)setupClosestStationLabel
+{
+    UILabel *closestStationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 270.0f, 140.0f, 50.0f)];
+    closestStationStaticLabel.text = @"Closest Station: ";
+    [self.view addSubview:closestStationStaticLabel];
+
+    UILabel *closestStationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 270.0f, 160.0f, 50.0f)];
+    closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
+    [self.view addSubview:closestStationLabel];
+    self.closestStationLabel = closestStationLabel;
+    closestStationLabel.textAlignment = NSTextAlignmentRight;
+}
+
 - (void)setupViewStationsButton
 {
-    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 270.0f, 320.0f, 50.0f)];
+    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 300.0f, 320.0f, 50.0f)];
     [viewStationsButton setTitle:@"View All Stations" forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];

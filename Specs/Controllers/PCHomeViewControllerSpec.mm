@@ -4,6 +4,7 @@
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
 #import "UIControl+Spec.h"
+#import "PCStation.h"
 #import "PebCiti.h"
 
 using namespace Cedar::Matchers;
@@ -215,6 +216,26 @@ describe(@"PCHomeViewController", ^{
 
         it(@"should display an empty string", ^{
             controller.currentLocationLabel.text should equal(@"");
+        });
+    });
+
+    describe(@"-closestStationLabel", ^{
+        beforeEach(^{
+            spy_on(PebCiti.sharedInstance.stationList);
+            PCStation *closestStation = [[[PCStation alloc] init] autorelease];
+            closestStation.name = @"1st Ave & 2nd St.";
+            PebCiti.sharedInstance.stationList stub_method("closestStation").and_return(closestStation);
+
+            controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
+        });
+
+        it(@"should exist in the view hierarchy", ^{
+            controller.view.subviews should contain(controller.closestStationLabel);
+        });
+
+        it(@"should display the closest station's name", ^{
+            controller.closestStationLabel.text should equal(@"1st Ave & 2nd St.");
         });
     });
 

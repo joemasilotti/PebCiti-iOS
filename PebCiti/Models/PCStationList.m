@@ -2,6 +2,7 @@
 #import "UIAlertView+PebCiti.h"
 #import "PCStationList.h"
 #import "PCStation.h"
+#import "PebCiti.h"
 
 @interface PCStationList ()
 @property (nonatomic, strong) NSArray *stations;
@@ -17,6 +18,23 @@
         [self requestStationList];
     }
     return self;
+}
+
+- (PCStation *)closestStation
+{
+    CLLocation *userLocation = PebCiti.sharedInstance.locationManager.location;
+    if (!userLocation) {
+        return nil;
+    }
+
+    PCStation *closestStation = nil;
+    CGFloat smallestDistance = CGFLOAT_MAX;
+    for (PCStation *station in self.stations) {
+        if ([userLocation distanceFromLocation:station.location] < smallestDistance) {
+            closestStation = station;
+        }
+    }
+    return closestStation;
 }
 
 #pragma mark - <NSURLConnectionDelegate>
