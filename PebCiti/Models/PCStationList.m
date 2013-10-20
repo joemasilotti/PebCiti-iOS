@@ -1,3 +1,4 @@
+#import <CoreLocation/CoreLocation.h>
 #import "UIAlertView+PebCiti.h"
 #import "PCStationList.h"
 #import "PCStation.h"
@@ -46,6 +47,7 @@
         PCStation *station = [[PCStation alloc] init];
         station.name = stationInfo[@"stationName"];
         station.docksAvailable = [stationInfo[@"availableDocks"] integerValue];
+        station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];
         [stations addObject:station];
     }
     self.stations = stations;
