@@ -41,7 +41,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
+    [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibikenyc.com"];
 }
 
 #pragma mark - <NSURLConnectionDataDelegate>
@@ -57,7 +57,7 @@
     NSArray *stationInfos = json[@"stationBeanList"];
 
     if (!stationInfos) {
-        [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibike.com"];
+        [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibikenyc.com"];
     }
 
     NSMutableArray *stations = [@[] mutableCopy];
