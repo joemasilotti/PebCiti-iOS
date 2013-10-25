@@ -22,6 +22,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     self.messageTextField.delegate = self;
     self.messageTextField.returnKeyType = UIReturnKeyDone;
     self.messageTextField.textAlignment = NSTextAlignmentCenter;
@@ -105,6 +107,7 @@
 {
     CLLocation *lastLocation = locations.lastObject;
     self.currentLocationLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
+    self.closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
 }
 
 #pragma mark - Private

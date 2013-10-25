@@ -379,7 +379,9 @@ describe(@"PCHomeViewController", ^{
     describe(@"<CLLocationManagerDelegate>", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            [controller viewDidLoad];
             controller.view should_not be_nil;
+            controller.closestStationLabel.text = @"";
         });
 
         it(@"should be the location manager's delegate", ^{
@@ -390,11 +392,21 @@ describe(@"PCHomeViewController", ^{
             beforeEach(^{
                 CLLocation *firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
                 CLLocation *secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
+
+                PCStation *newClosestStation = [[PCStation alloc] init];
+                newClosestStation.name = @"New Station Name";
+                spy_on(PebCiti.sharedInstance.stationList);
+                PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(newClosestStation);
+
                 [controller locationManager:nil didUpdateLocations:@[ firstLocation, secondLocation ]];
             });
 
             it(@"should set the location label to the most recent location's lat and long", ^{
                 controller.currentLocationLabel.text should equal(@"-24.0260, 64.4450");
+            });
+
+            it(@"should update the closest station label", ^{
+                controller.closestStationLabel.text should equal(@"New Station Name");
             });
         });
     });

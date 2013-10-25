@@ -30,8 +30,10 @@
     PCStation *closestStation = nil;
     CGFloat smallestDistance = CGFLOAT_MAX;
     for (PCStation *station in self.stations) {
-        if ([userLocation distanceFromLocation:station.location] < smallestDistance) {
+        CGFloat distanceToStation = [userLocation distanceFromLocation:station.location];
+        if (distanceToStation < smallestDistance) {
             closestStation = station;
+            smallestDistance = distanceToStation;
         }
     }
     return closestStation;

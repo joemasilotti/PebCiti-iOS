@@ -7,6 +7,10 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
+@interface PCStationList (Spec)
+@property (nonatomic, strong) NSArray *stations;
+@end
+
 SPEC_BEGIN(PCStationListSpec)
 
 describe(@"PCStationList", ^{
@@ -108,18 +112,34 @@ describe(@"PCStationList", ^{
     describe(@"-closestStation:", ^{
         beforeEach(^{
             spy_on(PebCiti.sharedInstance.locationManager);
-            PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
-            [NSURLConnection.connections[0] receiveResponse:successResponse];
+
+            PCStation *farStation, *closeStation, *closestStation, *farthestStation;
+            farStation = [[[PCStation alloc] init] autorelease];
+            closeStation = [[[PCStation alloc] init] autorelease];
+            closestStation = [[[PCStation alloc] init] autorelease];
+            farthestStation = [[[PCStation alloc] init] autorelease];
+
+            farStation.name = @"Far Station";
+            closeStation.name = @"Close Station";
+            closestStation.name = @"Closest Station";
+            farthestStation.name = @"Farthest Station";
+
+            farStation.location = [[[CLLocation alloc] initWithLatitude:40.717209f longitude:-73.997211f] autorelease];
+            closeStation.location = [[[CLLocation alloc] initWithLatitude:40.720591f longitude:-73.995752f] autorelease];
+            closestStation.location = [[[CLLocation alloc] initWithLatitude:40.722348f longitude:-73.992662f] autorelease];
+            farthestStation.location = [[[CLLocation alloc] initWithLatitude:40.71272f longitude:-73.999014f] autorelease];
+
+            stationList.stations = @[ farStation, closeStation, closestStation, farthestStation ];
         });
 
         context(@"when the user has reported a location", ^{
             beforeEach(^{
-                CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.71117415f longitude:-74.00016544f] autorelease];
+                CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.722543f longitude:-73.994379f] autorelease];
                 PebCiti.sharedInstance.locationManager stub_method("location").and_return(userLocation);
             });
 
             it(@"should return the station with the smallest distance to the user's location", ^{
-                stationList.closestStation.name should equal(@"St James Pl & Pearl St");
+                stationList.closestStation.name should equal(@"Closest Station");
             });
         });
 
