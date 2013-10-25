@@ -63,7 +63,7 @@
 
     PCStation *station = PebCiti.sharedInstance.stationList[indexPath.row];
     cell.textLabel.text = station.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", station.docksAvailable];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)station.docksAvailable];
     return cell;
 }
 

@@ -101,11 +101,11 @@
 
 - (void)setupConnectedPebbleLabel
 {
-    UILabel *connectedPebbleLabelStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, 160.0f, 50.0f)];
+    UILabel *connectedPebbleLabelStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 60.0f, 160.0f, 50.0f)];
     connectedPebbleLabelStaticLabel.text = @"Connected Pebble: ";
     [self.view addSubview:connectedPebbleLabelStaticLabel];
 
-    UILabel *connectedPebbleLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.0f, 0, 140.0f, 50.0f)];
+    UILabel *connectedPebbleLabel = [[UILabel alloc] initWithFrame:CGRectMake(170.0f, 60.0f, 140.0f, 50.0f)];
     connectedPebbleLabel.textAlignment = NSTextAlignmentRight;
     PBWatch *watch = PebCiti.sharedInstance.pebbleManager.connectedWatch;
     connectedPebbleLabel.text = watch ? watch.name : @"";
@@ -115,7 +115,7 @@
 
 - (void)setupConnectToPebbleButton
 {
-    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 35.0f, 320.0f, 50.0f)];
+    UIButton *connectToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 95.0f, 320.0f, 50.0f)];
     [connectToPebbleButton setTitle:@"Connect to Pebble" forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [connectToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
@@ -123,14 +123,14 @@
     [self.view addSubview:connectToPebbleButton];
     self.connectToPebbleButton = connectToPebbleButton;
 
-    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 95.0f, 300.0f, 2.0f)];
+    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 155.0f, 300.0f, 2.0f)];
     horizontalRule.backgroundColor = [self buttonTitleColor];
     [self.view addSubview:horizontalRule];
 }
 
 - (void)setupMessageTextField
 {
-    UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 125.0f, 270.0f, 40.0f)];
+    UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(25.0f, 185.0f, 270.0f, 40.0f)];
     messageTextField.delegate = self;
     messageTextField.returnKeyType = UIReturnKeyDone;
     messageTextField.text = @"";
@@ -143,7 +143,7 @@
 
 - (void)setupSendToPebbleButton
 {
-    UIButton *sendToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 165.0f, 320.0f, 50.0f)];
+    UIButton *sendToPebbleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 225.0f, 320.0f, 50.0f)];
     [sendToPebbleButton setTitle:@"Send Message to Pebble" forState:UIControlStateNormal];
     [sendToPebbleButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [sendToPebbleButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
@@ -151,18 +151,18 @@
     [self.view addSubview:sendToPebbleButton];
     self.sendToPebbleButton = sendToPebbleButton;
 
-    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 225.0f, 300.0f, 2.0f)];
+    UIView *horizontalRule = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 285.0f, 300.0f, 2.0f)];
     horizontalRule.backgroundColor = [self buttonTitleColor];
     [self.view addSubview:horizontalRule];
 }
 
 - (void)setupCurrentLocationLabel
 {
-    UILabel *currentLocationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 235.0f, 140.0f, 50.0f)];
+    UILabel *currentLocationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 295.0f, 140.0f, 50.0f)];
     currentLocationStaticLabel.text = @"Current Location: ";
     [self.view addSubview:currentLocationStaticLabel];
 
-    UILabel *currentLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 235.0f, 160.0f, 50.0f)];
+    UILabel *currentLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 295.0f, 160.0f, 50.0f)];
     currentLocationLabel.textAlignment = NSTextAlignmentRight;
     currentLocationLabel.text = @"";
     [self.view addSubview:currentLocationLabel];
@@ -171,11 +171,11 @@
 
 - (void)setupClosestStationLabel
 {
-    UILabel *closestStationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 270.0f, 140.0f, 50.0f)];
+    UILabel *closestStationStaticLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 330.0f, 140.0f, 50.0f)];
     closestStationStaticLabel.text = @"Closest Station: ";
     [self.view addSubview:closestStationStaticLabel];
 
-    UILabel *closestStationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 270.0f, 160.0f, 50.0f)];
+    UILabel *closestStationLabel = [[UILabel alloc] initWithFrame:CGRectMake(150.0f, 330.0f, 160.0f, 50.0f)];
     closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
     [self.view addSubview:closestStationLabel];
     self.closestStationLabel = closestStationLabel;
@@ -184,7 +184,7 @@
 
 - (void)setupViewStationsButton
 {
-    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 300.0f, 320.0f, 50.0f)];
+    UIButton *viewStationsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 360.0f, 320.0f, 50.0f)];
     [viewStationsButton setTitle:@"View All Stations" forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
     [viewStationsButton setTitleColor:self.buttonTitleHighlightedColor forState:UIControlStateHighlighted];
