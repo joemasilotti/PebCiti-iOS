@@ -5,13 +5,17 @@
 
 @interface PCHomeViewController : UIViewController <PCPebbleManagerDelegate, UITextFieldDelegate, PCStationsViewControllerDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic, weak, readonly) UILabel *connectedPebbleLabel;
-@property (nonatomic, weak, readonly) UIButton *connectToPebbleButton;
-@property (nonatomic, weak, readonly) UITextField *messageTextField;
-@property (nonatomic, weak, readonly) UIButton *sendToPebbleButton;
-@property (nonatomic, weak, readonly) UILabel *currentLocationLabel;
-@property (nonatomic, weak, readonly) UILabel *closestStationLabel;
-@property (nonatomic, weak, readonly) UIButton *viewStationsButton;
-@property (nonatomic, weak, readonly) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet UILabel *connectedPebbleLabel;
+@property (nonatomic, weak) IBOutlet UIButton *connectToPebbleButton;
+@property (nonatomic, weak) IBOutlet UITextField *messageTextField;
+@property (nonatomic, weak) IBOutlet UIButton *sendToPebbleButton;
+@property (nonatomic, weak) IBOutlet UILabel *currentLocationLabel;
+@property (nonatomic, weak) IBOutlet UILabel *closestStationLabel;
+@property (nonatomic, weak) IBOutlet UIButton *viewStationsButton;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+- (IBAction)connectToPebbleButtonWasTapped:(UIButton *)connectToPebbleButton;
+- (IBAction)sendToPebbleButtonWasTapped:(UIButton *)sendToPebbleButton;
+- (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton;
 
 @end

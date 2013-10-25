@@ -35,6 +35,7 @@
 		8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */; };
 		8473CA2B180DC40100961C86 /* UIAlertView+PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */; };
 		847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */; };
+		84AF88FF181A1D3300D33AF7 /* PCHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AF88FE181A1D3300D33AF7 /* PCHomeView.xib */; };
 		84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AE1800770D00403C60 /* CoreGraphics.framework */; };
 		84D610B11800770D00403C60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610B01800770D00403C60 /* UIKit.framework */; };
@@ -246,6 +247,7 @@
 		8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PebCiti.m"; sourceTree = "<group>"; };
 		8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIAlertView+PebCitiSpec.mm"; sourceTree = "<group>"; };
 		847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCPebbleManagerSpec.mm; sourceTree = "<group>"; };
+		84AF88FE181A1D3300D33AF7 /* PCHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PCHomeView.xib; path = PebCiti/Views/PCHomeView.xib; sourceTree = SOURCE_ROOT; };
 		84D610A91800770D00403C60 /* PebCiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PebCiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D610AC1800770D00403C60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D610AE1800770D00403C60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -282,6 +284,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842374591800872900FB7610 /* PebbleKit.framework in Frameworks */,
+				8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */,
 				84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */,
 				8462A9B8180E1EF400E66B4A /* MessageUI.framework in Frameworks */,
 				8462A9B4180E1ED500E66B4A /* libxml2.2.dylib in Frameworks */,
@@ -290,8 +294,6 @@
 				8423746018008F9400FB7610 /* CoreMotion.framework in Frameworks */,
 				8423745E18008F9100FB7610 /* CoreBluetooth.framework in Frameworks */,
 				84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */,
-				8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */,
-				842374591800872900FB7610 /* PebbleKit.framework in Frameworks */,
 				84D610B11800770D00403C60 /* UIKit.framework in Frameworks */,
 				84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */,
 			);
@@ -301,14 +303,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */,
+				840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */,
 				84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */,
 				84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
 				8462A9B0180E1E9700E66B4A /* libxml2.2.dylib in Frameworks */,
 				84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
-				840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */,
-				840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */,
 				8423746B18008FC800FB7610 /* MessageUI.framework in Frameworks */,
 				8423746818008FBC00FB7610 /* CoreMotion.framework in Frameworks */,
 				8423746718008FB800FB7610 /* CoreBluetooth.framework in Frameworks */,
@@ -421,6 +423,14 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
+		84AF88EB181A1D1900D33AF7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84AF88FE181A1D3300D33AF7 /* PCHomeView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		84D610A01800770D00403C60 = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +475,7 @@
 			children = (
 				84FD027918119EB500D41A36 /* Models */,
 				843C3E7E1800936400EB9E94 /* Controllers */,
+				84AF88EB181A1D1900D33AF7 /* Views */,
 				843C3EA41800970A00EB9E94 /* Interfaces */,
 				8473CA16180DC32F00961C86 /* Extensions */,
 				843C3E8E1800958800EB9E94 /* PebCiti.h */,
@@ -814,6 +825,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D610B71800770D00403C60 /* InfoPlist.strings in Resources */,
+				84AF88FF181A1D3300D33AF7 /* PCHomeView.xib in Resources */,
 				84D610BF1800770D00403C60 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

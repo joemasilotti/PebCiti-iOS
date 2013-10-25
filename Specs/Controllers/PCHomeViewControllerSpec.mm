@@ -15,7 +15,7 @@ SPEC_BEGIN(PCHomeViewControllerSpec)
 describe(@"PCHomeViewController", ^{
     __block PCHomeViewController *controller;
 
-    describe(@"-viewDidAppear:", ^{
+    describe(@"loading the view", ^{
         __block PBWatch *watch;
 
         beforeEach(^{
@@ -23,6 +23,7 @@ describe(@"PCHomeViewController", ^{
             watch = nice_fake_for([PBWatch class]);
             spy_on(PCPebbleCentral.defaultCentral);
             spy_on(PebCiti.sharedInstance.locationManager);
+            controller.view should_not be_nil;
         });
 
         it(@"should tell the location manager to start updating the user's location", ^{
@@ -82,47 +83,6 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
-    describe(@"-connectedPebbleLabel", ^{
-        __block PCPebbleManager *pebbleManager;
-
-        beforeEach(^{
-            spy_on(PebCiti.sharedInstance);
-            pebbleManager = nice_fake_for([PCPebbleManager class]);
-            PebCiti.sharedInstance stub_method("pebbleManager").and_return(pebbleManager);
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            controller.view.subviews should contain(controller.connectedPebbleLabel);
-        });
-
-        context(@"when a Pebble is connected", ^{
-            beforeEach(^{
-                PBWatch *watch = nice_fake_for([PBWatch class]);
-                watch stub_method("name").and_return(@"PB12");
-                pebbleManager stub_method("connectedWatch").and_return(watch);
-
-                controller = [[[PCHomeViewController alloc] init] autorelease];
-            });
-
-            it(@"should be the name of the watch", ^{
-                controller.connectedPebbleLabel.text should equal(@"PB12");
-            });
-        });
-
-        context(@"when a Pebble is not connected", ^{
-            beforeEach(^{
-                pebbleManager.connectedWatch should be_nil;
-
-                controller = [[[PCHomeViewController alloc] init] autorelease];
-            });
-
-            it(@"should be blank", ^{
-                controller.connectedPebbleLabel.text should equal(@"");
-            });
-        });
-    });
-
     describe(@"-connectToPebbleButton", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -130,13 +90,10 @@ describe(@"PCHomeViewController", ^{
             PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
         });
 
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.connectToPebbleButton);
-        });
-
         describe(@"when the button is tapped", ^{
             beforeEach(^{
                 spy_on(PebCiti.sharedInstance.pebbleManager);
+                controller.view should_not be_nil;
                 controller.activityIndicator.isAnimating should_not be_truthy;
 
                 [controller.connectToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -156,10 +113,6 @@ describe(@"PCHomeViewController", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view should_not be_nil;
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.messageTextField);
         });
 
         it(@"should have a done button", ^{
@@ -182,13 +135,10 @@ describe(@"PCHomeViewController", ^{
             PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
         });
 
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.sendToPebbleButton);
-        });
-
         describe(@"when the button is tapped", ^{
             beforeEach(^{
                 spy_on(PebCiti.sharedInstance.pebbleManager);
+                controller.view should_not be_nil;
                 controller.activityIndicator.isAnimating should_not be_truthy;
                 controller.messageTextField.text = @"TEXT";
 
@@ -208,10 +158,7 @@ describe(@"PCHomeViewController", ^{
     describe(@"-currentLocationLabel", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.currentLocationLabel);
+            controller.view should_not be_nil;
         });
 
         it(@"should display an empty string", ^{
@@ -230,10 +177,6 @@ describe(@"PCHomeViewController", ^{
             controller.view should_not be_nil;
         });
 
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.closestStationLabel);
-        });
-
         it(@"should display the closest station's name", ^{
             controller.closestStationLabel.text should equal(@"1st Ave & 2nd St.");
         });
@@ -242,6 +185,7 @@ describe(@"PCHomeViewController", ^{
     describe(@"-viewStationsButton", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
         });
 
         it(@"should exist in the view hierarchy", ^{
@@ -270,14 +214,11 @@ describe(@"PCHomeViewController", ^{
     describe(@"-activityIndicator", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.activityIndicator);
+            controller.view should_not be_nil;
         });
 
         it(@"should be hidden", ^{
-            controller.activityIndicator.hidden should be_truthy;
+            controller.activityIndicator.isHidden should be_truthy;
         });
 
         it(@"should not be spinning", ^{
@@ -288,6 +229,7 @@ describe(@"PCHomeViewController", ^{
     describe(@"<UITextFieldDelegate>", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
         });
 
         it(@"should return NO", ^{
@@ -324,10 +266,9 @@ describe(@"PCHomeViewController", ^{
         beforeEach(^{
             watch = nice_fake_for([PBWatch class]);
             watch stub_method("name").and_return(@"PB12");
-        });
 
-        beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
         });
 
         it(@"should be the default manager's delegate", ^{
@@ -438,6 +379,7 @@ describe(@"PCHomeViewController", ^{
     describe(@"<CLLocationManagerDelegate>", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
+            controller.view should_not be_nil;
         });
 
         it(@"should be the location manager's delegate", ^{
