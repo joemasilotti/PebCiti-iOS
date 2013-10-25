@@ -107,7 +107,9 @@
 {
     CLLocation *lastLocation = locations.lastObject;
     self.currentLocationLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
-    self.closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
+    NSString *stationName = PebCiti.sharedInstance.stationList.closestStation.name;
+    self.closestStationLabel.text = stationName;
+    [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:stationName];
 }
 
 #pragma mark - Private

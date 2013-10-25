@@ -389,15 +389,22 @@ describe(@"PCHomeViewController", ^{
         });
 
         describe(@"-locationManager:didUpdateLocations:", ^{
+            __block CLLocation *firstLocation, *secondLocation;
+
             beforeEach(^{
-                CLLocation *firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
-                CLLocation *secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
+                firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
+                secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
 
                 PCStation *newClosestStation = [[PCStation alloc] init];
                 newClosestStation.name = @"New Station Name";
                 spy_on(PebCiti.sharedInstance.stationList);
                 PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(newClosestStation);
 
+                spy_on(PebCiti.sharedInstance.pebbleManager);
+
+            });
+
+            subjectAction(^{
                 [controller locationManager:nil didUpdateLocations:@[ firstLocation, secondLocation ]];
             });
 
@@ -407,6 +414,10 @@ describe(@"PCHomeViewController", ^{
 
             it(@"should update the closest station label", ^{
                 controller.closestStationLabel.text should equal(@"New Station Name");
+            });
+
+            it(@"should tell the Pebble the closest station", ^{
+                PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"New Station Name");
             });
         });
     });
