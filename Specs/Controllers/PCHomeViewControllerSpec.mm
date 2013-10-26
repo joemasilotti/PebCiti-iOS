@@ -109,52 +109,6 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
-    describe(@"-messageTextField", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            controller.view should_not be_nil;
-        });
-
-        it(@"should have a done button", ^{
-            controller.messageTextField.returnKeyType should equal(UIReturnKeyDone);
-        });
-
-        it(@"should have it's delegate be the controller", ^{
-            controller.messageTextField.delegate should be_same_instance_as(controller);
-        });
-
-        it(@"should initialize with an empty string", ^{
-            controller.messageTextField.text should equal(@"");
-        });
-    });
-
-    describe(@"-sendToPebbleButton", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            spy_on(PebCiti.sharedInstance);
-            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
-        });
-
-        describe(@"when the button is tapped", ^{
-            beforeEach(^{
-                spy_on(PebCiti.sharedInstance.pebbleManager);
-                controller.view should_not be_nil;
-                controller.activityIndicator.isAnimating should_not be_truthy;
-                controller.messageTextField.text = @"TEXT";
-
-                [controller.sendToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-            });
-
-            it(@"should start spinning the activity indicator", ^{
-                controller.activityIndicator.isAnimating should be_truthy;
-            });
-
-            it(@"should tell the Pebble manager to send the text from the input field", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received("sendMessageToPebble:").with(@"TEXT");
-            });
-        });
-    });
-
     describe(@"-currentLocationLabel", ^{
         beforeEach(^{
             controller = [[[PCHomeViewController alloc] init] autorelease];
@@ -223,23 +177,6 @@ describe(@"PCHomeViewController", ^{
 
         it(@"should not be spinning", ^{
             controller.activityIndicator.isAnimating should_not be_truthy;
-        });
-    });
-
-    describe(@"<UITextFieldDelegate>", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            controller.view should_not be_nil;
-        });
-
-        it(@"should return NO", ^{
-            [controller textFieldShouldReturn:controller.messageTextField] should_not be_truthy;
-        });
-
-        it(@"should tell the text field to resign as first responder", ^{
-            spy_on(controller.messageTextField);
-            [controller textFieldShouldReturn:controller.messageTextField];
-            controller.messageTextField should have_received("resignFirstResponder");
         });
     });
 

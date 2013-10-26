@@ -11,8 +11,6 @@
                 <outlet property="connectToPebbleButton" destination="jSi-CJ-ArP" id="92t-Ja-1mH"/>
                 <outlet property="connectedPebbleLabel" destination="WzJ-RY-xRy" id="6VO-4d-uVu"/>
                 <outlet property="currentLocationLabel" destination="IXr-w0-Luk" id="iF2-Vp-8eO"/>
-                <outlet property="messageTextField" destination="VBo-FG-quo" id="M0s-aG-M2l"/>
-                <outlet property="sendToPebbleButton" destination="mMS-7j-oQ0" id="wVk-xk-nRf"/>
                 <outlet property="view" destination="1" id="Wfk-XY-tqB"/>
                 <outlet property="viewStationsButton" destination="1RK-eo-9cM" id="Jv5-ZZ-8eU"/>
             </connections>
@@ -45,49 +43,33 @@
                         <action selector="connectToPebbleButtonWasTapped:" destination="-1" eventType="touchUpInside" id="jcp-8f-2zL"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VBo-FG-quo" userLabel="messageTextField">
-                    <rect key="frame" x="20" y="165" width="280" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMS-7j-oQ0" userLabel="sendToPebbleButton">
-                    <rect key="frame" x="74" y="203" width="172" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Send Message to Pebble">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="sendToPebbleButtonWasTapped:" destination="-1" eventType="touchUpInside" id="HNR-E8-Y5X"/>
-                    </connections>
-                </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6c-HI-LCM" userLabel="Current Location:">
-                    <rect key="frame" x="20" y="263" width="280" height="21"/>
+                    <rect key="frame" x="20" y="151" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXr-w0-Luk" userLabel="currentLocationLabel">
-                    <rect key="frame" x="20" y="292" width="280" height="21"/>
+                    <rect key="frame" x="20" y="180" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Closest Station:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGF-xU-Kci" userLabel="Closest Station:">
-                    <rect key="frame" x="20" y="321" width="280" height="21"/>
+                    <rect key="frame" x="20" y="209" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyk-70-lfb" userLabel="closestStationLabel">
-                    <rect key="frame" x="20" y="350" width="280" height="21"/>
+                    <rect key="frame" x="20" y="238" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1RK-eo-9cM" userLabel="viewStationsButton">
-                    <rect key="frame" x="103" y="379" width="114" height="30"/>
+                    <rect key="frame" x="103" y="267" width="114" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="View All Stations">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -97,7 +79,7 @@
                     </connections>
                 </button>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Yy5-KJ-NQW" userLabel="activityIndicatorView">
-                    <rect key="frame" x="142" y="255" width="37" height="37"/>
+                    <rect key="frame" x="142" y="143" width="37" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
             </subviews>

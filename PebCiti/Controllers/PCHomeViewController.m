@@ -24,11 +24,6 @@
 {
     [super viewDidLoad];
 
-    self.messageTextField.delegate = self;
-    self.messageTextField.returnKeyType = UIReturnKeyDone;
-    self.messageTextField.textAlignment = NSTextAlignmentCenter;
-    self.messageTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-
     self.closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
 
     self.activityIndicator.hidden = YES;
@@ -48,12 +43,6 @@
 {
     [self.activityIndicator startAnimating];
     [PebCiti.sharedInstance.pebbleManager connectToPebble];
-}
-
-- (IBAction)sendToPebbleButtonWasTapped:(UIButton *)sendToPebbleButton
-{
-    [self.activityIndicator startAnimating];
-    [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:self.messageTextField.text];
 }
 
 - (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton
@@ -84,14 +73,6 @@
     [self.activityIndicator stopAnimating];
     NSString *message = error ? error.localizedDescription : @"Message sent to Pebble successfully.";
     [UIAlertView displayAlertViewWithTitle:@"" message:message];
-}
-
-#pragma mark - <UITextFieldDelegate>
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return NO;
 }
 
 #pragma mark - <PCStationsViewControllerDelegate>
