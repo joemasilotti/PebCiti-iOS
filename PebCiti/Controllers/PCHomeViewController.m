@@ -72,7 +72,7 @@
     [self.sendMessagesSwitch setOn:NO animated:YES];
     if (!self.isErrorAlertPresented) {
         self.errorAlertPresented = YES;
-        [[[UIAlertView alloc] initWithTitle:@"Pebble CommunicationFailed"
+        [[[UIAlertView alloc] initWithTitle:@"Pebble Communication Failed"
                                     message:error.localizedDescription
                                    delegate:self
                           cancelButtonTitle:@"Dismiss"
