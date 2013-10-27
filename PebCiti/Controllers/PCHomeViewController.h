@@ -3,16 +3,15 @@
 #import "PCStationsViewController.h"
 #import "PCPebbleManager.h"
 
-@interface PCHomeViewController : UIViewController <PCPebbleManagerDelegate, PCStationsViewControllerDelegate, CLLocationManagerDelegate>
+@interface PCHomeViewController : UIViewController <PCPebbleManagerDelegate, PCStationsViewControllerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UILabel *connectedPebbleLabel;
-@property (nonatomic, weak) IBOutlet UIButton *connectToPebbleButton;
+@property (nonatomic, weak) IBOutlet UISwitch *sendMessagesSwitch;
 @property (nonatomic, weak) IBOutlet UILabel *currentLocationLabel;
 @property (nonatomic, weak) IBOutlet UILabel *closestStationLabel;
 @property (nonatomic, weak) IBOutlet UIButton *viewStationsButton;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-- (IBAction)connectToPebbleButtonWasTapped:(UIButton *)connectToPebbleButton;
+- (IBAction)sendMessagesSwitchWasToggled:(UISwitch *)sendMessagesSwitch;
 - (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton;
 
 @end

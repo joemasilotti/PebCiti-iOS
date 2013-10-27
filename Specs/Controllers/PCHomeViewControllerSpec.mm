@@ -15,135 +15,222 @@ SPEC_BEGIN(PCHomeViewControllerSpec)
 describe(@"PCHomeViewController", ^{
     __block PCHomeViewController *controller;
 
-    describe(@"loading the view", ^{
-        __block PBWatch *watch;
+    beforeEach(^{
+        controller = [[[PCHomeViewController alloc] init] autorelease];
+    });
 
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            watch = nice_fake_for([PBWatch class]);
-            spy_on(PCPebbleCentral.defaultCentral);
-            spy_on(PebCiti.sharedInstance.locationManager);
-            controller.view should_not be_nil;
-        });
+    it(@"should be the Pebble manager's delegate", ^{
+        PebCiti.sharedInstance.pebbleManager.delegate should be_same_instance_as(controller);
+    });
 
-        it(@"should tell the location manager to start updating the user's location", ^{
-            [controller viewDidAppear:NO];
-
-            PebCiti.sharedInstance.locationManager should have_received("startUpdatingLocation");
-        });
-
-        context(@"when a Pebble is connected", ^{
-            beforeEach(^{
-                watch stub_method("isConnected").and_return(YES);
-                watch stub_method("name").and_return(@"UI93");
-                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
-
-                [controller viewDidAppear:NO];
-            });
-
-            it(@"should set the connected Pebble label to the Pebble's name", ^{
-                controller.connectedPebbleLabel.text should equal(@"UI93");
-            });
-        });
-
-        context(@"when a Pebble is not connected", ^{
-            beforeEach(^{
-                controller.connectedPebbleLabel.text = @"XA43";
-                watch stub_method("isConnected").and_return(NO);
-                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
-
-                [controller viewDidAppear:NO];
-            });
-
-            it(@"should set the connected Pebble label to blank", ^{
-                controller.connectedPebbleLabel.text should equal(@"");
-            });
-        });
-
-        context(@"when a Pebble was never connected", ^{
-            beforeEach(^{
-                controller.connectedPebbleLabel.text = @"XA43";
-
-                [controller viewDidAppear:NO];
-            });
-
-            it(@"should set the connected Pebble label to blank", ^{
-                controller.connectedPebbleLabel.text should equal(@"");
-            });
-        });
+    it(@"should be the location manager's delegate", ^{
+        PebCiti.sharedInstance.locationManager.delegate should be_same_instance_as(controller);
     });
 
     describe(@"-title", ^{
-        beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-        });
-
         it(@"should be PebCiti", ^{
             controller.title should equal(@"PebCiti");
         });
     });
 
-    describe(@"-connectToPebbleButton", ^{
+    describe(@"when the view appears", ^{
         beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            spy_on(PebCiti.sharedInstance);
-            PebCiti.sharedInstance stub_method("pebbleManager").and_return(nice_fake_for([PCPebbleManager class]));
+            spy_on(PebCiti.sharedInstance.locationManager);
+            [controller viewDidAppear:NO];
         });
 
-        describe(@"when the button is tapped", ^{
+        it(@"should tell the location manager to start updating the user's location", ^{
+            PebCiti.sharedInstance.locationManager should have_received("startUpdatingLocation");
+        });
+    });
+
+    describe(@"-sendMessagesSwitch", ^{
+        beforeEach(^{
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method(@selector(pebbleManager)).and_return(nice_fake_for([PCPebbleManager class]));
+        });
+
+        context(@"when the Pebble manager is not sending messages", ^{
             beforeEach(^{
-                spy_on(PebCiti.sharedInstance.pebbleManager);
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
                 controller.view should_not be_nil;
-                controller.activityIndicator.isAnimating should_not be_truthy;
-
-                [controller.connectToPebbleButton sendActionsForControlEvents:UIControlEventTouchUpInside];
             });
 
-            it(@"should start spinning the activity indicator", ^{
-                controller.activityIndicator.isAnimating should be_truthy;
+            it(@"should be off", ^{
+                controller.sendMessagesSwitch.isOn should_not be_truthy;
             });
 
-            it(@"should tell the Pebble manager to send a message", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received("connectToPebble");
+            describe(@"turning the switch on", ^{
+                beforeEach(^{
+                    controller.sendMessagesSwitch.on = YES;
+                    [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
+                });
+
+                it(@"should display a spinner", ^{
+                    controller.activityIndicator.isAnimating should be_truthy;
+                });
+
+                it(@"should tell the Pebble manager to start sending updates to the connected Pebble", ^{
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(YES);
+                });
+
+                describe(@"when a Pebble connects successfully", ^{
+                    beforeEach(^{
+                        [controller pebbleManagerConnectedToWatch:nice_fake_for([PCPebbleManager class])];
+                    });
+
+                    it(@"should hide the spinner", ^{
+                        controller.activityIndicator.isAnimating should_not be_truthy;
+                    });
+
+                    it(@"should not display an alert view", ^{
+                        UIAlertView.currentAlertView should be_nil;
+                    });
+                });
+
+                describe(@"when no Pebble successfully connects", ^{
+                    beforeEach(^{
+                        spy_on(controller.sendMessagesSwitch);
+                        [controller pebbleManagerFailedToConnectToWatch:nice_fake_for([PCPebbleManager class])];
+                    });
+
+                    it(@"should set the switch back to off", ^{
+                        controller.sendMessagesSwitch should have_received(@selector(setOn:animated:)).with(NO, YES);
+                    });
+
+                    it(@"should hide the spinner", ^{
+                        controller.activityIndicator.isAnimating should_not be_truthy;
+                    });
+
+                    it(@"should display an error alert view", ^{
+                        UIAlertView.currentAlertView should_not be_nil;
+                    });
+                });
+            });
+
+            describe(@"when the Pebble disconnects", ^{
+                beforeEach(^{
+                    spy_on(controller.sendMessagesSwitch);
+                    [controller pebbleManagerDisconnectedFromWatch:nice_fake_for([PCPebbleManager class])];
+                });
+
+                it(@"should not display an alert view", ^{
+                    UIAlertView.currentAlertView should be_nil;
+                });
+
+                it(@"should not tell the switch to do anything else", ^{
+                    controller.sendMessagesSwitch should_not have_received(@selector(setOn:animated:));
+                });
+            });
+        });
+
+        context(@"when the Pebble manager is sending messages", ^{
+            beforeEach(^{
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                controller.view should_not be_nil;
+            });
+
+            it(@"should be on", ^{
+                controller.sendMessagesSwitch.isOn should be_truthy;
+            });
+
+            describe(@"turning the switch off", ^{
+                beforeEach(^{
+                    controller.sendMessagesSwitch.on = NO;
+                    spy_on(controller.sendMessagesSwitch);
+                    [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
+                });
+
+                it(@"should tell the Pebble manager to start stop updates to the connected Pebble", ^{
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(NO);
+                });
+
+                it(@"should not display a spinner", ^{
+                    controller.activityIndicator.isAnimating should_not be_truthy;
+                });
+
+                it(@"should not display an alert view", ^{
+                    UIAlertView.currentAlertView should be_nil;
+                });
+
+                it(@"should not tell the switch to do anything else", ^{
+                    controller.sendMessagesSwitch should_not have_received(@selector(setOn:animated:));
+                });
+            });
+
+            describe(@"when the Pebble disconnects", ^{
+                beforeEach(^{
+                    spy_on(controller.sendMessagesSwitch);
+                    [controller pebbleManagerDisconnectedFromWatch:nice_fake_for([PCPebbleManager class])];
+                });
+
+                it(@"should display an alert view", ^{
+                    UIAlertView.currentAlertView should_not be_nil;
+                });
+
+                it(@"should set the switch to off", ^{
+                    controller.sendMessagesSwitch should have_received(@selector(setOn:animated:)).with(NO, YES);
+                });
             });
         });
     });
 
     describe(@"-currentLocationLabel", ^{
         beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view should_not be_nil;
         });
 
         it(@"should display an empty string", ^{
             controller.currentLocationLabel.text should equal(@"");
         });
+
+        describe(@"on a location update", ^{
+            __block CLLocation *firstLocation, *secondLocation;
+
+            beforeEach(^{
+                firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
+                secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
+
+                CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
+                [controller locationManager:locationManager didUpdateLocations:@[ firstLocation, secondLocation ]];
+            });
+
+            it(@"should update to the most recent location lat and long", ^{
+                controller.currentLocationLabel.text should equal(@"-24.0260, 64.4450");
+            });
+        });
     });
 
     describe(@"-closestStationLabel", ^{
         beforeEach(^{
             spy_on(PebCiti.sharedInstance.stationList);
-            PCStation *closestStation = [[[PCStation alloc] init] autorelease];
-            closestStation.name = @"1st Ave & 2nd St.";
-            PebCiti.sharedInstance.stationList stub_method("closestStation").and_return(closestStation);
-
-            controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view should_not be_nil;
         });
 
-        it(@"should display the closest station's name", ^{
-            controller.closestStationLabel.text should equal(@"1st Ave & 2nd St.");
+        it(@"should display an empty string", ^{
+            controller.closestStationLabel.text should equal(@"");
+        });
+
+        describe(@"on a location update", ^{
+            beforeEach(^{
+                PCStation *closestStation = nice_fake_for([PCStation class]);
+                closestStation stub_method(@selector(name)).and_return(@"1st Ave & 2nd St.");
+                PebCiti.sharedInstance.stationList stub_method("closestStation").and_return(closestStation);
+
+                CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
+                CLLocation *location = nice_fake_for([CLLocation class]);
+                [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+            });
+
+            it(@"should update to the closest station's name", ^{
+                controller.closestStationLabel.text should equal(@"1st Ave & 2nd St.");
+            });
         });
     });
 
     describe(@"-viewStationsButton", ^{
         beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view should_not be_nil;
-        });
-
-        it(@"should exist in the view hierarchy", ^{
-            controller.view.subviews should contain(controller.viewStationsButton);
         });
 
         describe(@"tapping the button", ^{
@@ -162,199 +249,120 @@ describe(@"PCHomeViewController", ^{
             it(@"should be the stationsVC's delegate", ^{
                 [(PCStationsViewController *)[(UINavigationController *)controller.presentedViewController topViewController] delegate] should be_same_instance_as(controller);
             });
+
+            describe(@"when the stations view is dismissed", ^{
+                beforeEach(^{
+                    [controller stationsViewControllerIsDone];
+                });
+
+                it(@"should dismiss the presented view controller", ^{
+                    controller.presentedViewController should be_nil;
+                });
+            });
         });
     });
 
     describe(@"-activityIndicator", ^{
         beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
             controller.view should_not be_nil;
         });
 
-        it(@"should be hidden", ^{
-            controller.activityIndicator.isHidden should be_truthy;
-        });
-
-        it(@"should not be spinning", ^{
-            controller.activityIndicator.isAnimating should_not be_truthy;
-        });
-    });
-
-    describe(@"<PCStationsViewControllerDelegate>", ^{
-        describe(@"-stationsViewControllerIsDone", ^{
+        describe(@"when the view appears", ^{
             beforeEach(^{
-                controller = [[[PCHomeViewController alloc] init] autorelease];
-                UIViewController *viewController = nice_fake_for([UIViewController class]);
-                [controller presentViewController:viewController animated:NO completion:nil];
-                controller.presentedViewController should_not be_nil;
-
-                [controller stationsViewControllerIsDone];
+                [controller viewDidAppear:NO];
             });
 
-            it(@"should dismiss the presented view controller", ^{
-                controller.presentedViewController should be_nil;
-            });
-        });
-    });
-
-    describe(@"<PCPebbleManagerDelegate>", ^{
-        __block PBWatch *watch;
-
-        beforeEach(^{
-            watch = nice_fake_for([PBWatch class]);
-            watch stub_method("name").and_return(@"PB12");
-
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            controller.view should_not be_nil;
-        });
-
-        it(@"should be the default manager's delegate", ^{
-            PebCiti.sharedInstance.pebbleManager.delegate should be_same_instance_as(controller);
-        });
-
-        describe(@"-pebbleManagerConnectedToWatch:", ^{
-            beforeEach(^{
-                [controller.activityIndicator startAnimating];
-                controller.connectedPebbleLabel.text should equal(@"");
-
-                [controller pebbleManagerConnectedToWatch:watch];
+            it(@"should be hidden", ^{
+                controller.activityIndicator.isHidden should be_truthy;
             });
 
-            it(@"should clear the spinner", ^{
+            it(@"should not be spinning", ^{
                 controller.activityIndicator.isAnimating should_not be_truthy;
             });
 
-            it(@"should update the connected Pebble label", ^{
-                controller.connectedPebbleLabel.text should equal(@"PB12");
-            });
-        });
-
-        describe(@"-pebbleManagerFailedToConnectToWatch:", ^{
-            context(@"when the watch doesn't support app messages", ^{
-                beforeEach(^{
-                    controller.connectedPebbleLabel.text = @"AB98";
-                    [controller.activityIndicator startAnimating];
-                    controller.activityIndicator.isAnimating should be_truthy;
-
-                    [controller pebbleManagerFailedToConnectToWatch:watch];
-                });
-
-                it(@"should clear the spinner", ^{
-                    controller.activityIndicator.isAnimating should_not be_truthy;
-                });
-
-                it(@"should set the connected Pebble label to be blank", ^{
-                    controller.connectedPebbleLabel.text should equal(@"");
-                });
-
-                it(@"should display an alert view", ^{
-                    UIAlertView.currentAlertView.message should equal(@"Pebble doesn't support app messages.");
-                });
-            });
-
-            context(@"when the manager failed to connect to any watch", ^{
-                beforeEach(^{
-                    controller.connectedPebbleLabel.text = @"AB98";
-                    [controller.activityIndicator startAnimating];
-                    controller.activityIndicator.isAnimating should be_truthy;
-
-                    [controller pebbleManagerFailedToConnectToWatch:nil];
-                });
-
-                it(@"should clear the spinner", ^{
-                    controller.activityIndicator.isAnimating should_not be_truthy;
-                });
-
-                it(@"should set the connected Pebble label to be blank", ^{
-                    controller.connectedPebbleLabel.text should equal(@"");
-                });
-
-                it(@"should display an alert view", ^{
-                    UIAlertView.currentAlertView.message should equal(@"No connected Pebble recognized.");
-                });
-            });
-        });
-
-        describe(@"-pebbleManagerSentMessageWithError:", ^{
-            context(@"when the message was sent successfully", ^{
-                beforeEach(^{
-                    [controller.activityIndicator startAnimating];
-                    controller.activityIndicator.isAnimating should be_truthy;
-
-                    [controller pebbleManagerSentMessageWithError:nil];
-                });
-
-                it(@"should stop the spinner", ^{
-                    controller.activityIndicator.isAnimating should_not be_truthy;
-                });
-
-                it(@"should show an alert view to the user noting the successful message send", ^{
-                    UIAlertView.currentAlertView.message should equal(@"Message sent to Pebble successfully.");
-                });
-            });
-
-            context(@"when the message sending reported an error", ^{
-                beforeEach(^{
-                    [controller.activityIndicator startAnimating];
-                    controller.activityIndicator.isAnimating should be_truthy;
-                    NSError *error = [NSError errorWithDomain:@"Pebble Error" code:1234 userInfo:@{ NSLocalizedDescriptionKey: @"Pebble had a problem." }];
-
-                    [controller pebbleManagerSentMessageWithError:error];
-                });
-
-                it(@"should clear the spinner", ^{
-                    controller.activityIndicator.isAnimating should_not be_truthy;
-                });
-
-                it(@"should show an alert view to the user with the error message", ^{
-                    UIAlertView.currentAlertView.message should equal(@"Pebble had a problem.");
-                });
+            it(@"should fill the screen", ^{
+                CGRectEqualToRect(controller.activityIndicator.frame, controller.view.frame) should be_truthy;
             });
         });
     });
 
-    describe(@"<CLLocationManagerDelegate>", ^{
+    describe(@"sending messages to the Pebble", ^{
         beforeEach(^{
-            controller = [[[PCHomeViewController alloc] init] autorelease];
-            [controller viewDidLoad];
-            controller.view should_not be_nil;
-            controller.closestStationLabel.text = @"";
+            spy_on(PebCiti.sharedInstance.pebbleManager);
         });
 
-        it(@"should be the location manager's delegate", ^{
-            PebCiti.sharedInstance.locationManager.delegate should be_same_instance_as(controller);
-        });
-
-        describe(@"-locationManager:didUpdateLocations:", ^{
-            __block CLLocation *firstLocation, *secondLocation;
-
+        context(@"when the Pebble manager should be updating the Pebble", ^{
             beforeEach(^{
-                firstLocation = [[[CLLocation alloc] initWithLatitude:-24.023 longitude:64.435] autorelease];
-                secondLocation = [[[CLLocation alloc] initWithLatitude:-24.026 longitude:64.445] autorelease];
-
-                PCStation *newClosestStation = [[PCStation alloc] init];
-                newClosestStation.name = @"New Station Name";
-                spy_on(PebCiti.sharedInstance.stationList);
-                PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(newClosestStation);
-
-                spy_on(PebCiti.sharedInstance.pebbleManager);
-
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
             });
 
-            subjectAction(^{
-                [controller locationManager:nil didUpdateLocations:@[ firstLocation, secondLocation ]];
+            describe(@"when a location update occurs", ^{
+                beforeEach(^{
+                    PCStation *station = nice_fake_for([PCStation class]);
+                    station stub_method(@selector(name)).and_return(@"Station Name");
+
+                    spy_on(PebCiti.sharedInstance.stationList);
+                    PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(station);
+
+                    CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
+                    CLLocation *location = nice_fake_for([CLLocation class]);
+                    [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                });
+
+                it(@"should send the closest station name to the Pebble", ^{
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Station Name");
+                });
+
+                describe(@"when an error occurs sending the message", ^{
+                    __block NSError *error;
+
+                    beforeEach(^{
+                        controller.view should_not be_nil;
+                        spy_on(controller.sendMessagesSwitch);
+
+                        error = [NSError errorWithDomain:@"Domain" code:123 userInfo:@{ NSLocalizedDescriptionKey: @"Some message." }];
+                        [controller pebbleManager:nice_fake_for([PCPebbleManager class]) receivedError:error];
+                    });
+
+                    it(@"should display an alert with the error message", ^{
+                        UIAlertView.currentAlertView.message should equal(error.localizedDescription);
+                    });
+
+                    it(@"should turn the switch off", ^{
+                        controller.sendMessagesSwitch should have_received(@selector(setOn:animated:)).with(NO, YES);
+                    });
+
+                    describe(@"when anothe error occurs before the first is dismissed", ^{
+                        __block NSError *newError;
+
+                        beforeEach(^{
+                            newError = [NSError errorWithDomain:@"Domain" code:123 userInfo:@{ NSLocalizedDescriptionKey: @"New error message." }];
+                            [controller pebbleManager:nice_fake_for([PCPebbleManager class]) receivedError:newError];
+                        });
+
+                        it(@"should not show another alert", ^{
+                            UIAlertView.currentAlertView.message should equal(error.localizedDescription);
+                        });
+                    });
+                });
+            });
+        });
+
+        context(@"when the Pebble manager should not be updating the Pebble", ^{
+            beforeEach(^{
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
             });
 
-            it(@"should set the location label to the most recent location's lat and long", ^{
-                controller.currentLocationLabel.text should equal(@"-24.0260, 64.4450");
-            });
+            describe(@"when a location update occurs", ^{
+                beforeEach(^{
+                    CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
+                    CLLocation *location = nice_fake_for([CLLocation class]);
+                    [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                });
 
-            it(@"should update the closest station label", ^{
-                controller.closestStationLabel.text should equal(@"New Station Name");
-            });
-
-            it(@"should tell the Pebble the closest station", ^{
-                PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"New Station Name");
+                it(@"should not send any messages to the Pebble", ^{
+                    PebCiti.sharedInstance.pebbleManager should_not have_received(@selector(sendMessageToPebble:));
+                });
             });
         });
     });

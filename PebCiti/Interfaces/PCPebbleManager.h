@@ -1,18 +1,21 @@
 #import <Foundation/Foundation.h>
 #import <PebbleKit/PebbleKit.h>
 
-@protocol PCPebbleManagerDelegate
-- (void)pebbleManagerConnectedToWatch:(PBWatch *)watch;
-- (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch;
-- (void)pebbleManagerSentMessageWithError:(NSError *)error;
-@end
+@protocol PCPebbleManagerDelegate;
 
 @interface PCPebbleManager : NSObject <PBPebbleCentralDelegate>
 
 @property (nonatomic, weak) id<PCPebbleManagerDelegate> delegate;
-@property (nonatomic, strong, readonly) PBWatch *connectedWatch;
+@property (nonatomic, getter = isSendingMessagesToPebble) BOOL sendMessagesToPebble;
+@property (nonatomic, strong, readonly) PBWatch *watch;
 
-- (void)connectToPebble;
 - (void)sendMessageToPebble:(NSString *)message;
 
+@end
+
+@protocol PCPebbleManagerDelegate
+- (void)pebbleManagerConnectedToWatch:(PCPebbleManager *)pebbleManager;
+- (void)pebbleManagerFailedToConnectToWatch:(PCPebbleManager *)pebbleManager;
+- (void)pebbleManager:(PCPebbleManager *)pebbleManager receivedError:(NSError *)error;
+- (void)pebbleManagerDisconnectedFromWatch:(PCPebbleManager *)pebbleManager;
 @end

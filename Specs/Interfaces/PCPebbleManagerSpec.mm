@@ -15,228 +15,221 @@ describe(@"PCPebbleManager", ^{
     __block PCPebbleManager *manager;
 
     beforeEach(^{
-        manager = [[[PCPebbleManager alloc] init] autorelease];
-    });
+        spy_on(PCPebbleCentral.defaultCentral);
+        PBWatch *watch = nice_fake_for([PBWatch class]);
+        PCPebbleCentral.defaultCentral stub_method(@selector(lastConnectedWatch)).and_return(watch);
 
-    it(@"should be a PebbleCentral delegate", ^{
-        [manager conformsToProtocol:@protocol(PBPebbleCentralDelegate)] should be_truthy;
+        manager = [[[PCPebbleManager alloc] init] autorelease];
+        manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
     });
 
     it(@"should be the default pebble central's delegate", ^{
         PCPebbleCentral.defaultCentral.delegate should be_same_instance_as(manager);
     });
 
-    describe(@"<PBPebbleCentralDelegate>", ^{
-        describe(@"-pebbleCentral:watchDidConnect:isNew:", ^{
+    it(@"should set the watch to the last connected one", ^{
+        manager.watch should be_same_instance_as(PCPebbleCentral.defaultCentral.lastConnectedWatch);
+    });
+
+    describe(@"when a watch connects", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            watch = nice_fake_for([PBWatch class]);
+            watch stub_method(@selector(isConnected)).and_return(YES);
+
+            PBPebbleCentral *pebbleCentral = nice_fake_for([PBPebbleCentral class]);
+            [manager pebbleCentral:pebbleCentral watchDidConnect:watch isNew:YES];
+        });
+
+        it(@"should set the watch to the connected watch", ^{
+            manager.watch should be_same_instance_as(watch);
+        });
+    });
+
+    describe(@"when telling the manager to send messages to the Pebble", ^{
+        context(@"when there is a connected Pebble", ^{
             __block PBWatch *watch;
-            __block void(^completionBlock)(PBWatch *, BOOL);
+            __block void (^completion)(PBWatch *, BOOL);
 
             beforeEach(^{
-                manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
                 watch = nice_fake_for([PBWatch class]);
+                watch stub_method(@selector(isConnected)).and_return(YES);
+                [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
 
-                [manager pebbleCentral:nil watchDidConnect:watch isNew:YES];
+                manager.sendMessagesToPebble = YES;
 
-                NSArray *sentMessages = [(id<CedarDouble>)watch sent_messages];
-                sentMessages = [sentMessages filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
                     return invocation.selector == @selector(appMessagesGetIsSupported:);
-                }]];
-                NSInvocation *lastMessage = [sentMessages lastObject];
+                }]] lastObject];
 
-                void(^localCompletionBlock)(PBWatch *, BOOL);
-                [lastMessage getArgument:&localCompletionBlock atIndex:2];
-                completionBlock = [localCompletionBlock copy];
+                void (^localCompletion)(PBWatch *, BOOL);
+                [lastMessage getArgument:&localCompletion atIndex:2];
+                completion = [localCompletion copy];
             });
 
             afterEach(^{
-                [completionBlock release];
-                completionBlock = nil;
+                [completion release];
             });
 
-            context(@"when the watch can accept app messages", ^{
+            context(@"and that Pebble supports app messages", ^{
                 beforeEach(^{
-                    completionBlock(watch, YES);
+                    completion(watch, YES);
                 });
 
-                it(@"should ask the watch if it can receive app messages", ^{
-                    watch should have_received("appMessagesGetIsSupported:");
-                });
-
-                it(@"should set the connected watch property", ^{
-                    manager.connectedWatch should be_same_instance_as(watch);
-                });
-
-                it(@"should set UUID on the watch", ^{
+                it(@"should set the UUID on the Pebble", ^{
                     uint8_t bytes[] = { 0xF6, 0xBB, 0x82, 0xD0, 0xB5, 0xBF, 0x4E, 0xC7, 0xA9, 0x7A, 0x40, 0x5D, 0x3A, 0x35, 0x04, 0x44 };
                     NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-                    watch should have_received("appMessagesSetUUID:").with(UUID);
+                    watch should have_received(@selector(appMessagesSetUUID:)).with(UUID);
                 });
 
-                it(@"should tell the delegate which watch successfully connected", ^{
-                    manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
+                it(@"should tell the delegate it connected", ^{
+                    manager.delegate should have_received(@selector(pebbleManagerConnectedToWatch:)).with(manager);
+                });
+
+                it(@"should set isSendingMessagesToPebble to YES", ^{
+                    manager.isSendingMessagesToPebble should be_truthy;
+                });
+
+                describe(@"when that watch disconnects", ^{
+                    beforeEach(^{
+                        [manager pebbleCentral:nice_fake_for([PBPebbleCentral class]) watchDidDisconnect:watch];
+                    });
+
+                    it(@"should alert the delegate", ^{
+                        manager.delegate should have_received(@selector(pebbleManagerDisconnectedFromWatch:)).with(manager);
+                    });
+
+                    it(@"should stop sending messages to the (now disconnected) Pebble", ^{
+                        manager.isSendingMessagesToPebble should_not be_truthy;
+                    });
                 });
             });
 
-            context(@"when the watch cannot accept app messages", ^{
+            context(@"and that Pebble does not support app messages", ^{
                 beforeEach(^{
-                    completionBlock(watch, NO);
+                    completion(watch, NO);
                 });
 
-                it(@"should not set the connected watch property", ^{
-                    manager.connectedWatch should be_nil;
+                it(@"should tell the delegate it failed to connect", ^{
+                    manager.delegate should have_received(@selector(pebbleManagerFailedToConnectToWatch:)).with(manager);
                 });
 
-                it(@"should tell the delegate the watch does not support app messages", ^{
-                    manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(watch);
+                it(@"should set isSendingMessagesToPebble to NO", ^{
+                    manager.isSendingMessagesToPebble should_not be_truthy;
                 });
+            });
+        });
+
+        context(@"when there is not a connected Pebble", ^{
+            beforeEach(^{
+                [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:nil isNew:NO];
+                manager.sendMessagesToPebble = YES;
+            });
+
+            it(@"should tell the delegate it failed to connect", ^{
+                manager.delegate should have_received(@selector(pebbleManagerFailedToConnectToWatch:)).with(manager);
+            });
+
+            it(@"should set isSendingMessagesToPebble to NO", ^{
+                manager.isSendingMessagesToPebble should_not be_truthy;
             });
         });
     });
 
-    describe(@"-connectToPebble", ^{
+    describe(@"sending a message to the Pebble", ^{
         __block PBWatch *watch;
 
         beforeEach(^{
-            spy_on(PCPebbleCentral.defaultCentral);
-            manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
             watch = nice_fake_for([PBWatch class]);
+            [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
+
+            spy_on(manager);
         });
 
-        context(@"when there was already a connected watch", ^{
+        context(@"when the manager should be sending messages", ^{
+            __block void (^completion)(PBWatch *, NSDictionary *, NSError *);
+
             beforeEach(^{
-                PCPebbleCentral.defaultCentral stub_method("lastConnectedWatch").and_return(watch);
+                manager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                [manager sendMessageToPebble:@"Message text"];
+
+                NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                    return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
+                }]] lastObject];
+
+                void (^localCompletion)(PBWatch *, NSDictionary *, NSError *);
+                [lastMessage getArgument:&localCompletion atIndex:3];
+                completion = [localCompletion copy];
             });
 
-            context(@"when that watch is still connected", ^{
+            afterEach(^{
+                [completion release];
+            });
+
+            it(@"should send the message to the Pebble", ^{
+                manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(@{ @1: @"Message text" }, Arguments::anything);
+            });
+
+            describe(@"when the message send successfully", ^{
                 beforeEach(^{
-                    watch stub_method("isConnected").and_return(YES);
-
-                    [manager connectToPebble];
+                    completion(watch, nil, nil);
                 });
 
-                it(@"should set the watch property to the most recently connected one", ^{
-                    manager.connectedWatch should be_same_instance_as(watch);
-                });
-
-                it(@"should set UUID on the watch", ^{
-                    uint8_t bytes[] = { 0xF6, 0xBB, 0x82, 0xD0, 0xB5, 0xBF, 0x4E, 0xC7, 0xA9, 0x7A, 0x40, 0x5D, 0x3A, 0x35, 0x04, 0x44 };
-                    NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-                    watch should have_received("appMessagesSetUUID:").with(UUID);
-                });
-
-                it(@"should tell the delegate which watch successfully connected", ^{
-                    manager.delegate should have_received("pebbleManagerConnectedToWatch:").with(watch);
+                it(@"should continue to send messages", ^{
+                    manager.isSendingMessagesToPebble should be_truthy;
                 });
             });
 
-            context(@"when that watch is no longer connected", ^{
-                beforeEach(^{
-                    watch stub_method("isConnected").and_return(NO);
+            describe(@"when the message fails to send", ^{
+                __block NSError *error;
 
-                    [manager connectToPebble];
+                beforeEach(^{
+                    spy_on(manager);
+                    error = [NSError errorWithDomain:@"Domain" code:987 userInfo:@{ NSLocalizedDescriptionKey: @"Some message." }];
+                    completion(watch, nil, error);
                 });
 
-                it(@"should tell the delegate there is no connected Pebble", ^{
-                    manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
+                it(@"should tell the delegate of the error", ^{
+                    manager.delegate should have_received(@selector(pebbleManager:receivedError:)).with(manager, error);
+                });
+
+                it(@"should turn off sending messages", ^{
+                    manager should have_received(@selector(setSendMessagesToPebble:)).with(NO);
                 });
             });
         });
 
-        context(@"when there wasn't a previously connected watch", ^{
+        context(@"when the manager should not be sending messages", ^{
             beforeEach(^{
-                [manager connectToPebble];
+                manager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
+                [manager sendMessageToPebble:@"Message text"];
             });
 
-            it(@"should tell the delegate there is no connected Pebble", ^{
-                manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
+            it(@"should not send a message to the watch", ^{
+                manager.watch should_not have_received(@selector(appMessagesPushUpdate:onSent:));
             });
         });
     });
 
-    describe(@"-sendMessageToPebble", ^{
+    describe(@"when telling the manager to stop sending messages to the Pebble", ^{
         __block PBWatch *watch;
 
         beforeEach(^{
+            manager.sendMessagesToPebble = YES;
             watch = nice_fake_for([PBWatch class]);
+            watch stub_method(@selector(isConnected)).and_return(YES);
+            [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
+            manager.sendMessagesToPebble = NO;
         });
 
-        context(@"when a watch with a UUID is connected", ^{
-            beforeEach(^{
-                manager.connectedWatch = watch;
-            });
-
-            it(@"should tell the connected watch to display a message", ^{
-                [manager sendMessageToPebble:@"message"];
-                watch should have_received("appMessagesPushUpdate:onSent:").with(@{ @1: @"message" }, Arguments::anything);
-            });
-
-            describe(@"when the update completes", ^{
-                __block void(^completionBlock)(PBWatch *, NSDictionary *, NSError *);
-
-                beforeEach(^{
-                    [(id<CedarDouble>)watch reset_sent_messages];
-                    manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
-
-                    [manager sendMessageToPebble:@"message"];
-
-                    NSArray *sentMessages = [(id<CedarDouble>)watch sent_messages];
-                    sentMessages = [sentMessages filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
-                        return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
-                    }]];
-                    NSInvocation *lastMessage = [sentMessages lastObject];
-
-                    void(^localCompletionBlock)(PBWatch *, BOOL);
-                    [lastMessage getArgument:&localCompletionBlock atIndex:3];
-                    completionBlock = [localCompletionBlock copy];
-                });
-
-                afterEach(^{
-                    [completionBlock release];
-                    completionBlock = nil;
-                });
-
-                context(@"when the push update succeeds", ^{
-                    beforeEach(^{
-                        completionBlock(watch, nil, nil);
-                    });
-
-                    it(@"should tell the delegate the update succeeded", ^{
-                        manager.delegate should have_received("pebbleManagerSentMessageWithError:").with(nil);
-                    });
-                });
-
-                context(@"when the push update fails", ^{
-                    __block NSError *error;
-
-                    beforeEach(^{
-                        error = [NSError errorWithDomain:@"PebbleError" code:12 userInfo:nil];
-                        completionBlock(watch, nil, error);
-                    });
-
-                    it(@"should tell the delegate the update failed with the error", ^{
-                        manager.delegate should have_received("pebbleManagerSentMessageWithError:").with(error);
-                    });
-                });
-            });
+        it(@"should not send any messages to the watch", ^{
+            watch should_not have_received(@selector(appMessagesGetIsSupported:));
         });
 
-        context(@"when no watch is connected", ^{
-            beforeEach(^{
-                manager.connectedWatch should be_nil;
-                manager.delegate = nice_fake_for(@protocol(PCPebbleManagerDelegate));
-
-                [manager sendMessageToPebble:@"message"];
-            });
-
-            it(@"should not send any messages to the watch reference", ^{
-                watch should_not have_received("appMessagesPushUpdate:onSent:");
-            });
-
-            it(@"should tell the delegate no watch is connected", ^{
-                manager.delegate should have_received("pebbleManagerFailedToConnectToWatch:").with(nil);
-            });
+        it(@"should set isSendingMessagesToPebble to NO", ^{
+            manager.isSendingMessagesToPebble should_not be_truthy;
         });
-
     });
 });
 

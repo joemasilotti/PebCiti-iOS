@@ -6,6 +6,10 @@
 #import "PCStation.h"
 #import "PebCiti.h"
 
+@interface PCHomeViewController ()
+@property (nonatomic, getter = isErrorAlertPresented) BOOL errorAlertPresented;
+@end
+
 @implementation PCHomeViewController
 
 - (instancetype)init
@@ -13,7 +17,6 @@
     self = [super init];
     if (self) {
         self.title = @"PebCiti";
-
         PebCiti.sharedInstance.pebbleManager.delegate = self;
         PebCiti.sharedInstance.locationManager.delegate = self;
     }
@@ -23,26 +26,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.closestStationLabel.text = PebCiti.sharedInstance.stationList.closestStation.name;
-
-    self.activityIndicator.hidden = YES;
+    NSString *closestStationName = PebCiti.sharedInstance.stationList.closestStation.name;
+    self.closestStationLabel.text = closestStationName ? closestStationName : @"";
+    self.sendMessagesSwitch.on = PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    PBWatch *connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
-    self.connectedPebbleLabel.text = connectedWatch.isConnected ? connectedWatch.name : @"";
-
     [PebCiti.sharedInstance.locationManager startUpdatingLocation];
+    [self setupActivityIndicator];
 }
 
-- (IBAction)connectToPebbleButtonWasTapped:(UIButton *)connectToPebbleButton
+- (IBAction)sendMessagesSwitchWasToggled:(UISwitch *)sendMessagesSwitch
 {
-    [self.activityIndicator startAnimating];
-    [PebCiti.sharedInstance.pebbleManager connectToPebble];
+    if (sendMessagesSwitch.isOn) {
+        [self.activityIndicator startAnimating];
+    }
+    PebCiti.sharedInstance.pebbleManager.sendMessagesToPebble = sendMessagesSwitch.isOn;
 }
 
 - (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton
@@ -56,23 +57,35 @@
 
 - (void)pebbleManagerConnectedToWatch:(PBWatch *)watch
 {
-    self.connectedPebbleLabel.text = watch.name;
     [self.activityIndicator stopAnimating];
 }
 
 - (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch
 {
     [self.activityIndicator stopAnimating];
-    self.connectedPebbleLabel.text = @"";
-    NSString *message = watch ? @"Pebble doesn't support app messages." : @"No connected Pebble recognized.";
-    [UIAlertView displayAlertViewWithTitle:@"Cannot Connect to Pebble" message:message];
+    [self.sendMessagesSwitch setOn:NO animated:YES];
+    [UIAlertView displayAlertViewWithTitle:@"No Pebble Connected" message:@"Connect a Pebble that supports app messages before continuing."];
 }
 
-- (void)pebbleManagerSentMessageWithError:(NSError *)error
+- (void)pebbleManager:(PCPebbleManager *)pebbleManager receivedError:(NSError *)error
 {
-    [self.activityIndicator stopAnimating];
-    NSString *message = error ? error.localizedDescription : @"Message sent to Pebble successfully.";
-    [UIAlertView displayAlertViewWithTitle:@"" message:message];
+    [self.sendMessagesSwitch setOn:NO animated:YES];
+    if (!self.isErrorAlertPresented) {
+        self.errorAlertPresented = YES;
+        [[[UIAlertView alloc] initWithTitle:@"Pebble CommunicationFailed"
+                                    message:error.localizedDescription
+                                   delegate:self
+                          cancelButtonTitle:@"Dismiss"
+                          otherButtonTitles:nil] show];
+    }
+}
+
+- (void)pebbleManagerDisconnectedFromWatch:(PCPebbleManager *)pebbleManager
+{
+    if (self.sendMessagesSwitch.isOn) {
+        [UIAlertView displayAlertViewWithTitle:@"Pebble Disconnected" message:@"Reconnect a Pebble before continuing."];
+        [self.sendMessagesSwitch setOn:NO animated:YES];
+    }
 }
 
 #pragma mark - <PCStationsViewControllerDelegate>
@@ -88,21 +101,28 @@
 {
     CLLocation *lastLocation = locations.lastObject;
     self.currentLocationLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
+
     NSString *stationName = PebCiti.sharedInstance.stationList.closestStation.name;
     self.closestStationLabel.text = stationName;
-    [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:stationName];
+    if (PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble) {
+        [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:stationName];
+    }
+}
+
+#pragma mark - <UIAlertViewDelegate>
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.errorAlertPresented = NO;
 }
 
 #pragma mark - Private
 
 - (void)setupActivityIndicator
 {
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    activityIndicator.color = [UIColor blackColor];
-    activityIndicator.hidesWhenStopped = YES;
-    [self.view addSubview:activityIndicator];
-    self.activityIndicator = activityIndicator;
+    self.activityIndicator.frame = self.view.frame;
+    self.activityIndicator.color = [UIColor blackColor];
+    self.activityIndicator.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
 }
 
 #pragma mark UIButton Color Helpers

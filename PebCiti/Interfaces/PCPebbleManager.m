@@ -2,7 +2,7 @@
 #import "PCPebbleCentral.h"
 
 @interface PCPebbleManager ()
-@property (nonatomic, strong, readwrite) PBWatch *connectedWatch;
+@property (nonatomic, strong, readwrite) PBWatch *watch;
 @end
 
 @implementation PCPebbleManager
@@ -12,31 +12,43 @@
     self = [super init];
     if (self) {
         PCPebbleCentral.defaultCentral.delegate = self;
+        self.watch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
     }
     return self;
 }
 
-- (void)connectToPebble
+- (void)setSendMessagesToPebble:(BOOL)sendMessagesToPebble
 {
-    self.connectedWatch = PCPebbleCentral.defaultCentral.lastConnectedWatch;
-    if (self.connectedWatch.isConnected) {
-        [self.connectedWatch appMessagesSetUUID:self.UUID];
-        [self.delegate pebbleManagerConnectedToWatch:self.connectedWatch];
+    if (sendMessagesToPebble) {
+        if (self.watch.isConnected) {
+            __weak PCPebbleManager *weakSelf = self;
+            [self.watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
+                if (isAppMessagesSupported) {
+                    [weakSelf.watch appMessagesSetUUID:[weakSelf UUID]];
+                    [weakSelf.delegate pebbleManagerConnectedToWatch:weakSelf];
+                    _sendMessagesToPebble = YES;
+                } else {
+                    [weakSelf.delegate pebbleManagerFailedToConnectToWatch:weakSelf];
+                }
+            }];
+        } else {
+            [self.delegate pebbleManagerFailedToConnectToWatch:self];
+        }
     } else {
-        [self.delegate pebbleManagerFailedToConnectToWatch:nil];
+        _sendMessagesToPebble = NO;
     }
 }
 
 - (void)sendMessageToPebble:(NSString *)message
 {
-    if (self.connectedWatch) {
+    if (self.isSendingMessagesToPebble) {
         __weak PCPebbleManager *weakSelf = self;
-        NSDictionary *update = @{ @1: message };
-        [self.connectedWatch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
-            [weakSelf.delegate pebbleManagerSentMessageWithError:error];
+        [self.watch appMessagesPushUpdate:@{ @1: message } onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+            if (error) {
+                weakSelf.sendMessagesToPebble = NO;
+                [weakSelf.delegate pebbleManager:weakSelf receivedError:error];
+            }
         }];
-    } else {
-        [self.delegate pebbleManagerFailedToConnectToWatch:nil];
     }
 }
 
@@ -44,16 +56,13 @@
 
 - (void)pebbleCentral:(PBPebbleCentral *)central watchDidConnect:(PBWatch *)watch isNew:(BOOL)isNew
 {
-    __weak PCPebbleManager *weakSelf = self;
-    [watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
-        if (isAppMessagesSupported) {
-            weakSelf.connectedWatch = watch;
-            [weakSelf.connectedWatch appMessagesSetUUID:weakSelf.UUID];
-            [self.delegate pebbleManagerConnectedToWatch:watch];
-        } else {
-            [self.delegate pebbleManagerFailedToConnectToWatch:watch];
-        }
-    }];
+    self.watch = watch;
+}
+
+- (void)pebbleCentral:(PBPebbleCentral *)central watchDidDisconnect:(PBWatch *)watch
+{
+    [self.delegate pebbleManagerDisconnectedFromWatch:self];
+    self.sendMessagesToPebble = NO;
 }
 
 #pragma mark - Private
