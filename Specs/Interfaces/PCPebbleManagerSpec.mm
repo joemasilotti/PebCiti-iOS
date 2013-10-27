@@ -78,9 +78,11 @@ describe(@"PCPebbleManager", ^{
                 });
 
                 it(@"should set the UUID on the Pebble", ^{
-                    uint8_t bytes[] = { 0xF6, 0xBB, 0x82, 0xD0, 0xB5, 0xBF, 0x4E, 0xC7, 0xA9, 0x7A, 0x40, 0x5D, 0x3A, 0x35, 0x04, 0x44 };
-                    NSData *UUID = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-                    watch should have_received(@selector(appMessagesSetUUID:)).with(UUID);
+                    NSUUID *UUID = [[[NSUUID alloc] initWithUUIDString:@"F6BB82D0-B5BF-4EC7-A97A-405D3A350444"] autorelease];
+                    uuid_t uuid;
+                    [UUID getUUIDBytes:uuid];
+                    NSData *UUIDData = [NSData dataWithBytes:uuid length:16];
+                    watch should have_received(@selector(appMessagesSetUUID:)).with(UUIDData);
                 });
 
                 it(@"should tell the delegate it connected", ^{
