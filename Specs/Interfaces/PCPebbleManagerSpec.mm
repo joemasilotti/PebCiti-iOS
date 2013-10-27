@@ -5,10 +5,6 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-@interface PCPebbleManager (Specs)
-@property (nonatomic, strong, readwrite) PBWatch *connectedWatch;
-@end
-
 SPEC_BEGIN(PCPebbleManagerSpec)
 
 describe(@"PCPebbleManager", ^{
