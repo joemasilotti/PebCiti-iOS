@@ -196,7 +196,7 @@ describe(@"PCHomeViewController", ^{
             });
 
             it(@"should update to the most recent location lat and long", ^{
-                controller.currentLocationLabel.text should equal(@"-24.0260, 64.4450");
+                controller.currentLocationLabel.text should equal(@"-24.026000, 64.445000");
             });
         });
     });

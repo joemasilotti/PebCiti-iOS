@@ -100,7 +100,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *lastLocation = locations.lastObject;
-    self.currentLocationLabel.text = [NSString stringWithFormat:@"%.4f, %.4f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
+    self.currentLocationLabel.text = [NSString stringWithFormat:@"%f, %f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
 
     NSString *stationName = PebCiti.sharedInstance.stationList.closestStation.name;
     self.closestStationLabel.text = stationName;
