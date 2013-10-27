@@ -26,9 +26,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     NSString *closestStationName = PebCiti.sharedInstance.stationList.closestStation.name;
     self.closestStationLabel.text = closestStationName ? closestStationName : @"";
-    self.sendMessagesSwitch.on = PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble;
+
+    BOOL isSendingMessagesToPebble = PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble;
+    self.sendMessagesSwitch.on = isSendingMessagesToPebble;
+
+    self.vibratePebbleLabel.enabled = isSendingMessagesToPebble;
+    self.vibratePebbleSwitch.enabled = isSendingMessagesToPebble;
+    self.vibratePebbleSwitch.on = PebCiti.sharedInstance.pebbleManager.isVibratingPebble;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -42,8 +49,19 @@
 {
     if (sendMessagesSwitch.isOn) {
         [self.activityIndicator startAnimating];
+    } else {
+        [self.vibratePebbleSwitch setOn:NO animated:YES];
+        self.vibratePebbleLabel.enabled = NO;
+        self.vibratePebbleSwitch.enabled = NO;
+        PebCiti.sharedInstance.pebbleManager.vibratePebble = NO;
     }
     PebCiti.sharedInstance.pebbleManager.sendMessagesToPebble = sendMessagesSwitch.isOn;
+
+}
+
+- (IBAction)vibratePebbleSwitchWasToggled:(UISwitch *)vibratePebbleSwitch
+{
+    PebCiti.sharedInstance.pebbleManager.vibratePebble = vibratePebbleSwitch.isOn;
 }
 
 - (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton
@@ -58,6 +76,8 @@
 - (void)pebbleManagerConnectedToWatch:(PBWatch *)watch
 {
     [self.activityIndicator stopAnimating];
+    self.vibratePebbleLabel.enabled = YES;
+    self.vibratePebbleSwitch.enabled = YES;
 }
 
 - (void)pebbleManagerFailedToConnectToWatch:(PBWatch *)watch
@@ -70,6 +90,10 @@
 - (void)pebbleManager:(PCPebbleManager *)pebbleManager receivedError:(NSError *)error
 {
     [self.sendMessagesSwitch setOn:NO animated:YES];
+    [self.vibratePebbleSwitch setOn:NO animated:YES];
+    self.vibratePebbleLabel.enabled = NO;
+    self.vibratePebbleSwitch.enabled = NO;
+
     if (!self.isErrorAlertPresented) {
         self.errorAlertPresented = YES;
         [[[UIAlertView alloc] initWithTitle:@"Pebble Communication Failed"
@@ -86,6 +110,9 @@
         [UIAlertView displayAlertViewWithTitle:@"Pebble Disconnected" message:@"Reconnect a Pebble before continuing."];
         [self.sendMessagesSwitch setOn:NO animated:YES];
     }
+    [self.vibratePebbleSwitch setOn:NO animated:YES];
+    self.vibratePebbleLabel.enabled = NO;
+    self.vibratePebbleSwitch.enabled = NO;
 }
 
 #pragma mark - <PCStationsViewControllerDelegate>

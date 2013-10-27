@@ -36,6 +36,7 @@
         }
     } else {
         _sendMessagesToPebble = NO;
+        self.vibratePebble = NO;
     }
 }
 
@@ -43,7 +44,8 @@
 {
     if (self.isSendingMessagesToPebble) {
         __weak PCPebbleManager *weakSelf = self;
-        [self.watch appMessagesPushUpdate:@{ @1: message } onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+        NSDictionary *update = @{ @1: message, @2: self.isVibratingPebble ? @1 : @0 };
+        [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
             if (error) {
                 weakSelf.sendMessagesToPebble = NO;
                 [weakSelf.delegate pebbleManager:weakSelf receivedError:error];

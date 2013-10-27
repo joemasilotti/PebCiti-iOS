@@ -45,14 +45,17 @@ describe(@"PCHomeViewController", ^{
     });
 
     describe(@"-sendMessagesSwitch", ^{
+        __block PCPebbleManager *pebbleManager;
+
         beforeEach(^{
+            pebbleManager = nice_fake_for([PCPebbleManager class]);
             spy_on(PebCiti.sharedInstance);
-            PebCiti.sharedInstance stub_method(@selector(pebbleManager)).and_return(nice_fake_for([PCPebbleManager class]));
+            PebCiti.sharedInstance stub_method(@selector(pebbleManager)).and_return(pebbleManager);
         });
 
         context(@"when the Pebble manager is not sending messages", ^{
             beforeEach(^{
-                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
+                pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
                 controller.view should_not be_nil;
             });
 
@@ -63,6 +66,9 @@ describe(@"PCHomeViewController", ^{
             describe(@"turning the switch on", ^{
                 beforeEach(^{
                     controller.sendMessagesSwitch.on = YES;
+                    controller.vibratePebbleLabel.enabled = YES;
+                    controller.vibratePebbleSwitch.enabled = YES;
+                    controller.vibratePebbleSwitch.on = YES;
                     [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
                 });
 
@@ -71,12 +77,22 @@ describe(@"PCHomeViewController", ^{
                 });
 
                 it(@"should tell the Pebble manager to start sending updates to the connected Pebble", ^{
-                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(YES);
+                    pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(YES);
+                });
+
+                it(@"should not change the vibrate label or switch", ^{
+                    controller.vibratePebbleLabel.isEnabled should be_truthy;
+                    controller.vibratePebbleSwitch.isEnabled should be_truthy;
+                    controller.vibratePebbleSwitch.isOn should be_truthy;
+                });
+
+                it(@"should not change any vibrate settings", ^{
+                    pebbleManager should_not have_received(@selector(setVibratePebble:));
                 });
 
                 describe(@"when a Pebble connects successfully", ^{
                     beforeEach(^{
-                        [controller pebbleManagerConnectedToWatch:nice_fake_for([PCPebbleManager class])];
+                        [controller pebbleManagerConnectedToWatch:pebbleManager];
                     });
 
                     it(@"should hide the spinner", ^{
@@ -126,7 +142,7 @@ describe(@"PCHomeViewController", ^{
 
         context(@"when the Pebble manager is sending messages", ^{
             beforeEach(^{
-                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
                 controller.view should_not be_nil;
             });
 
@@ -137,12 +153,15 @@ describe(@"PCHomeViewController", ^{
             describe(@"turning the switch off", ^{
                 beforeEach(^{
                     controller.sendMessagesSwitch.on = NO;
+                    controller.vibratePebbleLabel.enabled = YES;
+                    controller.vibratePebbleSwitch.enabled = YES;
+                    controller.vibratePebbleSwitch.on = YES;
                     spy_on(controller.sendMessagesSwitch);
                     [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
                 });
 
                 it(@"should tell the Pebble manager to start stop updates to the connected Pebble", ^{
-                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(NO);
+                    pebbleManager should have_received(@selector(setSendMessagesToPebble:)).with(NO);
                 });
 
                 it(@"should not display a spinner", ^{
@@ -155,6 +174,22 @@ describe(@"PCHomeViewController", ^{
 
                 it(@"should not tell the switch to do anything else", ^{
                     controller.sendMessagesSwitch should_not have_received(@selector(setOn:animated:));
+                });
+
+                it(@"should disable the vibrate label", ^{
+                    controller.vibratePebbleLabel.isEnabled should_not be_truthy;
+                });
+
+                it(@"should turn off the vibrate switch", ^{
+                    controller.vibratePebbleSwitch.isOn should_not be_truthy;
+                });
+
+                it(@"should disable the vibrate switch", ^{
+                    controller.vibratePebbleSwitch.isEnabled should_not be_truthy;
+                });
+
+                it(@"should tell the Pebble manager to stop vibrating the Pebble", ^{
+                    pebbleManager should have_received(@selector(setVibratePebble:)).with(NO);
                 });
             });
 
@@ -170,6 +205,162 @@ describe(@"PCHomeViewController", ^{
 
                 it(@"should set the switch to off", ^{
                     controller.sendMessagesSwitch should have_received(@selector(setOn:animated:)).with(NO, YES);
+                });
+            });
+        });
+    });
+
+    describe(@"-vibratePebbleSwitch", ^{
+        beforeEach(^{
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method(@selector(pebbleManager)).and_return(nice_fake_for([PCPebbleManager class]));
+        });
+
+        context(@"when the Pebble manager is sending messages", ^{
+            beforeEach(^{
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+            });
+
+            context(@"when the Pebble manager is vibrating the Pebble", ^{
+                beforeEach(^{
+                    PebCiti.sharedInstance.pebbleManager stub_method(@selector(isVibratingPebble)).and_return(YES);
+                    controller.view should_not be_nil;
+                });
+
+                it(@"should be enabled", ^{
+                    controller.vibratePebbleSwitch.isEnabled should be_truthy;
+                });
+
+                it(@"should be on", ^{
+                    controller.vibratePebbleSwitch.isOn should be_truthy;
+                });
+
+                it(@"the label should be enabled", ^{
+                    controller.vibratePebbleLabel.isEnabled should be_truthy;
+                });
+
+                describe(@"turning the switch off", ^{
+                    beforeEach(^{
+                        controller.vibratePebbleSwitch.on = NO;
+                        [controller vibratePebbleSwitchWasToggled:controller.vibratePebbleSwitch];
+                    });
+
+                    it(@"should tell the Pebble manager to stop vibrating the Pebble", ^{
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(setVibratePebble:)).with(NO);
+                    });
+                });
+            });
+
+            context(@"when the Pebble manager is not vibrating the Pebble", ^{
+                beforeEach(^{
+                    PebCiti.sharedInstance.pebbleManager stub_method(@selector(isVibratingPebble)).and_return(NO);
+                    controller.view should_not be_nil;
+                });
+
+                it(@"should be enabled", ^{
+                    controller.vibratePebbleSwitch.isEnabled should be_truthy;
+                });
+
+                it(@"should be off", ^{
+                    controller.vibratePebbleSwitch.isOn should_not be_truthy;
+                });
+
+                it(@"the label should still be enabled", ^{
+                    controller.vibratePebbleLabel.isEnabled should be_truthy;
+                });
+
+                describe(@"turning the switch on", ^{
+                    beforeEach(^{
+                        controller.vibratePebbleSwitch.on = YES;
+                        [controller vibratePebbleSwitchWasToggled:controller.vibratePebbleSwitch];
+                    });
+
+                    it(@"should tell the Pebble manager to start vibrating the Pebble", ^{
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(setVibratePebble:)).with(YES);
+                    });
+                });
+            });
+        });
+
+        context(@"when the Pebble manager is not sending messages", ^{
+            beforeEach(^{
+                PebCiti.sharedInstance.pebbleManager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
+                controller.view should_not be_nil;
+            });
+
+            it(@"should be disabled", ^{
+                controller.vibratePebbleSwitch.isEnabled should_not be_truthy;
+            });
+
+            it(@"should be off", ^{
+                controller.vibratePebbleSwitch.isOn should_not be_truthy;
+            });
+
+            it(@"the label should be disabled", ^{
+                controller.vibratePebbleLabel.isEnabled should_not be_truthy;
+            });
+        });
+
+        describe(@"interacting with the Pebble", ^{
+            beforeEach(^{
+                controller.view should_not be_nil;
+            });
+
+            describe(@"when a Pebble connects", ^{
+                beforeEach(^{
+                    controller.vibratePebbleLabel.enabled = NO;
+                    controller.vibratePebbleSwitch.enabled = NO;
+                    [controller pebbleManagerConnectedToWatch:nice_fake_for([PCPebbleManager class])];
+                });
+
+                it(@"should enable the vibrate switch", ^{
+                    controller.vibratePebbleSwitch.isEnabled should be_truthy;
+                });
+
+                it(@"should enable the vibrate label", ^{
+                    controller.vibratePebbleLabel.isEnabled should be_truthy;
+                });
+            });
+
+            describe(@"when a Pebble disconnects", ^{
+                beforeEach(^{
+                    controller.vibratePebbleLabel.enabled = YES;
+                    controller.vibratePebbleSwitch.enabled = YES;
+                    controller.vibratePebbleSwitch.on = YES;
+                    [controller pebbleManagerDisconnectedFromWatch:nice_fake_for([PCPebbleManager class])];
+                });
+
+                it(@"should disable the vibrate switch", ^{
+                    controller.vibratePebbleSwitch.isEnabled should_not be_truthy;
+                });
+
+                it(@"should turn the vibrate switch off", ^{
+                    controller.vibratePebbleSwitch.isOn should_not be_truthy;
+                });
+
+                it(@"should disable the vibrate label", ^{
+                    controller.vibratePebbleLabel.isEnabled should_not be_truthy;
+                });
+            });
+
+            describe(@"when sending a message to the Pebble fails", ^{
+                beforeEach(^{
+                    controller.vibratePebbleLabel.enabled = YES;
+                    controller.vibratePebbleSwitch.enabled = YES;
+                    controller.vibratePebbleSwitch.on = YES;
+                    [controller pebbleManager:nice_fake_for([PCPebbleManager class]) receivedError:nice_fake_for([NSError class])];
+                });
+
+                it(@"should disable the vibrate switch", ^{
+                    controller.vibratePebbleSwitch.isEnabled should_not be_truthy;
+                });
+
+                it(@"should turn the vibrate switch off", ^{
+                    controller.vibratePebbleSwitch.isOn should_not be_truthy;
+                });
+
+                it(@"should disable the vibrate label", ^{
+                    controller.vibratePebbleLabel.isEnabled should_not be_truthy;
                 });
             });
         });
@@ -202,8 +393,12 @@ describe(@"PCHomeViewController", ^{
     });
 
     describe(@"-closestStationLabel", ^{
+        __block PCStationList *stationList;
+
         beforeEach(^{
-            spy_on(PebCiti.sharedInstance.stationList);
+            stationList = nice_fake_for([PCStationList class]);
+            spy_on(PebCiti.sharedInstance);
+            PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
             controller.view should_not be_nil;
         });
 
@@ -215,7 +410,7 @@ describe(@"PCHomeViewController", ^{
             beforeEach(^{
                 PCStation *closestStation = nice_fake_for([PCStation class]);
                 closestStation stub_method(@selector(name)).and_return(@"1st Ave & 2nd St.");
-                PebCiti.sharedInstance.stationList stub_method("closestStation").and_return(closestStation);
+                stationList stub_method("closestStation").and_return(closestStation);
 
                 CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
                 CLLocation *location = nice_fake_for([CLLocation class]);

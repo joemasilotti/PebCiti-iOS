@@ -53,6 +53,7 @@ describe(@"PCPebbleManager", ^{
                 watch stub_method(@selector(isConnected)).and_return(YES);
                 [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
 
+                manager.vibratePebble = YES;
                 manager.sendMessagesToPebble = YES;
 
                 NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
@@ -66,6 +67,10 @@ describe(@"PCPebbleManager", ^{
 
             afterEach(^{
                 [completion release];
+            });
+
+            it(@"should keep the Pebble vibrating status", ^{
+                manager.isVibratingPebble should be_truthy;
             });
 
             context(@"and that Pebble supports app messages", ^{
@@ -165,8 +170,28 @@ describe(@"PCPebbleManager", ^{
                 [completion release];
             });
 
-            it(@"should send the message to the Pebble", ^{
-                manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(@{ @1: @"Message text" }, Arguments::anything);
+            context(@"when the Pebble should be vibrated", ^{
+                beforeEach(^{
+                    manager.vibratePebble = YES;
+                    [manager sendMessageToPebble:@"Message text"];
+                });
+
+                it(@"should send the message with the vibrate key set", ^{
+                    NSDictionary *message = @{ @1: @"Message text", @2: @1 };
+                    manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(message, Arguments::anything);
+                });
+            });
+
+            context(@"when the Pebble should not be vibrated", ^{
+                beforeEach(^{
+                    manager.vibratePebble = YES;
+                    [manager sendMessageToPebble:@"Message text"];
+                });
+
+                it(@"should send the message with the vibrate key not set", ^{
+                    NSDictionary *message = @{ @1: @"Message text", @2: @0 };
+                    manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(message, Arguments::anything);
+                });
             });
 
             describe(@"when the message send successfully", ^{
@@ -215,6 +240,7 @@ describe(@"PCPebbleManager", ^{
 
         beforeEach(^{
             manager.sendMessagesToPebble = YES;
+            manager.vibratePebble = YES;
             watch = nice_fake_for([PBWatch class]);
             watch stub_method(@selector(isConnected)).and_return(YES);
             [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
@@ -227,6 +253,10 @@ describe(@"PCPebbleManager", ^{
 
         it(@"should set isSendingMessagesToPebble to NO", ^{
             manager.isSendingMessagesToPebble should_not be_truthy;
+        });
+
+        it(@"should stop vibrating the Pebble", ^{
+            manager.isVibratingPebble should_not be_truthy;
         });
     });
 });
