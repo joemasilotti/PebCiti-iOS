@@ -99,11 +99,7 @@
 
     if (!self.isErrorAlertPresented) {
         self.errorAlertPresented = YES;
-        [[[UIAlertView alloc] initWithTitle:@"Pebble Communication Failed"
-                                    message:error.localizedDescription
-                                   delegate:self
-                          cancelButtonTitle:@"Dismiss"
-                          otherButtonTitles:nil] show];
+        [UIAlertView displayAlertViewWithTitle:@"Pebble Communication Failed" message:error.localizedDescription delegate:self];
     }
 }
 
