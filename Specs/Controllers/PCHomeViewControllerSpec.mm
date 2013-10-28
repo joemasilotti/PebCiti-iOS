@@ -539,6 +539,20 @@ describe(@"PCHomeViewController", ^{
                             UIAlertView.currentAlertView.message should equal(error.localizedDescription);
                         });
                     });
+
+                    describe(@"when another error occurs after the first is dismissed", ^{
+                        __block NSError *newError;
+
+                        beforeEach(^{
+                            [UIAlertView.currentAlertView dismissWithCancelButton];
+                            newError = [NSError errorWithDomain:@"Domain" code:123 userInfo:@{ NSLocalizedDescriptionKey: @"Third error message." }];
+                            [controller pebbleManager:nice_fake_for([PCPebbleManager class]) receivedError:newError];
+                        });
+
+                        it(@"should show another alert", ^{
+                            UIAlertView.currentAlertView.message should equal(@"Third error message.");
+                        });
+                    });
                 });
             });
 
