@@ -408,8 +408,8 @@ describe(@"PCHomeViewController", ^{
 
         describe(@"on a location update", ^{
             beforeEach(^{
-                PCStation *closestStation = nice_fake_for([PCStation class]);
-                closestStation stub_method(@selector(name)).and_return(@"1st Ave & 2nd St.");
+                PCStation *closestStation = [[[PCStation alloc] initWithID:@1] autorelease];
+                closestStation.name = @"1st Ave & 2nd St.";
                 stationList stub_method("closestStation").and_return(closestStation);
 
                 CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
@@ -493,8 +493,8 @@ describe(@"PCHomeViewController", ^{
 
             describe(@"when a location update occurs", ^{
                 beforeEach(^{
-                    PCStation *station = nice_fake_for([PCStation class]);
-                    station stub_method(@selector(name)).and_return(@"Station Name");
+                    PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
+                    station.name = @"Station Name";
 
                     spy_on(PebCiti.sharedInstance.stationList);
                     PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(station);
@@ -527,7 +527,7 @@ describe(@"PCHomeViewController", ^{
                         controller.sendMessagesSwitch should have_received(@selector(setOn:animated:)).with(NO, YES);
                     });
 
-                    describe(@"when anothe error occurs before the first is dismissed", ^{
+                    describe(@"when another error occurs before the first is dismissed", ^{
                         __block NSError *newError;
 
                         beforeEach(^{
@@ -539,6 +539,119 @@ describe(@"PCHomeViewController", ^{
                             UIAlertView.currentAlertView.message should equal(error.localizedDescription);
                         });
                     });
+                });
+            });
+
+            describe(@"subsequent location updates", ^{
+                __block CLLocationManager *locationManager;
+                __block CLLocation *location;
+
+                beforeEach(^{
+                    PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
+                    station.name = @"First Station";
+
+                    spy_on(PebCiti.sharedInstance.stationList);
+                    PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(station);
+
+                    locationManager = nice_fake_for([CLLocationManager class]);
+                    location = nice_fake_for([CLLocation class]);
+                    [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                });
+
+                it(@"should send the station name to the Pebble", ^{
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"First Station");
+                });
+
+                context(@"with different stations", ^{
+                    beforeEach(^{
+                        PCStation *station = [[[PCStation alloc] initWithID:@2] autorelease];
+                        station.name = @"Second Station";
+
+                        PCStationList *stationList = nice_fake_for([PCStationList class]);
+                        stationList stub_method(@selector(closestStation)).and_return(station);
+                        spy_on(PebCiti.sharedInstance);
+                        PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
+
+                        [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                    });
+
+                    it(@"should send the second station name to the Pebble", ^{
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Second Station");
+                    });
+                });
+
+                context(@"with the same station", ^{
+                    beforeEach(^{
+                        PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
+                        station.name = @"Second Station";
+
+                        PCStationList *stationList = nice_fake_for([PCStationList class]);
+                        stationList stub_method(@selector(closestStation)).and_return(station);
+                        spy_on(PebCiti.sharedInstance);
+                        PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
+                    });
+
+                    context(@"after the Pebble failed to connect", ^{
+                        beforeEach(^{
+                            [controller pebbleManagerFailedToConnectToWatch:nice_fake_for([PCPebbleManager class])];
+                            [(id<CedarDouble>)PebCiti.sharedInstance.pebbleManager reset_sent_messages];
+                            [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                        });
+
+                        it(@"should send the second station name to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Second Station");
+                        });
+                    });
+
+                    context(@"after message sending failed", ^{
+                        beforeEach(^{
+                            [controller pebbleManager:nice_fake_for([PCPebbleManager class]) receivedError:nice_fake_for([NSError class])];
+                            [(id<CedarDouble>)PebCiti.sharedInstance.pebbleManager reset_sent_messages];
+                            [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                        });
+
+                        it(@"should send the second station name to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Second Station");
+                        });
+                    });
+
+                    context(@"after the Pebble disconnected", ^{
+                        beforeEach(^{
+                            [controller pebbleManagerDisconnectedFromWatch:nice_fake_for([PCPebbleManager class])];
+                            [(id<CedarDouble>)PebCiti.sharedInstance.pebbleManager reset_sent_messages];
+                            [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                        });
+
+                        it(@"should send the second station name to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Second Station");
+                        });
+                    });
+
+                    context(@"after sending messages to Pebble is toggled", ^{
+                        beforeEach(^{
+                            [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
+                            [controller sendMessagesSwitchWasToggled:controller.sendMessagesSwitch];
+
+                            [(id<CedarDouble>)PebCiti.sharedInstance.pebbleManager reset_sent_messages];
+                            [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                        });
+
+                        it(@"should send the second station name to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Second Station");
+                        });
+                    });
+
+                    context(@"and no other special circumstances occurred", ^{
+                        beforeEach(^{
+                            [(id<CedarDouble>)PebCiti.sharedInstance.pebbleManager reset_sent_messages];
+                            [controller locationManager:locationManager didUpdateLocations:@[ location ]];
+                        });
+
+                        it(@"should not send the second station name to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should_not have_received(@selector(sendMessageToPebble:));
+                        });
+                    });
+
                 });
             });
         });

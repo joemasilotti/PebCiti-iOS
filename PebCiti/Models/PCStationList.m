@@ -64,7 +64,7 @@
 
     NSMutableArray *stations = [@[] mutableCopy];
     for (NSDictionary *stationInfo in stationInfos) {
-        PCStation *station = [[PCStation alloc] init];
+        PCStation *station = [[PCStation alloc] initWithID:stationInfo[@"id"]];
         station.name = stationInfo[@"stationName"];
         station.docksAvailable = [stationInfo[@"availableDocks"] integerValue];
         station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];

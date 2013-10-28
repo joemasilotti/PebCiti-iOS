@@ -7,6 +7,7 @@
 #import "PebCiti.h"
 
 @interface PCHomeViewController ()
+@property (nonatomic, strong) PCStation *previousClosestStation;
 @property (nonatomic, getter = isErrorAlertPresented) BOOL errorAlertPresented;
 @end
 
@@ -56,7 +57,7 @@
         PebCiti.sharedInstance.pebbleManager.vibratePebble = NO;
     }
     PebCiti.sharedInstance.pebbleManager.sendMessagesToPebble = sendMessagesSwitch.isOn;
-
+    self.previousClosestStation = nil;
 }
 
 - (IBAction)vibratePebbleSwitchWasToggled:(UISwitch *)vibratePebbleSwitch
@@ -84,6 +85,7 @@
 {
     [self.activityIndicator stopAnimating];
     [self.sendMessagesSwitch setOn:NO animated:YES];
+    self.previousClosestStation = nil;
     [UIAlertView displayAlertViewWithTitle:@"No Pebble Connected" message:@"Connect a Pebble that supports app messages before continuing."];
 }
 
@@ -93,6 +95,7 @@
     [self.vibratePebbleSwitch setOn:NO animated:YES];
     self.vibratePebbleLabel.enabled = NO;
     self.vibratePebbleSwitch.enabled = NO;
+    self.previousClosestStation = nil;
 
     if (!self.isErrorAlertPresented) {
         self.errorAlertPresented = YES;
@@ -113,6 +116,7 @@
     [self.vibratePebbleSwitch setOn:NO animated:YES];
     self.vibratePebbleLabel.enabled = NO;
     self.vibratePebbleSwitch.enabled = NO;
+    self.previousClosestStation = nil;
 }
 
 #pragma mark - <PCStationsViewControllerDelegate>
@@ -129,10 +133,12 @@
     CLLocation *lastLocation = locations.lastObject;
     self.currentLocationLabel.text = [NSString stringWithFormat:@"%f, %f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
 
-    NSString *stationName = PebCiti.sharedInstance.stationList.closestStation.name;
-    self.closestStationLabel.text = stationName;
-    if (PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble) {
-        [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:stationName];
+    PCStation *closestStation = PebCiti.sharedInstance.stationList.closestStation;
+    self.closestStationLabel.text = closestStation.name;
+
+    if (PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble && self.previousClosestStation.stationID != closestStation.stationID) {
+        [PebCiti.sharedInstance.pebbleManager sendMessageToPebble:closestStation.name];
+        self.previousClosestStation = closestStation;
     }
 }
 

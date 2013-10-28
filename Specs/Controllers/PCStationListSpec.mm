@@ -52,6 +52,10 @@ describe(@"PCStationList", ^{
                     it(@"should store the stations", ^{
                         stationList.count should equal(3);
 
+                        stationList[0].stationID should equal(@72);
+                        stationList[1].stationID should equal(@79);
+                        stationList[2].stationID should equal(@82);
+
                         stationList[0].name should equal(@"W 52 St & 11 Ave");
                         stationList[1].name should equal(@"Franklin St & W Broadway");
                         stationList[2].name should equal(@"St James Pl & Pearl St");
@@ -114,10 +118,10 @@ describe(@"PCStationList", ^{
             spy_on(PebCiti.sharedInstance.locationManager);
 
             PCStation *farStation, *closeStation, *closestStation, *farthestStation;
-            farStation = [[[PCStation alloc] init] autorelease];
-            closeStation = [[[PCStation alloc] init] autorelease];
-            closestStation = [[[PCStation alloc] init] autorelease];
-            farthestStation = [[[PCStation alloc] init] autorelease];
+            farStation = [[[PCStation alloc] initWithID:@1] autorelease];
+            closeStation = [[[PCStation alloc] initWithID:@2] autorelease];
+            closestStation = [[[PCStation alloc] initWithID:@3] autorelease];
+            farthestStation = [[[PCStation alloc] initWithID:@4] autorelease];
 
             farStation.name = @"Far Station";
             closeStation.name = @"Close Station";

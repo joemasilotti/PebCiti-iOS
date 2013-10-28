@@ -96,13 +96,13 @@ describe(@"PCStationsViewController", ^{
 
         beforeEach(^{
             PCStation *station1, *station2, *station3;
-            station1 = [[PCStation alloc] init];
+            station1 = [[PCStation alloc] initWithID:@1];
             station1.name = @"First and First";
             station1.docksAvailable = 1;
-            station2 = [[PCStation alloc] init];
+            station2 = [[PCStation alloc] initWithID:@2];
             station2.name = @"Second and Second";
             station2.docksAvailable = 2;
-            station3 = [[PCStation alloc] init];
+            station3 = [[PCStation alloc] initWithID:@3];
             station3.name = @"Third and Third";
             station3.docksAvailable = 3;
 
