@@ -1,3 +1,4 @@
+#import <AudioToolbox/AudioServices.h>
 #import "UIAlertView+PebCiti.h"
 
 @implementation UIAlertView (PebCiti)
@@ -14,6 +15,7 @@
                                                        delegate:delegate
                                               cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
     [alertView show];
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     return alertView;
 }
 
