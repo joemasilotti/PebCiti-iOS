@@ -36,15 +36,29 @@
         }
     } else {
         _sendMessagesToPebble = NO;
-        self.vibratePebble = NO;
     }
+}
+
+- (void)setVibratePebble:(BOOL)vibratePebble
+{
+    NSDictionary *update = @{ @2: [NSNumber numberWithBool:vibratePebble] };
+    __weak PCPebbleManager *weakSelf = self;
+    [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+        if (!error) {
+            _vibratePebble = vibratePebble;
+        } else {
+            _vibratePebble = NO;
+            _sendMessagesToPebble = NO;
+            [weakSelf.delegate pebbleManager:weakSelf receivedError:error];
+        }
+    }];
 }
 
 - (void)sendMessageToPebble:(NSString *)message
 {
     if (self.isSendingMessagesToPebble) {
         __weak PCPebbleManager *weakSelf = self;
-        NSDictionary *update = @{ @1: message, @2: self.isVibratingPebble ? @1 : @0 };
+        NSDictionary *update = @{ @1: message };
         [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
             if (error) {
                 weakSelf.sendMessagesToPebble = NO;

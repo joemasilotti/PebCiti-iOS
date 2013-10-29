@@ -53,7 +53,6 @@ describe(@"PCPebbleManager", ^{
                 watch stub_method(@selector(isConnected)).and_return(YES);
                 [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
 
-                manager.vibratePebble = YES;
                 manager.sendMessagesToPebble = YES;
 
                 NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
@@ -67,10 +66,6 @@ describe(@"PCPebbleManager", ^{
 
             afterEach(^{
                 [completion release];
-            });
-
-            it(@"should keep the Pebble vibrating status", ^{
-                manager.isVibratingPebble should be_truthy;
             });
 
             context(@"and that Pebble supports app messages", ^{
@@ -105,6 +100,119 @@ describe(@"PCPebbleManager", ^{
 
                     it(@"should stop sending messages to the (now disconnected) Pebble", ^{
                         manager.isSendingMessagesToPebble should_not be_truthy;
+                    });
+                });
+
+                describe(@"when telling the manager to vibrate the Pebble", ^{
+                    __block void (^completion)(PBWatch *, NSDictionary *, NSError *);
+
+                    beforeEach(^{
+                        [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
+                        manager.vibratePebble = YES;
+
+                        NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                            return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
+                        }]] lastObject];
+
+                        __block void (^localCompletion)(PBWatch *, NSDictionary *, NSError *);
+                        [lastMessage getArgument:&localCompletion atIndex:3];
+                        completion = [localCompletion copy];
+                    });
+
+                    afterEach(^{
+                        [completion release];
+                    });
+
+                    it(@"should tell the Pebble to vibrate", ^{
+                        NSDictionary *update = @{ @2: @1 };
+                        watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
+                    });
+
+                    describe(@"when the update succeeds", ^{
+                        beforeEach(^{
+                            completion(watch, nil, nil);
+                        });
+
+                        it(@"should set the vibrating status to true", ^{
+                            manager.isVibratingPebble should be_truthy;
+                        });
+
+                        describe(@"when telling the manager to not vibrate the Pebble", ^{
+                            __block void (^offCompletion)(PBWatch *, NSDictionary *, NSError *);
+
+                            beforeEach(^{
+                                manager.vibratePebble = NO;
+
+                                NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                                    return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
+                                }]] lastObject];
+
+                                __block void (^localCompletion)(PBWatch *, NSDictionary *, NSError *);
+                                [lastMessage getArgument:&localCompletion atIndex:3];
+                                offCompletion = [localCompletion copy];
+                            });
+
+                            afterEach(^{
+                                [offCompletion release];
+                            });
+
+                            it(@"should tell the Pebble not to vibrate", ^{
+                                NSDictionary *update = @{ @2: @0 };
+                                watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
+                            });
+
+                            describe(@"when the update succeeds", ^{
+                                beforeEach(^{
+                                    offCompletion(watch, nil, nil);
+                                });
+
+                                it(@"should set the vibrating status to false", ^{
+                                    manager.isVibratingPebble should_not be_truthy;
+                                });
+                            });
+
+                            describe(@"when the update fails", ^{
+                                __block NSError *error;
+
+                                beforeEach(^{
+                                    error = nice_fake_for([NSError class]);
+                                    offCompletion(watch, nil, error);
+                                });
+
+                                it(@"should set the vibrating status to false", ^{
+                                    manager.isVibratingPebble should_not be_truthy;
+                                });
+
+                                it(@"should stop sending updates to the Pebble", ^{
+                                    manager.isSendingMessagesToPebble should_not be_truthy;
+                                });
+
+                                it(@"should alert the delegate of the error", ^{
+                                    manager.delegate should have_received(@selector(pebbleManager:receivedError:)).with(manager, error);
+                                });
+                            });
+                        });
+                    });
+
+                    describe(@"when the update fails", ^{
+                        __block NSError *error;
+
+                        beforeEach(^{
+                            error = nice_fake_for([NSError class]);
+                            completion(watch, nil, error);
+                        });
+
+                        it(@"should set the vibrating status to false", ^{
+                            manager.isVibratingPebble should_not be_truthy;
+                        });
+
+                        it(@"should stop sending updates to the Pebble", ^{
+                            manager.isSendingMessagesToPebble should_not be_truthy;
+                        });
+
+                        it(@"should alert the delegate of the error", ^{
+                            manager.delegate should have_received(@selector(pebbleManager:receivedError:)).with(manager, error);
+                        });
                     });
                 });
             });
@@ -170,31 +278,12 @@ describe(@"PCPebbleManager", ^{
                 [completion release];
             });
 
-            context(@"when the Pebble should be vibrated", ^{
-                beforeEach(^{
-                    manager.vibratePebble = YES;
-                    [manager sendMessageToPebble:@"Message text"];
-                });
-
-                it(@"should send the message with the vibrate key set", ^{
-                    NSDictionary *message = @{ @1: @"Message text", @2: @1 };
-                    manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(message, Arguments::anything);
-                });
+            it(@"should send the message to the Pebble", ^{
+                NSDictionary *message = @{ @1: @"Message text" };
+                manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(message, Arguments::anything);
             });
 
-            context(@"when the Pebble should not be vibrated", ^{
-                beforeEach(^{
-                    manager.vibratePebble = YES;
-                    [manager sendMessageToPebble:@"Message text"];
-                });
-
-                it(@"should send the message with the vibrate key not set", ^{
-                    NSDictionary *message = @{ @1: @"Message text", @2: @0 };
-                    manager.watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(message, Arguments::anything);
-                });
-            });
-
-            describe(@"when the message send successfully", ^{
+            describe(@"when the message sent successfully", ^{
                 beforeEach(^{
                     completion(watch, nil, nil);
                 });
