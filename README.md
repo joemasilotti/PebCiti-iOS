@@ -1,6 +1,6 @@
 # PebCiti-iOS
 
-iOS half of PebCiti, a simple app to show the nearest available [CitiBike NYC](http://citibikenyc.com/) dock on your [Pebble](https://getpebble.com/).
+iOS half of PebCiti ([Pebble half](https://github.com/joemasilotti/PebCiti-Pebble)), a simple app to show the nearest available [CitiBike NYC](http://citibikenyc.com/) dock on your [Pebble](https://getpebble.com/).
 
 **UUID**: F6BB82D0-B5BF-4EC7-A97A-405D3A350444
 
