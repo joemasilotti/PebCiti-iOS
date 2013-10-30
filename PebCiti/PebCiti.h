@@ -9,5 +9,6 @@
 @property (nonatomic, strong, readonly) PCStationList *stationList;
 
 + (PebCiti *)sharedInstance;
+- (void)setUpAppearance;
 
 @end
