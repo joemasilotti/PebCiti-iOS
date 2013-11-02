@@ -44,6 +44,44 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"bikeOrDockSegmentControl", ^{
+        beforeEach(^{
+            controller.view should_not be_nil;
+        });
+
+        context(@"when the focus type is the closest bike", ^{
+            beforeEach(^{
+                controller.focusType should equal(PCFocusTypeBike);
+            });
+
+            it(@"should be 'Bike'", ^{
+                controller.focusSegmentControl.selectedSegmentIndex = 0;
+            });
+
+            describe(@"changing it to 'Dock'", ^{
+                beforeEach(^{
+                    [controller.focusSegmentControl setSelectedSegmentIndex:1];
+                    [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
+                });
+
+                it(@"should change the property to 'Dock'", ^{
+                    controller.focusType should equal(PCFocusTypeDock);
+                });
+
+                describe(@"changing it back to 'Bike'", ^{
+                    beforeEach(^{
+                        [controller.focusSegmentControl setSelectedSegmentIndex:0];
+                        [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
+                    });
+
+                    it(@"should change the property to 'Bike'", ^{
+                        controller.focusType should equal(PCFocusTypeBike);
+                    });
+                });
+            });
+        });
+    });
+
     describe(@"-sendMessagesSwitch", ^{
         __block PCPebbleManager *pebbleManager;
 
@@ -399,26 +437,89 @@ describe(@"PCHomeViewController", ^{
             stationList = nice_fake_for([PCStationList class]);
             spy_on(PebCiti.sharedInstance);
             PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
-            controller.view should_not be_nil;
         });
 
-        it(@"should display an empty string", ^{
-            controller.closestStationLabel.text should equal(@"");
+        context(@"when no closest station has been found", ^{
+            beforeEach(^{
+                controller.view should_not be_nil;
+            });
+
+            it(@"should display an empty string", ^{
+                controller.closestStationLabel.text should equal(@"");
+            });
+        });
+
+        context(@"when requesting an available bike", ^{
+            beforeEach(^{
+                controller.focusType should equal(PCFocusTypeBike);
+
+                PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
+                station.name = @"Available Dock Station Name";
+                stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
+
+                controller.view should_not be_nil;
+            });
+
+            it(@"should be the name of the closest station with an available bike", ^{
+                controller.closestStationLabel.text should equal(@"Available Dock Station Name");
+            });
+        });
+
+        context(@"when requesting an open dock", ^{
+            beforeEach(^{
+                controller.view should_not be_nil;
+                [controller.focusSegmentControl setSelectedSegmentIndex:1];
+                [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
+
+                PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
+                station.name = @"Open Dock Station Name";
+                stationList stub_method(@selector(closestStationWithOpenDock)).and_return(station);
+
+                [controller viewDidLoad];
+            });
+
+            it(@"should update to the name of the closest station with an open dock", ^{
+                controller.closestStationLabel.text should equal(@"Open Dock Station Name");
+            });
         });
 
         describe(@"on a location update", ^{
-            beforeEach(^{
-                PCStation *closestStation = [[[PCStation alloc] initWithID:@1] autorelease];
-                closestStation.name = @"1st Ave & 2nd St.";
-                stationList stub_method("closestStation").and_return(closestStation);
+            __block PCStation *station;
 
+            beforeEach(^{
+                station = [[[PCStation alloc] initWithID:@1] autorelease];
+            });
+
+            subjectAction(^{
+                controller.view should_not be_nil;
                 CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
                 CLLocation *location = nice_fake_for([CLLocation class]);
                 [controller locationManager:locationManager didUpdateLocations:@[ location ]];
             });
 
-            it(@"should update to the closest station's name", ^{
-                controller.closestStationLabel.text should equal(@"1st Ave & 2nd St.");
+            context(@"when requesting an available bike", ^{
+                beforeEach(^{
+                    station.name = @"Available Dock Station Name";
+                    stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
+                });
+
+                it(@"should update to the name of the closest station with an available bike", ^{
+                    controller.closestStationLabel.text should equal(@"Available Dock Station Name");
+                });
+
+                describe(@"when requesting a station with an open bike", ^{
+                    beforeEach(^{
+                        station.name = @"Open Dock Station Name";
+                        stationList stub_method(@selector(closestStationWithOpenDock)).and_return(station);
+
+                        [controller.focusSegmentControl setSelectedSegmentIndex:1];
+                        [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
+                    });
+
+                    it(@"should update to the name of the closest station with an open dock", ^{
+                        controller.closestStationLabel.text should equal(@"Open Dock Station Name");
+                    });
+                });
             });
         });
     });
@@ -492,20 +593,42 @@ describe(@"PCHomeViewController", ^{
             });
 
             describe(@"when a location update occurs", ^{
+                __block PCStation *station;
+
                 beforeEach(^{
-                    PCStation *station = [[[PCStation alloc] initWithID:@1] autorelease];
-                    station.name = @"Station Name";
-
                     spy_on(PebCiti.sharedInstance.stationList);
-                    PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(station);
+                    station = [[[PCStation alloc] initWithID:@1] autorelease];
+                });
 
+                subjectAction(^{
                     CLLocationManager *locationManager = nice_fake_for([CLLocationManager class]);
                     CLLocation *location = nice_fake_for([CLLocation class]);
                     [controller locationManager:locationManager didUpdateLocations:@[ location ]];
                 });
 
-                it(@"should send the closest station name to the Pebble", ^{
-                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Station Name");
+                context(@"when requesting the closest bike", ^{
+                    beforeEach(^{
+                        station.name = @"Station Name with Bike";
+                        PebCiti.sharedInstance.stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
+                    });
+
+                    it(@"should send the name of the closest station with a bike to the Pebble", ^{
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Station Name with Bike");
+                    });
+
+                    describe(@"when asking for the closest open dock", ^{
+                        beforeEach(^{
+                            station.name = @"Station Name with Open Dock";
+                            PebCiti.sharedInstance.stationList stub_method(@selector(closestStationWithOpenDock)).and_return(station);
+
+                            [controller.focusSegmentControl setSelectedSegmentIndex:1];
+                            [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
+                        });
+
+                        it(@"should send the name of the closest station with an open dock to the Pebble", ^{
+                            PebCiti.sharedInstance.pebbleManager should have_received(@selector(sendMessageToPebble:)).with(@"Station Name with Open Dock");
+                        });
+                    });
                 });
 
                 describe(@"when an error occurs sending the message", ^{
@@ -565,7 +688,7 @@ describe(@"PCHomeViewController", ^{
                     station.name = @"First Station";
 
                     spy_on(PebCiti.sharedInstance.stationList);
-                    PebCiti.sharedInstance.stationList stub_method(@selector(closestStation)).and_return(station);
+                    PebCiti.sharedInstance.stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
 
                     locationManager = nice_fake_for([CLLocationManager class]);
                     location = nice_fake_for([CLLocation class]);
@@ -582,7 +705,7 @@ describe(@"PCHomeViewController", ^{
                         station.name = @"Second Station";
 
                         PCStationList *stationList = nice_fake_for([PCStationList class]);
-                        stationList stub_method(@selector(closestStation)).and_return(station);
+                        stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
                         spy_on(PebCiti.sharedInstance);
                         PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
 
@@ -600,7 +723,7 @@ describe(@"PCHomeViewController", ^{
                         station.name = @"Second Station";
 
                         PCStationList *stationList = nice_fake_for([PCStationList class]);
-                        stationList stub_method(@selector(closestStation)).and_return(station);
+                        stationList stub_method(@selector(closestStationWithAvailableBike)).and_return(station);
                         spy_on(PebCiti.sharedInstance);
                         PebCiti.sharedInstance stub_method(@selector(stationList)).and_return(stationList);
                     });

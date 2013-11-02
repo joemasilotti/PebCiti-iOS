@@ -64,6 +64,10 @@ describe(@"PCStationList", ^{
                         stationList[1].docksAvailable should equal(7);
                         stationList[2].docksAvailable should equal(25);
 
+                        stationList[0].bikesAvailable should equal(2);
+                        stationList[1].bikesAvailable should equal(26);
+                        stationList[2].bikesAvailable should equal(1);
+
                         stationList[0].location.coordinate.latitude should equal(40.76727216f);
                         stationList[1].location.coordinate.latitude should equal(40.71911552f);
                         stationList[2].location.coordinate.latitude should equal(40.71117416f);
@@ -113,11 +117,12 @@ describe(@"PCStationList", ^{
         });
     });
 
-    describe(@"-closestStation:", ^{
+    describe(@"closest stations", ^{
+        __block PCStation *farStation, *closeStation, *closestStation, *farthestStation;
+
         beforeEach(^{
             spy_on(PebCiti.sharedInstance.locationManager);
 
-            PCStation *farStation, *closeStation, *closestStation, *farthestStation;
             farStation = [[[PCStation alloc] initWithID:@1] autorelease];
             closeStation = [[[PCStation alloc] initWithID:@2] autorelease];
             closestStation = [[[PCStation alloc] initWithID:@3] autorelease];
@@ -136,24 +141,63 @@ describe(@"PCStationList", ^{
             stationList.stations = @[ farStation, closeStation, closestStation, farthestStation ];
         });
 
-        context(@"when the user has reported a location", ^{
+        describe(@"-closestStationWithAvailableBike", ^{
             beforeEach(^{
-                CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.722543f longitude:-73.994379f] autorelease];
-                PebCiti.sharedInstance.locationManager stub_method("location").and_return(userLocation);
+                farStation.bikesAvailable = 5;
+                closeStation.bikesAvailable = 1;
+                closestStation.bikesAvailable = 0;
+                farthestStation.bikesAvailable = 5;
             });
 
-            it(@"should return the station with the smallest distance to the user's location", ^{
-                stationList.closestStation.name should equal(@"Closest Station");
+            context(@"when the user has reported a location", ^{
+                beforeEach(^{
+                    CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.722543f longitude:-73.994379f] autorelease];
+                    PebCiti.sharedInstance.locationManager stub_method("location").and_return(userLocation);
+                });
+
+                it(@"should return the closest station with at least one bike available", ^{
+                    stationList.closestStationWithAvailableBike should equal(closeStation);
+                });
+            });
+
+            context(@"when the user has not yet reported a location", ^{
+                beforeEach(^{
+                    PebCiti.sharedInstance.locationManager stub_method("location");
+                });
+
+                it(@"should return nil", ^{
+                    stationList.closestStationWithAvailableBike should be_nil;
+                });
             });
         });
 
-        context(@"when the user has not yet reported a location", ^{
+        describe(@"-closestStationWithOpenDock", ^{
             beforeEach(^{
-                PebCiti.sharedInstance.locationManager stub_method("location");
+                farStation.docksAvailable = 5;
+                closeStation.docksAvailable = 1;
+                closestStation.docksAvailable = 0;
+                farthestStation.docksAvailable = 5;
             });
 
-            it(@"should return nil", ^{
-                stationList.closestStation should be_nil;
+            context(@"when the user has reported a location", ^{
+                beforeEach(^{
+                    CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.722543f longitude:-73.994379f] autorelease];
+                    PebCiti.sharedInstance.locationManager stub_method("location").and_return(userLocation);
+                });
+
+                it(@"should return the closest station with at least one dock available", ^{
+                    stationList.closestStationWithOpenDock should equal(closeStation);
+                });
+            });
+
+            context(@"when the user has not yet reported a location", ^{
+                beforeEach(^{
+                    PebCiti.sharedInstance.locationManager stub_method("location");
+                });
+
+                it(@"should return nil", ^{
+                    stationList.closestStationWithOpenDock should be_nil;
+                });
             });
         });
     });

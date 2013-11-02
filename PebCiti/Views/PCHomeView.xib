@@ -9,6 +9,7 @@
                 <outlet property="activityIndicator" destination="Yy5-KJ-NQW" id="YUl-Ky-SAT"/>
                 <outlet property="closestStationLabel" destination="vyk-70-lfb" id="sPZ-iW-POo"/>
                 <outlet property="currentLocationLabel" destination="IXr-w0-Luk" id="iF2-Vp-8eO"/>
+                <outlet property="focusSegmentControl" destination="iGu-e1-rGe" id="6eC-i2-Rhh"/>
                 <outlet property="sendMessagesSwitch" destination="aaz-mW-Qqc" id="mwP-vZ-ufk"/>
                 <outlet property="vibratePebbleLabel" destination="HjM-Xr-bTe" id="gxZ-zW-AKl"/>
                 <outlet property="vibratePebbleSwitch" destination="8wF-Lf-M2E" id="XuB-6w-Vsz"/>
@@ -21,60 +22,71 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iGu-e1-rGe" userLabel="focusSegmentControl">
+                    <rect key="frame" x="20" y="76" width="280" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="Bike"/>
+                        <segment title="Dock"/>
+                    </segments>
+                    <connections>
+                        <action selector="focusSegmentControlValueWasChanged:" destination="-1" eventType="valueChanged" id="wdG-rX-RGr"/>
+                    </connections>
+                </segmentedControl>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send Stations to Pebble?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJX-c7-Mln" userLabel="Send Messages to Pebble?">
-                    <rect key="frame" x="20" y="71" width="223" height="31"/>
+                    <rect key="frame" x="20" y="112" width="223" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aaz-mW-Qqc" userLabel="sendMessagesSwitch">
-                    <rect key="frame" x="251" y="71" width="51" height="31"/>
+                    <rect key="frame" x="251" y="112" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="sendMessagesSwitchWasToggled:" destination="-1" eventType="valueChanged" id="dTY-Kf-A6R"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vibrate Pebble?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjM-Xr-bTe" userLabel="vibratePebbleLabel">
-                    <rect key="frame" x="20" y="105" width="223" height="31"/>
+                    <rect key="frame" x="20" y="146" width="223" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wF-Lf-M2E" userLabel="vibratePebbleSwitch">
-                    <rect key="frame" x="251" y="105" width="51" height="31"/>
+                    <rect key="frame" x="251" y="146" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="vibratePebbleSwitchWasToggled:" destination="-1" eventType="valueChanged" id="hz2-HS-JfO"/>
                     </connections>
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6c-HI-LCM" userLabel="Current Location:">
-                    <rect key="frame" x="20" y="144" width="280" height="21"/>
+                    <rect key="frame" x="20" y="185" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXr-w0-Luk" userLabel="currentLocationLabel">
-                    <rect key="frame" x="20" y="173" width="280" height="21"/>
+                    <rect key="frame" x="20" y="214" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Closest Station:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGF-xU-Kci" userLabel="Closest Station:">
-                    <rect key="frame" x="20" y="202" width="280" height="21"/>
+                    <rect key="frame" x="20" y="243" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyk-70-lfb" userLabel="closestStationLabel">
-                    <rect key="frame" x="20" y="231" width="280" height="21"/>
+                    <rect key="frame" x="20" y="272" width="280" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1RK-eo-9cM" userLabel="viewStationsButton">
-                    <rect key="frame" x="73" y="265" width="175" height="30"/>
+                    <rect key="frame" x="73" y="306" width="175" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
                     <state key="normal" title="View All Stations">

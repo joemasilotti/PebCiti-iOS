@@ -37,8 +37,9 @@ static PebCiti *_sharedPebCiti;
     NSDictionary *customFont = @{ NSFontAttributeName: [UIFont fontWithName:@"AppleSDGothicNeo-Medium" size:20.0] };
     [[UINavigationBar appearance] setTitleTextAttributes:customFont];
 
-    [[UIButton appearance] setTintColor:[self tintColor]];
     [[UINavigationBar appearance] setTintColor:[self tintColor]];
+    [[UIButton appearance] setTintColor:[self tintColor]];
+    [[UISegmentedControl appearance] setTintColor:[self tintColor]];
 }
 
 #pragma mark - Private

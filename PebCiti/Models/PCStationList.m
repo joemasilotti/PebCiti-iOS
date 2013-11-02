@@ -20,23 +20,30 @@
     return self;
 }
 
-- (PCStation *)closestStation
+- (PCStation *)closestStationWithAvailableBike
 {
     CLLocation *userLocation = PebCiti.sharedInstance.locationManager.location;
     if (!userLocation) {
         return nil;
     }
 
-    PCStation *closestStation = nil;
-    CGFloat smallestDistance = CGFLOAT_MAX;
-    for (PCStation *station in self.stations) {
-        CGFloat distanceToStation = [userLocation distanceFromLocation:station.location];
-        if (distanceToStation < smallestDistance) {
-            closestStation = station;
-            smallestDistance = distanceToStation;
-        }
+    NSPredicate *availableBikesPredicate = [NSPredicate predicateWithFormat:@"bikesAvailable > 0"];
+    NSArray *stationsWithAvailableBikes = [self.stations filteredArrayUsingPredicate:availableBikesPredicate];
+
+    return [self closestStationToLocation:userLocation fromStationList:stationsWithAvailableBikes];
+}
+
+- (PCStation *)closestStationWithOpenDock
+{
+    CLLocation *userLocation = PebCiti.sharedInstance.locationManager.location;
+    if (!userLocation) {
+        return nil;
     }
-    return closestStation;
+
+    NSPredicate *openDocksPredicate = [NSPredicate predicateWithFormat:@"docksAvailable > 0"];
+    NSArray *stationsWithOpenDocks = [self.stations filteredArrayUsingPredicate:openDocksPredicate];
+
+    return [self closestStationToLocation:userLocation fromStationList:stationsWithOpenDocks];
 }
 
 #pragma mark - <NSURLConnectionDelegate>
@@ -67,6 +74,7 @@
         PCStation *station = [[PCStation alloc] initWithID:stationInfo[@"id"]];
         station.name = stationInfo[@"stationName"];
         station.docksAvailable = [stationInfo[@"availableDocks"] integerValue];
+        station.bikesAvailable = [stationInfo[@"availableBikes"] integerValue];
         station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];
         [stations addObject:station];
     }
@@ -95,6 +103,20 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
     [connection start];
+}
+
+- (PCStation *)closestStationToLocation:(CLLocation *)location fromStationList:(NSArray *)stationList
+{
+    PCStation *closestStation = nil;
+    CGFloat smallestDistance = CGFLOAT_MAX;
+    for (PCStation *station in stationList) {
+        CGFloat distanceToStation = [location distanceFromLocation:station.location];
+        if (distanceToStation < smallestDistance) {
+            closestStation = station;
+            smallestDistance = distanceToStation;
+        }
+    }
+    return closestStation;
 }
 
 @end

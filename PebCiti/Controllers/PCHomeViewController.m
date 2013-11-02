@@ -7,6 +7,7 @@
 #import "PebCiti.h"
 
 @interface PCHomeViewController ()
+@property (nonatomic, readwrite) PCFocusType focusType;
 @property (nonatomic, strong) PCStation *previousClosestStation;
 @property (nonatomic, getter = isErrorAlertPresented) BOOL errorAlertPresented;
 @end
@@ -28,7 +29,12 @@
 {
     [super viewDidLoad];
 
-    NSString *closestStationName = PebCiti.sharedInstance.stationList.closestStation.name;
+    NSString *closestStationName;
+    if (self.focusType == PCFocusTypeBike) {
+       closestStationName = PebCiti.sharedInstance.stationList.closestStationWithAvailableBike.name;
+    } else {
+        closestStationName = PebCiti.sharedInstance.stationList.closestStationWithOpenDock.name;
+    }
     self.closestStationLabel.text = closestStationName ? closestStationName : @"";
 
     BOOL isSendingMessagesToPebble = PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble;
@@ -44,6 +50,11 @@
     [super viewDidAppear:animated];
     [PebCiti.sharedInstance.locationManager startUpdatingLocation];
     [self setupActivityIndicator];
+}
+
+- (IBAction)focusSegmentControlValueWasChanged:(UISegmentedControl *)focusSegmentControl
+{
+    self.focusType = focusSegmentControl.selectedSegmentIndex;
 }
 
 - (IBAction)sendMessagesSwitchWasToggled:(UISwitch *)sendMessagesSwitch
@@ -129,7 +140,12 @@
     CLLocation *lastLocation = locations.lastObject;
     self.currentLocationLabel.text = [NSString stringWithFormat:@"%f, %f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude];
 
-    PCStation *closestStation = PebCiti.sharedInstance.stationList.closestStation;
+    PCStation *closestStation;
+    if (self.focusType == PCFocusTypeBike) {
+        closestStation = PebCiti.sharedInstance.stationList.closestStationWithAvailableBike;
+    } else {
+        closestStation = PebCiti.sharedInstance.stationList.closestStationWithOpenDock;
+    }
     self.closestStationLabel.text = closestStation.name;
 
     if (PebCiti.sharedInstance.pebbleManager.isSendingMessagesToPebble && self.previousClosestStation.stationID != closestStation.stationID) {

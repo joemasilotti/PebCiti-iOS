@@ -12,7 +12,8 @@
 
 @property (nonatomic, weak) id<PCStationListDelegate>delegate;
 
-- (PCStation *)closestStation;
+- (PCStation *)closestStationWithAvailableBike;
+- (PCStation *)closestStationWithOpenDock;
 - (NSUInteger)count;
 - (PCStation *)objectAtIndexedSubscript:(NSUInteger)index;
 
