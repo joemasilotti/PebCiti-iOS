@@ -11,6 +11,7 @@
 @property (nonatomic, strong, readonly) PBWatch *watch;
 
 - (void)sendMessageToPebble:(NSString *)message;
+- (void)changeFocusTo:(NSString *)focus;
 
 @end
 

@@ -44,7 +44,7 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
-    describe(@"bikeOrDockSegmentControl", ^{
+    describe(@"focusSegmentControl", ^{
         beforeEach(^{
             controller.view should_not be_nil;
         });
@@ -60,12 +60,17 @@ describe(@"PCHomeViewController", ^{
 
             describe(@"changing it to 'Dock'", ^{
                 beforeEach(^{
+                    spy_on(PebCiti.sharedInstance.pebbleManager);
                     [controller.focusSegmentControl setSelectedSegmentIndex:1];
                     [controller.focusSegmentControl sendActionsForControlEvents:UIControlEventValueChanged];
                 });
 
                 it(@"should change the property to 'Dock'", ^{
                     controller.focusType should equal(PCFocusTypeDock);
+                });
+
+                it(@"should tell the Pebble that is is focusing on open docks", ^{
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(changeFocusTo:)).with(@"Closest Open Dock:");
                 });
 
                 describe(@"changing it back to 'Bike'", ^{
@@ -76,6 +81,10 @@ describe(@"PCHomeViewController", ^{
 
                     it(@"should change the property to 'Bike'", ^{
                         controller.focusType should equal(PCFocusTypeBike);
+                    });
+
+                    it(@"should tell the Pebble that is is focusing on an available bike", ^{
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(changeFocusTo:)).with(@"Closest Available Bike:");
                     });
                 });
             });

@@ -68,6 +68,20 @@
     }
 }
 
+- (void)changeFocusTo:(NSString *)focus
+{
+    if (self.isSendingMessagesToPebble) {
+        NSDictionary *update = @{ @0: focus };
+        __weak PCPebbleManager *weakSelf = self;
+        [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+            if (error) {
+                weakSelf.sendMessagesToPebble = NO;
+                [weakSelf.delegate pebbleManager:weakSelf receivedError:error];
+            }
+        }];
+    }
+}
+
 #pragma mark - <PBPebbleManagerDelegate>
 
 - (void)pebbleCentral:(PBPebbleCentral *)central watchDidConnect:(PBWatch *)watch isNew:(BOOL)isNew

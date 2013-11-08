@@ -324,6 +324,89 @@ describe(@"PCPebbleManager", ^{
         });
     });
 
+    describe(@"setting the focus on the Pebble", ^{
+        __block PBWatch *watch;
+
+        beforeEach(^{
+            spy_on(manager);
+            watch = nice_fake_for([PBWatch class]);
+        });
+
+        context(@"when a watch is connected", ^{
+            beforeEach(^{
+                [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
+            });
+
+            context(@"when the app should be sending messages", ^{
+                beforeEach(^{
+                    manager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                    [manager changeFocusTo:@"New Focus"];
+                });
+
+                it(@"should tell the watch the new focus", ^{
+                    NSDictionary *update = @{@0: @"New Focus"};
+                    watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
+                });
+
+                describe(@"sending the message", ^{
+                    __block void (^completion)(PBWatch *, NSDictionary *, NSError *);
+
+                    beforeEach(^{
+                        NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                            return invocation.selector == @selector(appMessagesPushUpdate:onSent:);
+                        }]] lastObject];
+
+                        void (^localCompletion)(PBWatch *, NSDictionary *, NSError *);
+                        [lastMessage getArgument:&localCompletion atIndex:3];
+                        completion = [localCompletion copy];
+                    });
+
+                    afterEach(^{
+                        [completion release];
+                    });
+
+                    context(@"succeeds", ^{
+                        beforeEach(^{
+                            completion(watch, nil, nil);
+                        });
+
+                        it(@"should continue to send messages", ^{
+                            manager.isSendingMessagesToPebble should be_truthy;
+                        });
+                    });
+
+                    context(@"fails", ^{
+                        __block NSError *error;
+
+                        beforeEach(^{
+                            error = nice_fake_for([NSError class]);
+                            completion(watch, nil, error);
+                        });
+
+                        it(@"should tell the delegate of the error", ^{
+                            manager.delegate should have_received(@selector(pebbleManager:receivedError:)).with(manager, error);
+                        });
+
+                        it(@"should turn off sending messages", ^{
+                            manager should have_received(@selector(setSendMessagesToPebble:)).with(NO);
+                        });
+                    });
+                });
+            });
+
+            context(@"when the app should not be sending messages", ^{
+                beforeEach(^{
+                    manager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
+                    [manager changeFocusTo:@"New Focus"];
+                });
+
+                it(@"should not tell the watch to change focus", ^{
+                    watch should_not have_received(@selector(appMessagesPushUpdate:onSent:));
+                });
+            });
+        });
+    });
+
     describe(@"when telling the manager to stop sending messages to the Pebble", ^{
         __block PBWatch *watch;
 
