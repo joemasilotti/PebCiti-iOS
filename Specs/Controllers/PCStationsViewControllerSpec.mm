@@ -1,5 +1,6 @@
 #import "PCStationsViewController.h"
 #import "UIAlertView+Spec.h"
+#import "PCHomeViewController.h"
 #import "PCStationList.h"
 #import "PCStation.h"
 #import "PebCiti.h"
@@ -15,47 +16,10 @@ SPEC_BEGIN(PCStationsViewControllerSpec)
 
 describe(@"PCStationsViewController", ^{
     __block PCStationsViewController *controller;
-    __block id<PCStationsViewControllerDelegate> delegate;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(PCStationsViewControllerDelegate));
-        controller = [[[PCStationsViewController alloc] initWithDelegate:delegate] autorelease];
-    });
-
-    describe(@"-delegate", ^{
-        it(@"should be the same as the one passed in", ^{
-            controller.delegate should be_same_instance_as(delegate);
-        });
-    });
-
-    describe(@"the 'Done' button", ^{
-        beforeEach(^{
-            controller.view should_not be_nil;
-        });
-
-        it(@"should be the left nav bar button item", ^{
-            controller.navigationItem.leftBarButtonItem should be_instance_of([UIBarButtonItem class]);
-        });
-
-        describe(@"tapping the button", ^{
-            beforeEach(^{
-                [controller.navigationItem.leftBarButtonItem.target performSelector:controller.navigationItem.leftBarButtonItem.action];
-            });
-
-            it(@"should tell the delegate the button was tapped", ^{
-                controller.delegate should have_received("stationsViewControllerIsDone");
-            });
-        });
-    });
-
-    describe(@"loading the view", ^{
-        beforeEach(^{
-            controller.view should_not be_nil;
-        });
-
-        it(@"should have a title of 'Stations'", ^{
-            controller.title should equal(@"Stations");
-        });
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        controller = [storyboard instantiateViewControllerWithIdentifier:@"PCStationsView"];
     });
 
     describe(@"-viewWillAppear:", ^{

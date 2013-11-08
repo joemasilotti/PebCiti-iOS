@@ -23,16 +23,6 @@ describe(@"PCAppDelegate", ^{
         it(@"should ask PebCiti to set up the appearance of the app", ^{
             PebCiti.sharedInstance should have_received(@selector(setUpAppearance));
         });
-
-        it(@"should display a UINavigationController", ^{
-            delegate.window.rootViewController should be_instance_of([UINavigationController class]);
-        });
-
-        describe(@"the navigation controller", ^{
-            it(@"should contain a PCHomeViewController", ^{
-                delegate.window.rootViewController.childViewControllers[0] should be_instance_of([PCHomeViewController class]);
-            });
-        });
     });
 });
 

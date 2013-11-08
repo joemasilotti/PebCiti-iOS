@@ -10,7 +10,7 @@ enum {
 typedef NSUInteger PCFocusType;
 
 
-@interface PCHomeViewController : UIViewController <PCPebbleManagerDelegate, PCStationsViewControllerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
+@interface PCHomeViewController : UITableViewController <PCPebbleManagerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *focusSegmentControl;
 @property (nonatomic, weak) IBOutlet UISwitch *sendMessagesSwitch;
@@ -18,7 +18,6 @@ typedef NSUInteger PCFocusType;
 @property (nonatomic, weak) IBOutlet UISwitch *vibratePebbleSwitch;
 @property (nonatomic, weak) IBOutlet UILabel *currentLocationLabel;
 @property (nonatomic, weak) IBOutlet UILabel *closestStationLabel;
-@property (nonatomic, weak) IBOutlet UIButton *viewStationsButton;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, readonly) PCFocusType focusType;
@@ -26,6 +25,5 @@ typedef NSUInteger PCFocusType;
 - (IBAction)focusSegmentControlValueWasChanged:(UISegmentedControl *)focusSegmentControl;
 - (IBAction)sendMessagesSwitchWasToggled:(UISwitch *)sendMessagesSwitch;
 - (IBAction)vibratePebbleSwitchWasToggled:(UISwitch *)vibratePebbleSwitch;
-- (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton;
 
 @end

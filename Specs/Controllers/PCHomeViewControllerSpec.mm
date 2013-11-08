@@ -16,7 +16,9 @@ describe(@"PCHomeViewController", ^{
     __block PCHomeViewController *controller;
 
     beforeEach(^{
-        controller = [[[PCHomeViewController alloc] init] autorelease];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        controller = [storyboard instantiateViewControllerWithIdentifier:@"PCHomeView"];
+        [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
     });
 
     it(@"should be the Pebble manager's delegate", ^{
@@ -533,36 +535,18 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
-    describe(@"-viewStationsButton", ^{
+    describe(@"viewing the station list", ^{
         beforeEach(^{
             controller.view should_not be_nil;
         });
 
-        describe(@"tapping the button", ^{
+        describe(@"selecting the station list row", ^{
             beforeEach(^{
-                [controller.viewStationsButton tap];
+                [controller performSegueWithIdentifier:@"PCHomeViewToPCStationsView" sender:nil];
             });
 
-            it(@"should display a UINavigationController", ^{
-                controller.presentedViewController should be_instance_of([UINavigationController class]);
-            });
-
-            it(@"should have the root of the nav controller be a PCStationsViewController", ^{
-                [(UINavigationController *)controller.presentedViewController topViewController] should be_instance_of([PCStationsViewController class]);
-            });
-
-            it(@"should be the stationsVC's delegate", ^{
-                [(PCStationsViewController *)[(UINavigationController *)controller.presentedViewController topViewController] delegate] should be_same_instance_as(controller);
-            });
-
-            describe(@"when the stations view is dismissed", ^{
-                beforeEach(^{
-                    [controller stationsViewControllerIsDone];
-                });
-
-                it(@"should dismiss the presented view controller", ^{
-                    controller.presentedViewController should be_nil;
-                });
+            it(@"should push a PCStationsVC to the nav stack", ^{
+                controller.navigationController.topViewController should be_instance_of([PCStationsViewController class]);
             });
         });
     });

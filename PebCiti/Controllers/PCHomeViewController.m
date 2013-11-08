@@ -14,15 +14,10 @@
 
 @implementation PCHomeViewController
 
-- (instancetype)init
+- (void)awakeFromNib
 {
-    self = [super init];
-    if (self) {
-        self.title = @"PebCiti";
-        PebCiti.sharedInstance.pebbleManager.delegate = self;
-        PebCiti.sharedInstance.locationManager.delegate = self;
-    }
-    return self;
+    PebCiti.sharedInstance.pebbleManager.delegate = self;
+    PebCiti.sharedInstance.locationManager.delegate = self;
 }
 
 - (void)viewDidLoad
@@ -76,13 +71,6 @@
 - (IBAction)vibratePebbleSwitchWasToggled:(UISwitch *)vibratePebbleSwitch
 {
     PebCiti.sharedInstance.pebbleManager.vibratePebble = vibratePebbleSwitch.isOn;
-}
-
-- (IBAction)viewStationsButtonWasTapped:(UIButton *)viewStationsButton
-{
-    PCStationsViewController *stationsViewController = [[PCStationsViewController alloc] initWithDelegate:self];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:stationsViewController];
-    [self presentViewController:navController animated:YES completion:nil];
 }
 
 #pragma mark - <PCPebbleManagerDelegate>
@@ -170,22 +158,7 @@
     self.activityIndicator.frame = self.view.frame;
     self.activityIndicator.color = [UIColor blackColor];
     self.activityIndicator.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
-}
-
-#pragma mark UIButton Color Helpers
-
-- (UIColor *)buttonTitleColor
-{
-    if ([self.view respondsToSelector:@selector(tintColor)]) {
-        return self.view.tintColor;
-    } else {
-        return [UIColor blueColor];
-    }
-}
-
-- (UIColor *)buttonTitleHighlightedColor
-{
-    return [[self buttonTitleColor] colorWithAlphaComponent:0.5f];
+    [self.view addSubview:self.activityIndicator];
 }
 
 @end
