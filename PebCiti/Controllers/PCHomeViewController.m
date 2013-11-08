@@ -78,7 +78,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 3) {
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"http://masilotti.com/PebCiti/PebCiti.pbw"]];
+        NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti"];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pebble_sdk_2_0"]) {
+            pbwURL = [pbwURL URLByAppendingPathComponent:@"SDK2.0"];
+        } else {
+            pbwURL = [pbwURL URLByAppendingPathComponent:@"SDK1.X"];
+        }
+        pbwURL = [pbwURL URLByAppendingPathComponent:@"PebCiti.pbw"];
+        [UIApplication.sharedApplication openURL:pbwURL];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }

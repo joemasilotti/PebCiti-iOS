@@ -811,6 +811,7 @@ describe(@"PCHomeViewController", ^{
             [controller viewDidAppear:NO];
             spy_on(UIApplication.sharedApplication);
             UIApplication.sharedApplication stub_method(@selector(openURL:));
+            spy_on([NSUserDefaults standardUserDefaults]);
         });
 
         context(@"selecting the 'Download Pebble App' row", ^{
@@ -821,12 +822,32 @@ describe(@"PCHomeViewController", ^{
                 UITableViewCell *cell = controller.tableView.visibleCells[3];
                 indexPath = [controller.tableView indexPathForCell:cell];
                 tableView = nice_fake_for([UITableView class]);
+            });
+
+            subjectAction(^{
                 [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
             });
 
-            it(@"should open Safari directed at the .pbw file", ^{
-                NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/PebCiti.pbw"];
-                UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
+            context(@"when the Pebble SDK 2.0 setting is set", ^{
+                beforeEach(^{
+                    [NSUserDefaults standardUserDefaults] stub_method(@selector(boolForKey:)).with(@"pebble_sdk_2_0").and_return(YES);
+                });
+
+                it(@"should open Safari directed at the 2.0 .pbw file", ^{
+                    NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/SDK2.0/PebCiti.pbw"];
+                    UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
+                });
+            });
+
+            context(@"when the Pebble SDK 2.0 is off or has never been set", ^{
+                beforeEach(^{
+                    [NSUserDefaults standardUserDefaults] stub_method(@selector(boolForKey:)).with(@"pebble_sdk_2_0").and_return(NO);
+                });
+
+                it(@"should open Safari directed at the 1.X .pbw file", ^{
+                    NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/SDK1.X/PebCiti.pbw"];
+                    UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
+                });
             });
 
             it(@"should then deselect the row that was selected", ^{
@@ -835,11 +856,8 @@ describe(@"PCHomeViewController", ^{
 
             context(@"selecting any other row", ^{
                 beforeEach(^{
-                    [(id<CedarDouble>)UIApplication.sharedApplication reset_sent_messages];
-                    [(id<CedarDouble>)tableView reset_sent_messages];
                     UITableViewCell *cell = controller.tableView.visibleCells[1];
-                    NSIndexPath *indexPath = [controller.tableView indexPathForCell:cell];
-                    [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
+                    indexPath = [controller.tableView indexPathForCell:cell];
                 });
 
                 it(@"should not open Safari if any other cell is selected", ^{
