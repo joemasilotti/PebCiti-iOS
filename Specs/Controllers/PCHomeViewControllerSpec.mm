@@ -804,6 +804,54 @@ describe(@"PCHomeViewController", ^{
             });
         });
     });
+
+    describe(@"selecting a row in the table", ^{
+        beforeEach(^{
+            [controller viewWillAppear:NO];
+            [controller viewDidAppear:NO];
+            spy_on(UIApplication.sharedApplication);
+            UIApplication.sharedApplication stub_method(@selector(openURL:));
+        });
+
+        context(@"selecting the 'Download Pebble App' row", ^{
+            __block UITableView *tableView;
+            __block NSIndexPath *indexPath;
+
+            beforeEach(^{
+                UITableViewCell *cell = controller.tableView.visibleCells[3];
+                indexPath = [controller.tableView indexPathForCell:cell];
+                tableView = nice_fake_for([UITableView class]);
+                [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
+            });
+
+            it(@"should open Safari directed at the .pbw file", ^{
+                NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/PebCiti.pbw"];
+                UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
+            });
+
+            it(@"should then deselect the row that was selected", ^{
+                tableView should have_received(@selector(deselectRowAtIndexPath:animated:)).with(indexPath, YES);
+            });
+
+            context(@"selecting any other row", ^{
+                beforeEach(^{
+                    [(id<CedarDouble>)UIApplication.sharedApplication reset_sent_messages];
+                    [(id<CedarDouble>)tableView reset_sent_messages];
+                    UITableViewCell *cell = controller.tableView.visibleCells[1];
+                    NSIndexPath *indexPath = [controller.tableView indexPathForCell:cell];
+                    [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
+                });
+
+                it(@"should not open Safari if any other cell is selected", ^{
+                    UIApplication.sharedApplication should_not have_received(@selector(openURL:));
+                });
+
+                it(@"should not deselect any rows", ^{
+                    tableView should_not have_received(@selector(deselectRowAtIndexPath:animated:));
+                });
+            });
+        });
+    });
 });
 
 SPEC_END

@@ -73,6 +73,16 @@
     PebCiti.sharedInstance.pebbleManager.vibratePebble = vibratePebbleSwitch.isOn;
 }
 
+#pragma mark - <UITableViewDelegate>
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 3) {
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"http://masilotti.com/PebCiti/PebCiti.pbw"]];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
 #pragma mark - <PCPebbleManagerDelegate>
 
 - (void)pebbleManagerConnectedToWatch:(PBWatch *)watch
