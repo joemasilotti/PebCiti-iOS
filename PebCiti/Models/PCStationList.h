@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) id<PCStationListDelegate>delegate;
 
+- (void)requestStationList;
 - (PCStation *)closestStationWithAvailableBike;
 - (PCStation *)closestStationWithOpenDock;
 - (NSUInteger)count;

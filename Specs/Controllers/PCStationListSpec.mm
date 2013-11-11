@@ -44,6 +44,7 @@ describe(@"PCStationList", ^{
             context(@"when the network request returns successfully", ^{
                 context(@"when the response is valid JSON", ^{
                     beforeEach(^{
+                        spy_on(stationList);
                         stationList.delegate = nice_fake_for(@protocol(PCStationListDelegate));
                         PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
                         [connection receiveResponse:successResponse];
@@ -80,38 +81,89 @@ describe(@"PCStationList", ^{
                     it(@"should alert the delegate the stations have been updated", ^{
                         stationList.delegate should have_received("stationListWasUpdated:").with(stationList);
                     });
+
+                    it(@"should update the stations after the specified delay", ^{
+                        stationList should have_received(@selector(performSelector:withObject:afterDelay:)).with(@selector(requestStationList), nil, Arguments::anything);
+                    });
+
+                    describe(@"when that second network request returns successfully", ^{
+                        context(@"with valid JSON", ^{
+                            beforeEach(^{
+                                [stationList requestStationList];
+                                connection = [NSURLConnection.connections lastObject];
+                                stationList.delegate = nice_fake_for(@protocol(PCStationListDelegate));
+                                PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations_retry.json"] success];
+                                [connection receiveResponse:successResponse];
+                            });
+
+                            it(@"should overwrite the stations with the new bike and dock counts", ^{
+                                stationList.count should equal(3);
+
+                                stationList[0].docksAvailable should equal(20);
+                                stationList[1].docksAvailable should equal(8);
+                                stationList[2].docksAvailable should equal(2);
+
+                                stationList[0].bikesAvailable should equal(5);
+                                stationList[1].bikesAvailable should equal(30);
+                                stationList[2].bikesAvailable should equal(53);
+                            });
+
+                            it(@"should alert the delegate the stations have been updated", ^{
+                                stationList.delegate should have_received("stationListWasUpdated:").with(stationList);
+                            });
+
+                            it(@"should update the stations after the specified delay", ^{
+                                stationList should have_received(@selector(performSelector:withObject:afterDelay:)).with(@selector(requestStationList), nil, Arguments::anything);
+                            });
+                        });
+                    });
                 });
 
                 context(@"when the response returns invalid JSON", ^{
                     beforeEach(^{
                         PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations_invalid.json"] success];
+                        spy_on(stationList);
                         [connection receiveResponse:successResponse];
                     });
 
                     it(@"should display an alert view", ^{
                         UIAlertView.currentAlertView should_not be_nil;
                     });
+
+                    it(@"should stop updating the stations", ^{
+                        stationList should_not have_received(@selector(performSelector:withObject:afterDelay:));
+                    });
                 });
             });
 
             context(@"when the request encounters a network error", ^{
                 beforeEach(^{
+                    spy_on(stationList);
                     [stationList connection:connection didFailWithError:[NSError errorWithDomain:@"Network Error" code:3 userInfo:nil]];
                 });
 
                 it(@"should display an alert view", ^{
                     UIAlertView.currentAlertView should_not be_nil;
                 });
+
+                it(@"should stop updating the stations", ^{
+                    stationList should_not have_received(@selector(performSelector:withObject:afterDelay:));
+                });
             });
 
             context(@"when the request encounters a server error", ^{
                 beforeEach(^{
+                    spy_on(stationList);
                     PSHKFakeHTTPURLResponse *failureResponse = [PSHKFakeHTTPURLResponse responseFromFixtureNamed:@"/stations.json" statusCode:404];
                     [connection receiveResponse:failureResponse];
                 });
 
                 it(@"should display an alert view", ^{
                     UIAlertView.currentAlertView should_not be_nil;
+                });
+
+                it(@"should stop updating the stations", ^{
+                    stationList should_not have_received(@selector(performSelector:withObject:afterDelay:));
                 });
             });
         });

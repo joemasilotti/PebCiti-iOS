@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404FF6E180085C60082F01E /* Cedar-iOS.framework */; };
+		840E45FC18307460006DCF8D /* 200.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840E45FA18307460006DCF8D /* 200.txt */; };
+		840E45FD18307460006DCF8D /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840E45FB18307460006DCF8D /* 404.txt */; };
 		840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374571800872900FB7610 /* PebbleKit.framework */; };
 		840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374581800872900FB7610 /* PebbleVendor.framework */; };
 		842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842374551800864400FB7610 /* PCAppDelegateSpec.mm */; };
@@ -223,6 +225,8 @@
 
 /* Begin PBXFileReference section */
 		8404FF6E180085C60082F01E /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Cedar-iOS.framework"; sourceTree = "<group>"; };
+		840E45FA18307460006DCF8D /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
+		840E45FB18307460006DCF8D /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
 		842374551800864400FB7610 /* PCAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAppDelegateSpec.mm; sourceTree = "<group>"; };
 		842374571800872900FB7610 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleKit.framework; path = pebblekit/iOS/PebbleKit.framework; sourceTree = "<group>"; };
 		842374581800872900FB7610 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = pebblekit/iOS/PebbleVendor.framework; sourceTree = "<group>"; };
@@ -338,6 +342,15 @@
 				8404FF6E180085C60082F01E /* Cedar-iOS.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		840E45F918307460006DCF8D /* stations_retry.json */ = {
+			isa = PBXGroup;
+			children = (
+				840E45FA18307460006DCF8D /* 200.txt */,
+				840E45FB18307460006DCF8D /* 404.txt */,
+			);
+			path = stations_retry.json;
 			sourceTree = "<group>";
 		};
 		843C3E7E1800936400EB9E94 /* Controllers */ = {
@@ -571,6 +584,7 @@
 			isa = PBXGroup;
 			children = (
 				84FD022C181088BE00D41A36 /* stations.json */,
+				840E45F918307460006DCF8D /* stations_retry.json */,
 				84FD0244181177FF00D41A36 /* stations_invalid.json */,
 			);
 			path = FakeResponses;
@@ -852,8 +866,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FD025A181179E800D41A36 /* 404.txt in Resources */,
+				840E45FD18307460006DCF8D /* 404.txt in Resources */,
 				84D611091800792700403C60 /* InfoPlist.strings in Resources */,
 				84FD0246181177FF00D41A36 /* 200.txt in Resources */,
+				840E45FC18307460006DCF8D /* 200.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

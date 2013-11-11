@@ -20,6 +20,14 @@
     return self;
 }
 
+- (void)requestStationList
+{
+    NSURL *URL = [NSURL URLWithString:@"http://citibikenyc.com/stations/json"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    [connection start];
+}
+
 - (PCStation *)closestStationWithAvailableBike
 {
     CLLocation *userLocation = PebCiti.sharedInstance.locationManager.location;
@@ -67,20 +75,22 @@
 
     if (!stationInfos) {
         [UIAlertView displayAlertViewWithTitle:@"" message:@"A problem occurred downloading the station list from citibikenyc.com"];
-    }
+    } else {
+        NSMutableArray *stations = [@[] mutableCopy];
+        PCStation *station;
+        for (NSDictionary *stationInfo in stationInfos) {
+            station = [[PCStation alloc] initWithID:stationInfo[@"id"]];
+            station.name = stationInfo[@"stationName"];
+            station.bikesAvailable = [stationInfo[@"availableBikes"] integerValue];
+            station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];
+            [stations addObject:station];
+        }
+        self.stations = stations;
 
-    NSMutableArray *stations = [@[] mutableCopy];
-    for (NSDictionary *stationInfo in stationInfos) {
-        PCStation *station = [[PCStation alloc] initWithID:stationInfo[@"id"]];
-        station.name = stationInfo[@"stationName"];
-        station.docksAvailable = [stationInfo[@"availableDocks"] integerValue];
-        station.bikesAvailable = [stationInfo[@"availableBikes"] integerValue];
-        station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];
-        [stations addObject:station];
+        [self.delegate stationListWasUpdated:self];
+        self.data = [[NSMutableData alloc] init];
+        [self performSelector:@selector(requestStationList) withObject:nil afterDelay:30];
     }
-    self.stations = stations;
-
-    [self.delegate stationListWasUpdated:self];
 }
 
 #pragma mark - Object Subscripting
@@ -96,14 +106,6 @@
 }
 
 #pragma mark - Private
-
-- (void)requestStationList
-{
-    NSURL *URL = [NSURL URLWithString:@"http://citibikenyc.com/stations/json"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    [connection start];
-}
 
 - (PCStation *)closestStationToLocation:(CLLocation *)location fromStationList:(NSArray *)stationList
 {
