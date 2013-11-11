@@ -4,6 +4,11 @@ iOS half of [PebCiti](http://github.com/joemasilotti/PebCiti) ([Pebble half](htt
 
 **UUID**: F6BB82D0-B5BF-4EC7-A97A-405D3A350444
 
+## Installation
+
+* Join the TestFlight beta [testing group](http://tflig.ht/10N3HIH)
+* Or, build from source and run via Xcode
+
 ## Contributing
 
 Visit the [Public Project Tracker](https://www.pivotaltracker.com/projects/928128/) to see what features are coming next.
