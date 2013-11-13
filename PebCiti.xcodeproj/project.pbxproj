@@ -53,6 +53,9 @@
 		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
 		84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6113418020FF700403C60 /* PCPebbleCentral.m */; };
+		84E08ED218333AA800185633 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E08ECC18333AA800185633 /* libTestFlight.a */; };
+		84E08ED318333AA800185633 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECD18333AA800185633 /* README.md */; };
+		84E08ED418333AA800185633 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECE18333AA800185633 /* release_notes.md */; };
 		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
 		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
@@ -276,6 +279,12 @@
 		84D6110F1800792700403C60 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		84D6113318020FF700403C60 /* PCPebbleCentral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleCentral.h; sourceTree = "<group>"; };
 		84D6113418020FF700403C60 /* PCPebbleCentral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleCentral.m; sourceTree = "<group>"; };
+		84E08ECC18333AA800185633 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		84E08ECD18333AA800185633 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		84E08ECE18333AA800185633 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		84E08ECF18333AA800185633 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		84E08ED018333AA800185633 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		84E08ED118333AA800185633 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		84FD022D181088BE00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0245181177FF00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0259181179E800D41A36 /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
@@ -293,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D45176181E8D5B002A9D89 /* AudioToolbox.framework in Frameworks */,
+				84E08ED218333AA800185633 /* libTestFlight.a in Frameworks */,
 				842374591800872900FB7610 /* PebbleKit.framework in Frameworks */,
 				8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */,
 				84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */,
@@ -535,6 +545,7 @@
 				8448130B1801D39800183D89 /* UIKit.xcodeproj */,
 				842374571800872900FB7610 /* PebbleKit.framework */,
 				842374581800872900FB7610 /* PebbleVendor.framework */,
+				84E08ECB18333AA700185633 /* TestFlightSDK */,
 			);
 			path = Externals;
 			sourceTree = "<group>";
@@ -578,6 +589,19 @@
 				84D6110F1800792700403C60 /* Specs-Prefix.pch */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84E08ECB18333AA700185633 /* TestFlightSDK */ = {
+			isa = PBXGroup;
+			children = (
+				84E08ECC18333AA800185633 /* libTestFlight.a */,
+				84E08ECD18333AA800185633 /* README.md */,
+				84E08ECE18333AA800185633 /* release_notes.md */,
+				84E08ECF18333AA800185633 /* TestFlight+AsyncLogging.h */,
+				84E08ED018333AA800185633 /* TestFlight+ManualSessions.h */,
+				84E08ED118333AA800185633 /* TestFlight.h */,
+			);
+			path = TestFlightSDK;
 			sourceTree = "<group>";
 		};
 		84FD022B181088BE00D41A36 /* FakeResponses */ = {
@@ -854,8 +878,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E08ED418333AA800185633 /* release_notes.md in Resources */,
 				84868BE8182D1AA700DF1410 /* Settings.bundle in Resources */,
 				84D610B71800770D00403C60 /* InfoPlist.strings in Resources */,
+				84E08ED318333AA800185633 /* README.md in Resources */,
 				84C68E09182C868700DAE51A /* MainStoryboard.storyboard in Resources */,
 				84D610BF1800770D00403C60 /* Images.xcassets in Resources */,
 			);
@@ -1057,6 +1083,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Externals/TestFlightSDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1074,6 +1104,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Externals/TestFlightSDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
