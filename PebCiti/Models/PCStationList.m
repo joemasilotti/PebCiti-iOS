@@ -82,6 +82,7 @@
             station = [[PCStation alloc] initWithID:stationInfo[@"id"]];
             station.name = stationInfo[@"stationName"];
             station.bikesAvailable = [stationInfo[@"availableBikes"] integerValue];
+            station.docksAvailable = [stationInfo[@"availableDocks"] integerValue];
             station.location = [[CLLocation alloc] initWithLatitude:[stationInfo[@"latitude"] floatValue] longitude:[stationInfo[@"longitude"] floatValue]];
             [stations addObject:station];
         }

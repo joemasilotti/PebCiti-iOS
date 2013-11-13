@@ -30,7 +30,7 @@ describe(@"PCStationList", ^{
             __block NSURLConnection *connection;
 
             beforeEach(^{
-                connection = NSURLConnection.connections[0];
+                connection = [NSURLConnection.connections lastObject];
             });
 
             it(@"should ask the CitiBikeNYC api for the list of stations", ^{
