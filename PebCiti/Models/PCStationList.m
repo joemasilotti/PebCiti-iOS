@@ -5,7 +5,7 @@
 #import "PebCiti.h"
 
 @interface PCStationList ()
-@property (nonatomic, strong) NSArray *stations;
+@property (nonatomic, strong, readwrite) NSArray *stations;
 @property (nonatomic, strong) NSMutableData *data;
 @end
 

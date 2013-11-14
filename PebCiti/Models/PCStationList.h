@@ -10,6 +10,7 @@
 
 @interface PCStationList : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
+@property (nonatomic, strong, readonly) NSArray *stations;
 @property (nonatomic, weak) id<PCStationListDelegate>delegate;
 
 - (void)requestStationList;

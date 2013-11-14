@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="SGK-GD-td6">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Home View Controller - PebCiti-->
@@ -204,7 +204,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Stations" id="jxy-O8-1fe"/>
+                    <navigationItem key="navigationItem" title="Stations" id="jxy-O8-1fe">
+                        <barButtonItem key="rightBarButtonItem" title="Docks" id="RMa-OV-E2n">
+                            <connections>
+                                <action selector="sortButtonWasTapped:" destination="xSk-Rj-Lyl" id="pK5-OQ-pgP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="sortButton" destination="RMa-OV-E2n" id="1Fj-gt-WbL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3W-qZ-1Kf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -213,7 +222,6 @@
         <!--Navigation Controller-->
         <scene sceneID="K8K-7T-lat">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XaC-wj-Xod" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SGK-GD-td6" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9di-zf-tha">
@@ -225,6 +233,7 @@
                         <segue destination="EEQ-02-S84" kind="relationship" relationship="rootViewController" id="kTO-qJ-XtN"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XaC-wj-Xod" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="525" y="234"/>
         </scene>

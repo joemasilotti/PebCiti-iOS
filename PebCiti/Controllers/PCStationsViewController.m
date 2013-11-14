@@ -6,6 +6,7 @@
 @interface PCStationsViewController ()
 @property (nonatomic, strong) NSMutableData *data;
 @property (nonatomic, strong) NSArray *stations;
+@property (nonatomic) BOOL showOpenDocks;
 @end
 
 @implementation PCStationsViewController
@@ -14,21 +15,15 @@
 {
     [super viewWillAppear:animated];
 
-    PebCiti.sharedInstance.stationList.delegate = self;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    PebCiti.sharedInstance.stationList.delegate = nil;
+    self.stations = [PebCiti.sharedInstance.stationList.stations copy];
+    self.showOpenDocks = YES;
 }
 
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return PebCiti.sharedInstance.stationList.count;
+    return self.stations.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -38,16 +33,20 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"StationCellIdentifier"];
     }
 
-    PCStation *station = PebCiti.sharedInstance.stationList[indexPath.row];
+    PCStation *station = self.stations[indexPath.row];
     cell.textLabel.text = station.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)station.docksAvailable];
+    if (self.showOpenDocks) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)station.docksAvailable];
+    } else {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)station.bikesAvailable];
+    }
     return cell;
 }
 
-#pragma mark - <PCStationListDelegate>
-
-- (void)stationListWasUpdated:(PCStationList *)stationList
+- (IBAction)sortButtonWasTapped:(UIBarButtonItem *)sender
 {
+    self.showOpenDocks = !self.showOpenDocks;
+    self.sortButton.title = self.showOpenDocks ? @"Docks" : @"Bikes";
     [self.tableView reloadData];
 }
 
