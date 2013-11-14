@@ -35,10 +35,9 @@
         return nil;
     }
 
+    [self sortStationsByDistance];
     NSPredicate *availableBikesPredicate = [NSPredicate predicateWithFormat:@"bikesAvailable > 0"];
-    NSArray *stationsWithAvailableBikes = [self.stations filteredArrayUsingPredicate:availableBikesPredicate];
-
-    return [self closestStationToLocation:userLocation fromStationList:stationsWithAvailableBikes];
+    return [self.stations filteredArrayUsingPredicate:availableBikesPredicate][0];
 }
 
 - (PCStation *)closestStationWithOpenDock
@@ -48,10 +47,9 @@
         return nil;
     }
 
+    [self sortStationsByDistance];
     NSPredicate *openDocksPredicate = [NSPredicate predicateWithFormat:@"docksAvailable > 0"];
-    NSArray *stationsWithOpenDocks = [self.stations filteredArrayUsingPredicate:openDocksPredicate];
-
-    return [self closestStationToLocation:userLocation fromStationList:stationsWithOpenDocks];
+    return [self.stations filteredArrayUsingPredicate:openDocksPredicate][0];
 }
 
 #pragma mark - <NSURLConnectionDelegate>
@@ -87,6 +85,7 @@
             [stations addObject:station];
         }
         self.stations = stations;
+        [self sortStationsByDistance];
 
         [self.delegate stationListWasUpdated:self];
         self.data = [[NSMutableData alloc] init];
@@ -108,18 +107,23 @@
 
 #pragma mark - Private
 
-- (PCStation *)closestStationToLocation:(CLLocation *)location fromStationList:(NSArray *)stationList
+- (void)sortStationsByDistance
 {
-    PCStation *closestStation = nil;
-    CGFloat smallestDistance = CGFLOAT_MAX;
-    for (PCStation *station in stationList) {
-        CGFloat distanceToStation = [location distanceFromLocation:station.location];
-        if (distanceToStation < smallestDistance) {
-            closestStation = station;
-            smallestDistance = distanceToStation;
-        }
+    if (PebCiti.sharedInstance.locationManager.location) {
+        self.stations = [self.stations sortedArrayUsingComparator:^NSComparisonResult(PCStation *station1, PCStation *station2) {
+            CLLocation *userLocation = PebCiti.sharedInstance.locationManager.location;
+            CLLocationDistance station1Distance = [userLocation distanceFromLocation:station1.location];
+            CLLocationDistance station2Distance = [userLocation distanceFromLocation:station2.location];
+
+            if (station1Distance < station2Distance) {
+                return NSOrderedAscending;
+            } else if (station1Distance > station2Distance) {
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
+        }];
     }
-    return closestStation;
 }
 
 @end

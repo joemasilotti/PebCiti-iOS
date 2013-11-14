@@ -45,37 +45,82 @@ describe(@"PCStationList", ^{
                 context(@"when the response is valid JSON", ^{
                     beforeEach(^{
                         spy_on(stationList);
+                        spy_on(PebCiti.sharedInstance.locationManager);
                         stationList.delegate = nice_fake_for(@protocol(PCStationListDelegate));
+                    });
+
+                    subjectAction(^{
                         PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
                         [connection receiveResponse:successResponse];
                     });
 
                     it(@"should store the stations", ^{
                         stationList.count should equal(3);
+                    });
 
-                        stationList[0].stationID should equal(@72);
-                        stationList[1].stationID should equal(@79);
-                        stationList[2].stationID should equal(@82);
+                    context(@"when the user has reported a location", ^{
+                        beforeEach(^{
+                            CLLocation *userLocation = [[[CLLocation alloc] initWithLatitude:40.722543f longitude:-73.994379f] autorelease];
+                            PebCiti.sharedInstance.locationManager stub_method(@selector(location)).and_return(userLocation);
+                        });
 
-                        stationList[0].name should equal(@"W 52 St & 11 Ave");
-                        stationList[1].name should equal(@"Franklin St & W Broadway");
-                        stationList[2].name should equal(@"St James Pl & Pearl St");
+                        it(@"should sort the station list by distance, closest first", ^{
+                            stationList[0].stationID should equal(@79);
+                            stationList[1].stationID should equal(@82);
+                            stationList[2].stationID should equal(@72);
 
-                        stationList[0].docksAvailable should equal(37);
-                        stationList[1].docksAvailable should equal(7);
-                        stationList[2].docksAvailable should equal(25);
+                            stationList[0].name should equal(@"Franklin St & W Broadway");
+                            stationList[1].name should equal(@"St James Pl & Pearl St");
+                            stationList[2].name should equal(@"W 52 St & 11 Ave");
 
-                        stationList[0].bikesAvailable should equal(2);
-                        stationList[1].bikesAvailable should equal(26);
-                        stationList[2].bikesAvailable should equal(1);
+                            stationList[0].docksAvailable should equal(7);
+                            stationList[1].docksAvailable should equal(25);
+                            stationList[2].docksAvailable should equal(37);
 
-                        stationList[0].location.coordinate.latitude should equal(40.76727216f);
-                        stationList[1].location.coordinate.latitude should equal(40.71911552f);
-                        stationList[2].location.coordinate.latitude should equal(40.71117416f);
+                            stationList[0].bikesAvailable should equal(26);
+                            stationList[1].bikesAvailable should equal(1);
+                            stationList[2].bikesAvailable should equal(2);
 
-                        stationList[0].location.coordinate.longitude should equal(-73.99392888f);
-                        stationList[1].location.coordinate.longitude should equal(-74.00666661f);
-                        stationList[2].location.coordinate.longitude should equal(-74.00016545f);
+                            stationList[0].location.coordinate.latitude should equal(40.71911552f);
+                            stationList[1].location.coordinate.latitude should equal(40.71117416f);
+                            stationList[2].location.coordinate.latitude should equal(40.76727216f);
+
+                            stationList[0].location.coordinate.longitude should equal(-74.00666661f);
+                            stationList[1].location.coordinate.longitude should equal(-74.00016545f);
+                            stationList[2].location.coordinate.longitude should equal(-73.99392888f);
+                        });
+                    });
+
+                    context(@"when the user has not yet reported a location", ^{
+                        beforeEach(^{
+                            PebCiti.sharedInstance.locationManager stub_method(@selector(location));
+                        });
+
+                        it(@"should sort the station list by ID", ^{
+                            stationList[0].stationID should equal(@72);
+                            stationList[1].stationID should equal(@79);
+                            stationList[2].stationID should equal(@82);
+
+                            stationList[0].name should equal(@"W 52 St & 11 Ave");
+                            stationList[1].name should equal(@"Franklin St & W Broadway");
+                            stationList[2].name should equal(@"St James Pl & Pearl St");
+
+                            stationList[0].docksAvailable should equal(37);
+                            stationList[1].docksAvailable should equal(7);
+                            stationList[2].docksAvailable should equal(25);
+
+                            stationList[0].bikesAvailable should equal(2);
+                            stationList[1].bikesAvailable should equal(26);
+                            stationList[2].bikesAvailable should equal(1);
+
+                            stationList[0].location.coordinate.latitude should equal(40.76727216f);
+                            stationList[1].location.coordinate.latitude should equal(40.71911552f);
+                            stationList[2].location.coordinate.latitude should equal(40.71117416f);
+
+                            stationList[0].location.coordinate.longitude should equal(-73.99392888f);
+                            stationList[1].location.coordinate.longitude should equal(-74.00666661f);
+                            stationList[2].location.coordinate.longitude should equal(-74.00016545f);
+                        });
                     });
 
                     it(@"should alert the delegate the stations have been updated", ^{
