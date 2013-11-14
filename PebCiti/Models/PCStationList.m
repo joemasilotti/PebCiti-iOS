@@ -93,18 +93,6 @@
     }
 }
 
-#pragma mark - Object Subscripting
-
-- (NSUInteger)count
-{
-    return self.stations.count;
-}
-
-- (PCStation *)objectAtIndexedSubscript:(NSUInteger)index
-{
-    return [self.stations objectAtIndexedSubscript:index];
-}
-
 #pragma mark - Private
 
 - (void)sortStationsByDistance

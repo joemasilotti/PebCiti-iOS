@@ -16,7 +16,5 @@
 - (void)requestStationList;
 - (PCStation *)closestStationWithAvailableBike;
 - (PCStation *)closestStationWithOpenDock;
-- (NSUInteger)count;
-- (PCStation *)objectAtIndexedSubscript:(NSUInteger)index;
 
 @end

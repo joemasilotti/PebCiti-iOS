@@ -55,7 +55,7 @@ describe(@"PCStationList", ^{
                     });
 
                     it(@"should store the stations", ^{
-                        stationList.count should equal(3);
+                        stationList.stations.count should equal(3);
                     });
 
                     context(@"when the user has reported a location", ^{
@@ -65,29 +65,33 @@ describe(@"PCStationList", ^{
                         });
 
                         it(@"should sort the station list by distance, closest first", ^{
-                            stationList[0].stationID should equal(@79);
-                            stationList[1].stationID should equal(@82);
-                            stationList[2].stationID should equal(@72);
+                            PCStation *station1 = stationList.stations[0];
+                            PCStation *station2 = stationList.stations[1];
+                            PCStation *station3 = stationList.stations[2];
 
-                            stationList[0].name should equal(@"Franklin St & W Broadway");
-                            stationList[1].name should equal(@"St James Pl & Pearl St");
-                            stationList[2].name should equal(@"W 52 St & 11 Ave");
+                            station1.stationID should equal(@79);
+                            station2.stationID should equal(@82);
+                            station3.stationID should equal(@72);
 
-                            stationList[0].docksAvailable should equal(7);
-                            stationList[1].docksAvailable should equal(25);
-                            stationList[2].docksAvailable should equal(37);
+                            station1.name should equal(@"Franklin St & W Broadway");
+                            station2.name should equal(@"St James Pl & Pearl St");
+                            station3.name should equal(@"W 52 St & 11 Ave");
 
-                            stationList[0].bikesAvailable should equal(26);
-                            stationList[1].bikesAvailable should equal(1);
-                            stationList[2].bikesAvailable should equal(2);
+                            station1.docksAvailable should equal(7);
+                            station2.docksAvailable should equal(25);
+                            station3.docksAvailable should equal(37);
 
-                            stationList[0].location.coordinate.latitude should equal(40.71911552f);
-                            stationList[1].location.coordinate.latitude should equal(40.71117416f);
-                            stationList[2].location.coordinate.latitude should equal(40.76727216f);
+                            station1.bikesAvailable should equal(26);
+                            station2.bikesAvailable should equal(1);
+                            station3.bikesAvailable should equal(2);
 
-                            stationList[0].location.coordinate.longitude should equal(-74.00666661f);
-                            stationList[1].location.coordinate.longitude should equal(-74.00016545f);
-                            stationList[2].location.coordinate.longitude should equal(-73.99392888f);
+                            station1.location.coordinate.latitude should equal(40.71911552f);
+                            station2.location.coordinate.latitude should equal(40.71117416f);
+                            station3.location.coordinate.latitude should equal(40.76727216f);
+
+                            station1.location.coordinate.longitude should equal(-74.00666661f);
+                            station2.location.coordinate.longitude should equal(-74.00016545f);
+                            station3.location.coordinate.longitude should equal(-73.99392888f);
                         });
                     });
 
@@ -97,29 +101,33 @@ describe(@"PCStationList", ^{
                         });
 
                         it(@"should sort the station list by ID", ^{
-                            stationList[0].stationID should equal(@72);
-                            stationList[1].stationID should equal(@79);
-                            stationList[2].stationID should equal(@82);
+                            PCStation *station1 = stationList.stations[0];
+                            PCStation *station2 = stationList.stations[1];
+                            PCStation *station3 = stationList.stations[2];
 
-                            stationList[0].name should equal(@"W 52 St & 11 Ave");
-                            stationList[1].name should equal(@"Franklin St & W Broadway");
-                            stationList[2].name should equal(@"St James Pl & Pearl St");
+                            station1.stationID should equal(@72);
+                            station2.stationID should equal(@79);
+                            station3.stationID should equal(@82);
 
-                            stationList[0].docksAvailable should equal(37);
-                            stationList[1].docksAvailable should equal(7);
-                            stationList[2].docksAvailable should equal(25);
+                            station1.name should equal(@"W 52 St & 11 Ave");
+                            station2.name should equal(@"Franklin St & W Broadway");
+                            station3.name should equal(@"St James Pl & Pearl St");
 
-                            stationList[0].bikesAvailable should equal(2);
-                            stationList[1].bikesAvailable should equal(26);
-                            stationList[2].bikesAvailable should equal(1);
+                            station1.docksAvailable should equal(37);
+                            station2.docksAvailable should equal(7);
+                            station3.docksAvailable should equal(25);
 
-                            stationList[0].location.coordinate.latitude should equal(40.76727216f);
-                            stationList[1].location.coordinate.latitude should equal(40.71911552f);
-                            stationList[2].location.coordinate.latitude should equal(40.71117416f);
+                            station1.bikesAvailable should equal(2);
+                            station2.bikesAvailable should equal(26);
+                            station3.bikesAvailable should equal(1);
 
-                            stationList[0].location.coordinate.longitude should equal(-73.99392888f);
-                            stationList[1].location.coordinate.longitude should equal(-74.00666661f);
-                            stationList[2].location.coordinate.longitude should equal(-74.00016545f);
+                            station1.location.coordinate.latitude should equal(40.76727216f);
+                            station2.location.coordinate.latitude should equal(40.71911552f);
+                            station3.location.coordinate.latitude should equal(40.71117416f);
+
+                            station1.location.coordinate.longitude should equal(-73.99392888f);
+                            station2.location.coordinate.longitude should equal(-74.00666661f);
+                            station3.location.coordinate.longitude should equal(-74.00016545f);
                         });
                     });
 
@@ -142,15 +150,19 @@ describe(@"PCStationList", ^{
                             });
 
                             it(@"should overwrite the stations with the new bike and dock counts", ^{
-                                stationList.count should equal(3);
+                                stationList.stations.count should equal(3);
 
-                                stationList[0].docksAvailable should equal(20);
-                                stationList[1].docksAvailable should equal(8);
-                                stationList[2].docksAvailable should equal(2);
+                                PCStation *station1 = stationList.stations[0];
+                                PCStation *station2 = stationList.stations[1];
+                                PCStation *station3 = stationList.stations[2];
 
-                                stationList[0].bikesAvailable should equal(5);
-                                stationList[1].bikesAvailable should equal(30);
-                                stationList[2].bikesAvailable should equal(53);
+                                station1.docksAvailable should equal(20);
+                                station2.docksAvailable should equal(8);
+                                station3.docksAvailable should equal(2);
+
+                                station1.bikesAvailable should equal(5);
+                                station2.bikesAvailable should equal(30);
+                                station3.bikesAvailable should equal(53);
                             });
 
                             it(@"should alert the delegate the stations have been updated", ^{
