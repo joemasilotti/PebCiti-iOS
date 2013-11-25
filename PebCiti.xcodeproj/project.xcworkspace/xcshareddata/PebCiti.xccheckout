@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>B9B02D3A-5C95-453A-9B7F-887CC82C1024</string>
+	<string>2C6DD2C0-2623-4619-B0C8-3773432CE79B</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PebCiti</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -20,8 +20,8 @@
 		<string>ssh://github.com/pivotal/cedar.git</string>
 		<key>D15BEA85-48D1-4B25-BC17-88555D50B085</key>
 		<string>git://github.com/pivotal/cedar.git</string>
-		<key>F591E0CD-6E70-43A7-B05A-286C402279B4</key>
-		<string>ssh://github.com/joemasilotti/PebCiti-iOS.git</string>
+		<key>F6082C75-5C81-46A9-839C-F50C9FFF7AA5</key>
+		<string>https://github.com/joemasilotti/PebCiti-iOS</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PebCiti.xcodeproj/project.xcworkspace</string>
@@ -37,15 +37,15 @@
 		<string>../../Externals/cedar</string>
 		<key>D15BEA85-48D1-4B25-BC17-88555D50B085</key>
 		<string>../../Externals/PivotalCoreKit/Externals/Cedar</string>
-		<key>F591E0CD-6E70-43A7-B05A-286C402279B4</key>
+		<key>F6082C75-5C81-46A9-839C-F50C9FFF7AA5</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/joemasilotti/PebCiti-iOS.git</string>
+	<string>https://github.com/joemasilotti/PebCiti-iOS</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F591E0CD-6E70-43A7-B05A-286C402279B4</string>
+	<string>F6082C75-5C81-46A9-839C-F50C9FFF7AA5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -76,17 +76,17 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>904D7A83-43BC-457B-8544-D8B5F1BD3E19</string>
+			<string>F6082C75-5C81-46A9-839C-F50C9FFF7AA5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>pebblekit</string>
+			<string>iOS</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F591E0CD-6E70-43A7-B05A-286C402279B4</string>
+			<string>904D7A83-43BC-457B-8544-D8B5F1BD3E19</string>
 			<key>IDESourceControlWCCName</key>
-			<string>PebCiti-iOS</string>
+			<string>pebblekit</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

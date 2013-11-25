@@ -7,7 +7,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Crashlytics startWithAPIKey:@"d719996ce2f7809259d6b116a1e5b1cf5d0f316d"];
+    [Crashlytics startWithAPIKey:@"73896b793d6e0ed4d486633b820e0ddffdc6625d"];
 #ifndef DEBUG
     [TestFlight setDeviceIdentifier:[UIDevice.currentDevice.identifierForVendor UUIDString]];
     [TestFlight takeOff:@"8aaf96c4-077f-40ed-b336-10c1acadb047"];
