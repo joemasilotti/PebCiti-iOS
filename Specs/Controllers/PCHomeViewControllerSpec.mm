@@ -4,6 +4,7 @@
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
 #import "UIControl+Spec.h"
+#import "PCAnalytics.h"
 #import "PCStation.h"
 #import "PebCiti.h"
 
