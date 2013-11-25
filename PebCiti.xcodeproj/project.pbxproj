@@ -57,6 +57,7 @@
 		84E08ED318333AA800185633 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECD18333AA800185633 /* README.md */; };
 		84E08ED418333AA800185633 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECE18333AA800185633 /* release_notes.md */; };
 		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
+		84F51D6B1842CB450017A237 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51D6A1842CB450017A237 /* Crashlytics.framework */; };
 		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
 		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
@@ -285,6 +286,7 @@
 		84E08ECF18333AA800185633 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		84E08ED018333AA800185633 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		84E08ED118333AA800185633 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		84F51D6A1842CB450017A237 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		84FD022D181088BE00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0245181177FF00D41A36 /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		84FD0259181179E800D41A36 /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D45176181E8D5B002A9D89 /* AudioToolbox.framework in Frameworks */,
+				84F51D6B1842CB450017A237 /* Crashlytics.framework in Frameworks */,
 				84E08ED218333AA800185633 /* libTestFlight.a in Frameworks */,
 				842374591800872900FB7610 /* PebbleKit.framework in Frameworks */,
 				8423745B1800872900FB7610 /* PebbleVendor.framework in Frameworks */,
@@ -540,6 +543,7 @@
 		84D610DC1800782900403C60 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				84F51D6A1842CB450017A237 /* Crashlytics.framework */,
 				84D610DD1800791100403C60 /* Cedar.xcodeproj */,
 				8462A98D180DD48000E66B4A /* Foundation.xcodeproj */,
 				8448130B1801D39800183D89 /* UIKit.xcodeproj */,
@@ -661,6 +665,7 @@
 				84D610A51800770D00403C60 /* Sources */,
 				84D610A61800770D00403C60 /* Frameworks */,
 				84D610A71800770D00403C60 /* Resources */,
+				84F51D571842CAFD0017A237 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -915,6 +920,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		84F51D571842CAFD0017A237 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Externals/Crashlytics.framework/run d719996ce2f7809259d6b116a1e5b1cf5d0f316d";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1079,6 +1097,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Externals/pebblekit/iOS",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/iOS/Externals,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
@@ -1100,6 +1119,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Externals/pebblekit/iOS",
+					/Users/joemasilotti/Dropbox/dev/PebCiti/iOS/Externals,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
