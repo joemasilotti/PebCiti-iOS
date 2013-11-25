@@ -3,6 +3,7 @@
 #import "PCHomeViewController.h"
 #import "UIAlertView+Spec.h"
 #import "PCStationList.h"
+#import "PCAnalytics.h"
 #import "PCStation.h"
 #import "PebCiti.h"
 
@@ -27,6 +28,7 @@ describe(@"PCStationsViewController", ^{
     describe(@"-viewWillAppear:", ^{
         beforeEach(^{
             spy_on(PebCiti.sharedInstance.stationList);
+            spy_on(PebCiti.sharedInstance.analytics);
             PebCiti.sharedInstance.stationList stub_method(@selector(stations)).and_return(@[ ]);
 
             [controller viewWillAppear:NO];
@@ -38,6 +40,10 @@ describe(@"PCStationsViewController", ^{
 
         it(@"should show open docks", ^{
             controller.showOpenDocks should be_truthy;
+        });
+
+        it(@"should tell the analytics to track the 'Home Screen'", ^{
+            PebCiti.sharedInstance.analytics should have_received(@selector(setActiveScreenName:)).with(@"Stations Screen");
         });
     });
 

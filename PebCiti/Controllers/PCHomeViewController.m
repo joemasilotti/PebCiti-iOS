@@ -3,6 +3,7 @@
 #import "UIAlertView+PebCiti.h"
 #import "PCPebbleCentral.h"
 #import "PCPebbleManager.h"
+#import "PCAnalytics.h"
 #import "PCStation.h"
 #import "PebCiti.h"
 
@@ -38,6 +39,12 @@
     self.vibratePebbleLabel.enabled = isSendingMessagesToPebble;
     self.vibratePebbleSwitch.enabled = isSendingMessagesToPebble;
     self.vibratePebbleSwitch.on = PebCiti.sharedInstance.pebbleManager.isVibratingPebble;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [PebCiti.sharedInstance.analytics setActiveScreenName:@"Home Screen"];
 }
 
 - (void)viewDidAppear:(BOOL)animated

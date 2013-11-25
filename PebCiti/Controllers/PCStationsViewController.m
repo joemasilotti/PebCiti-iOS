@@ -1,5 +1,6 @@
 #import "PCStationsViewController.h"
 #import "UIAlertView+PebCiti.h"
+#import "PCAnalytics.h"
 #import "PCStation.h"
 #import "PebCiti.h"
 
@@ -14,7 +15,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    [PebCiti.sharedInstance.analytics setActiveScreenName:@"Stations Screen"];
     self.stations = [PebCiti.sharedInstance.stationList.stations copy];
     self.showOpenDocks = YES;
 }

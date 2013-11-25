@@ -1,12 +1,14 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PCPebbleManager.h"
 #import "PCStationList.h"
+#import "PCAnalytics.h"
 #import "PebCiti.h"
 
 @interface PebCiti ()
 @property (nonatomic, strong, readwrite) PCPebbleManager *pebbleManager;
 @property (nonatomic, strong, readwrite) CLLocationManager *locationManager;
 @property (nonatomic, strong, readwrite) PCStationList *stationList;
+@property (nonatomic, strong, readwrite) PCAnalytics *analytics;
 @end
 
 static PebCiti *_sharedPebCiti;
@@ -28,6 +30,7 @@ static PebCiti *_sharedPebCiti;
         self.pebbleManager = [[PCPebbleManager alloc] init];
         self.locationManager = [[CLLocationManager alloc] init];
         self.stationList = [[PCStationList alloc] init];
+        self.analytics = [[PCAnalytics alloc] init];
     }
     return  self;
 }

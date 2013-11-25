@@ -35,6 +35,17 @@ describe(@"PCHomeViewController", ^{
         });
     });
 
+    describe(@"when the view is about to appear", ^{
+        beforeEach(^{
+            spy_on(PebCiti.sharedInstance.analytics);
+            [controller viewWillAppear:NO];
+        });
+
+        it(@"should tell the analytics to track the 'Home Screen'", ^{
+            PebCiti.sharedInstance.analytics should have_received(@selector(setActiveScreenName:)).with(@"Home Screen");
+        });
+    });
+
     describe(@"when the view appears", ^{
         beforeEach(^{
             spy_on(PebCiti.sharedInstance.locationManager);
