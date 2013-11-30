@@ -57,8 +57,7 @@
 - (IBAction)focusSegmentControlValueWasChanged:(UISegmentedControl *)focusSegmentControl
 {
     self.focusType = focusSegmentControl.selectedSegmentIndex;
-    NSString *focus = focusSegmentControl.selectedSegmentIndex == PCFocusTypeDock ? @"Closest Open Dock:" : @"Closest Available Bike:";
-    [PebCiti.sharedInstance.pebbleManager changeFocusTo:focus];
+    PebCiti.sharedInstance.pebbleManager.focusIsBike = focusSegmentControl.selectedSegmentIndex == PCFocusTypeBike ? YES : NO;
 }
 
 - (IBAction)sendMessagesSwitchWasToggled:(UISwitch *)sendMessagesSwitch

@@ -338,17 +338,7 @@ describe(@"PCPebbleManager", ^{
             });
 
             context(@"when the app should be sending messages", ^{
-                beforeEach(^{
-                    manager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
-                    [manager changeFocusTo:@"New Focus"];
-                });
-
-                it(@"should tell the watch the new focus", ^{
-                    NSDictionary *update = @{@0: @"New Focus"};
-                    watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
-                });
-
-                describe(@"sending the message", ^{
+                sharedExamplesFor(@"setting the focus on the Pebble", ^(NSDictionary *sharedContext) {
                     __block void (^completion)(PBWatch *, NSDictionary *, NSError *);
 
                     beforeEach(^{
@@ -392,12 +382,38 @@ describe(@"PCPebbleManager", ^{
                         });
                     });
                 });
+
+                context(@"setting the focus to 'bike'", ^{
+                    beforeEach(^{
+                        manager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                        manager.focusIsBike = YES;
+                    });
+
+                    it(@"should tell the watch the focus is bikes", ^{
+                        NSDictionary *update = @{ @0: @1 };
+                        watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
+                    });
+
+                    itShouldBehaveLike(@"setting the focus on the Pebble");
+                });
+
+                context(@"setting the focus to 'dock'", ^{
+                    beforeEach(^{
+                        manager stub_method(@selector(isSendingMessagesToPebble)).and_return(YES);
+                        manager.focusIsBike = NO;
+                    });
+
+                    it(@"should tell the watch the focus is docks", ^{
+                        NSDictionary *update = @{ @0: @0 };
+                        watch should have_received(@selector(appMessagesPushUpdate:onSent:)).with(update, Arguments::anything);
+                    });
+                });
             });
 
             context(@"when the app should not be sending messages", ^{
                 beforeEach(^{
                     manager stub_method(@selector(isSendingMessagesToPebble)).and_return(NO);
-                    [manager changeFocusTo:@"New Focus"];
+                    manager.focusIsBike = YES;
                 });
 
                 it(@"should not tell the watch to change focus", ^{

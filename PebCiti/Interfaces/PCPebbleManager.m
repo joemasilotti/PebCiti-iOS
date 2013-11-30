@@ -39,21 +39,6 @@
     }
 }
 
-- (void)setVibratePebble:(BOOL)vibratePebble
-{
-    NSDictionary *update = @{ @2: [NSNumber numberWithBool:vibratePebble] };
-    __weak PCPebbleManager *weakSelf = self;
-    [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
-        if (!error) {
-            _vibratePebble = vibratePebble;
-        } else {
-            _vibratePebble = NO;
-            _sendMessagesToPebble = NO;
-            [weakSelf.delegate pebbleManager:weakSelf receivedError:error];
-        }
-    }];
-}
-
 - (void)sendMessageToPebble:(NSString *)message
 {
     if (self.isSendingMessagesToPebble) {
@@ -68,10 +53,10 @@
     }
 }
 
-- (void)changeFocusTo:(NSString *)focus
+- (void)setFocusIsBike:(BOOL)focusIsBike
 {
     if (self.isSendingMessagesToPebble) {
-        NSDictionary *update = @{ @0: focus };
+        NSDictionary *update = @{ @0: focusIsBike ? @1 : @0 };
         __weak PCPebbleManager *weakSelf = self;
         [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
             if (error) {
@@ -80,6 +65,21 @@
             }
         }];
     }
+}
+
+- (void)setVibratePebble:(BOOL)vibratePebble
+{
+    NSDictionary *update = @{ @2: [NSNumber numberWithBool:vibratePebble] };
+    __weak PCPebbleManager *weakSelf = self;
+    [self.watch appMessagesPushUpdate:update onSent:^(PBWatch *watch, NSDictionary *update, NSError *error) {
+        if (!error) {
+            _vibratePebble = vibratePebble;
+        } else {
+            _vibratePebble = NO;
+            _sendMessagesToPebble = NO;
+            [weakSelf.delegate pebbleManager:weakSelf receivedError:error];
+        }
+    }];
 }
 
 #pragma mark - <PBPebbleManagerDelegate>

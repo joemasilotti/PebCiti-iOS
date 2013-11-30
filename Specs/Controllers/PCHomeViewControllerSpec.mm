@@ -84,7 +84,7 @@ describe(@"PCHomeViewController", ^{
                 });
 
                 it(@"should tell the Pebble that is is focusing on open docks", ^{
-                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(changeFocusTo:)).with(@"Closest Open Dock:");
+                    PebCiti.sharedInstance.pebbleManager should have_received(@selector(setFocusIsBike:)).with(NO);
                 });
 
                 describe(@"changing it back to 'Bike'", ^{
@@ -98,7 +98,7 @@ describe(@"PCHomeViewController", ^{
                     });
 
                     it(@"should tell the Pebble that is is focusing on an available bike", ^{
-                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(changeFocusTo:)).with(@"Closest Available Bike:");
+                        PebCiti.sharedInstance.pebbleManager should have_received(@selector(setFocusIsBike:)).with(YES);
                     });
                 });
             });

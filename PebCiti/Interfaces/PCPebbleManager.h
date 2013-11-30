@@ -7,11 +7,11 @@
 
 @property (nonatomic, weak) id<PCPebbleManagerDelegate> delegate;
 @property (nonatomic, getter = isSendingMessagesToPebble) BOOL sendMessagesToPebble;
+@property (nonatomic) BOOL focusIsBike;
 @property (nonatomic, getter = isVibratingPebble) BOOL vibratePebble;
 @property (nonatomic, strong, readonly) PBWatch *watch;
 
 - (void)sendMessageToPebble:(NSString *)message;
-- (void)changeFocusTo:(NSString *)focus;
 
 @end
 
