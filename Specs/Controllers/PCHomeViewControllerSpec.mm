@@ -882,6 +882,33 @@ describe(@"PCHomeViewController", ^{
             });
         });
     });
+
+    describe(@"-pebbleManager:changedFocusToBike:", ^{
+        beforeEach(^{
+            spy_on(controller);
+            controller stub_method(@selector(focusSegmentControl)).and_return(nice_fake_for([UISegmentedControl class]));
+        });
+
+        describe(@"when setting the focus to 'Dock'", ^{
+            beforeEach(^{
+                [controller pebbleManager:nice_fake_for([PCPebbleManager class]) changedFocusToBike:NO];
+            });
+
+            it(@"should change the segment control to 'Dock'", ^{
+                controller.focusSegmentControl should have_received(@selector(setSelectedSegmentIndex:)).with(PCFocusTypeDock);
+            });
+
+            describe(@"when setting the focus to 'Bike'", ^{
+                beforeEach(^{
+                    [controller pebbleManager:nice_fake_for([PCPebbleManager class]) changedFocusToBike:YES];
+                });
+
+                it(@"should change the segment control to 'Bike'", ^{
+                    controller.focusSegmentControl should have_received(@selector(setSelectedSegmentIndex:)).with(PCFocusTypeBike);
+                });
+            });
+        });
+    });
 });
 
 SPEC_END

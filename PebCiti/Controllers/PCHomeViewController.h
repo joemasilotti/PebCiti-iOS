@@ -9,7 +9,6 @@ enum {
 };
 typedef NSUInteger PCFocusType;
 
-
 @interface PCHomeViewController : UITableViewController <PCPebbleManagerDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *focusSegmentControl;

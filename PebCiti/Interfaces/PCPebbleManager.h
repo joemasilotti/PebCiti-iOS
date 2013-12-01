@@ -18,6 +18,7 @@
 @protocol PCPebbleManagerDelegate
 - (void)pebbleManagerConnectedToWatch:(PCPebbleManager *)pebbleManager;
 - (void)pebbleManagerFailedToConnectToWatch:(PCPebbleManager *)pebbleManager;
+- (void)pebbleManager:(PCPebbleManager *)pebbleManager changedFocusToBike:(BOOL)focusIsBike;
 - (void)pebbleManager:(PCPebbleManager *)pebbleManager receivedError:(NSError *)error;
 - (void)pebbleManagerDisconnectedFromWatch:(PCPebbleManager *)pebbleManager;
 @end

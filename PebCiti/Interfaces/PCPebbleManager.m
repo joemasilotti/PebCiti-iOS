@@ -26,6 +26,11 @@
                 if (isAppMessagesSupported) {
                     [weakSelf.watch appMessagesSetUUID:[weakSelf UUIDData]];
                     [weakSelf.delegate pebbleManagerConnectedToWatch:weakSelf];
+                    [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
+                        _focusIsBike = [[update objectForKey:@0] boolValue];
+                        [weakSelf.delegate pebbleManager:weakSelf changedFocusToBike:_focusIsBike];
+                        return YES;
+                    }];
                     _sendMessagesToPebble = YES;
                 } else {
                     [weakSelf.delegate pebbleManagerFailedToConnectToWatch:weakSelf];

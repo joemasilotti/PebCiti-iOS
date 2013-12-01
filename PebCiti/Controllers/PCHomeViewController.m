@@ -113,6 +113,11 @@
     [UIAlertView displayAlertViewWithTitle:@"No Pebble Connected" message:@"Connect a Pebble that supports app messages before continuing."];
 }
 
+- (void)pebbleManager:(PCPebbleManager *)pebbleManager changedFocusToBike:(BOOL)focusIsBike
+{
+    self.focusSegmentControl.selectedSegmentIndex = focusIsBike ? PCFocusTypeBike : PCFocusTypeDock;
+}
+
 - (void)pebbleManager:(PCPebbleManager *)pebbleManager receivedError:(NSError *)error
 {
     [self.sendMessagesSwitch setOn:NO animated:YES];

@@ -89,6 +89,10 @@ describe(@"PCPebbleManager", ^{
                     manager.isSendingMessagesToPebble should be_truthy;
                 });
 
+                it(@"should set the watch's recieved update handler", ^{
+                    manager.watch should have_received(@selector(appMessagesAddReceiveUpdateHandler:));
+                });
+
                 describe(@"when that watch disconnects", ^{
                     beforeEach(^{
                         [manager pebbleCentral:nice_fake_for([PBPebbleCentral class]) watchDidDisconnect:watch];
@@ -228,6 +232,10 @@ describe(@"PCPebbleManager", ^{
 
                 it(@"should set isSendingMessagesToPebble to NO", ^{
                     manager.isSendingMessagesToPebble should_not be_truthy;
+                });
+
+                it(@"should not set the watch's recieved update handler", ^{
+                    manager.watch should_not have_received(@selector(appMessagesAddReceiveUpdateHandler:));
                 });
             });
         });
@@ -445,6 +453,62 @@ describe(@"PCPebbleManager", ^{
 
         it(@"should stop vibrating the Pebble", ^{
             manager.isVibratingPebble should_not be_truthy;
+        });
+    });
+
+    describe(@"when the watch sends an update", ^{
+        __block PBWatch *watch;
+        __block BOOL (^updateHandler)(PBWatch *watch, NSDictionary *update);
+
+        beforeEach(^{
+            watch = nice_fake_for([PBWatch class]);
+            watch stub_method(@selector(isConnected)).and_return(YES);
+            [manager pebbleCentral:nice_fake_for([PCPebbleCentral class]) watchDidConnect:watch isNew:YES];
+            manager.sendMessagesToPebble = YES;
+
+            NSInvocation *lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                return invocation.selector == @selector(appMessagesGetIsSupported:);
+            }]] lastObject];
+
+            BOOL (^appMessagesHandler)(PBWatch *watch, BOOL isAppMessagesSupported);
+            [lastMessage getArgument:&appMessagesHandler atIndex:2];
+            appMessagesHandler(watch, YES);
+
+            lastMessage = [[[(id<CedarDouble>)watch sent_messages] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSInvocation *invocation, NSDictionary *bindings) {
+                return invocation.selector == @selector(appMessagesAddReceiveUpdateHandler:);
+            }]] lastObject];
+
+            BOOL (^localUpdateHandler)(PBWatch *watch, NSDictionary *update);
+            [lastMessage getArgument:&localUpdateHandler atIndex:2];
+            updateHandler = [localUpdateHandler copy];
+        });
+
+        describe(@"setting the focus to 'Bike'", ^{
+            beforeEach(^{
+                updateHandler(watch, @{ @0: @1 });
+            });
+
+            it(@"should set the manager's focus to 'Bike'", ^{
+                manager.focusIsBike should be_truthy;
+            });
+
+            it(@"should tell the delegate the focus is now 'Bike'", ^{
+                manager.delegate should have_received(@selector(pebbleManager:changedFocusToBike:)).with(manager, YES);
+            });
+
+            describe(@"setting the focus to 'Dock'", ^{
+                beforeEach(^{
+                    updateHandler(watch, @{ @0: @0 });
+                });
+
+                it(@"should set the manager's focus to 'Dock'", ^{
+                    manager.focusIsBike should_not be_truthy;
+                });
+
+                it(@"should tell the delegate the focus is now 'Bike'", ^{
+                    manager.delegate should have_received(@selector(pebbleManager:changedFocusToBike:)).with(manager, NO);
+                });
+            });
         });
     });
 });
