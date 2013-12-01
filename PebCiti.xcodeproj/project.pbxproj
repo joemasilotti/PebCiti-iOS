@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8404FF6F180085C60082F01E /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404FF6E180085C60082F01E /* Cedar-iOS.framework */; };
-		840E45FC18307460006DCF8D /* 200.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840E45FA18307460006DCF8D /* 200.txt */; };
-		840E45FD18307460006DCF8D /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840E45FB18307460006DCF8D /* 404.txt */; };
 		840E64061800908200148EA7 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374571800872900FB7610 /* PebbleKit.framework */; };
 		840E64071800908200148EA7 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842374581800872900FB7610 /* PebbleVendor.framework */; };
 		842374561800864400FB7610 /* PCAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 842374551800864400FB7610 /* PCAppDelegateSpec.mm */; };
@@ -66,8 +64,6 @@
 		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
 		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
-		84FD0246181177FF00D41A36 /* 200.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0245181177FF00D41A36 /* 200.txt */; };
-		84FD025A181179E800D41A36 /* 404.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84FD0259181179E800D41A36 /* 404.txt */; };
 		84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 		84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 		84FD027C18119EE400D41A36 /* PCStationList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FD027B18119EE400D41A36 /* PCStationList.m */; };
@@ -937,11 +933,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FD025A181179E800D41A36 /* 404.txt in Resources */,
-				840E45FD18307460006DCF8D /* 404.txt in Resources */,
 				84D611091800792700403C60 /* InfoPlist.strings in Resources */,
-				84FD0246181177FF00D41A36 /* 200.txt in Resources */,
-				840E45FC18307460006DCF8D /* 200.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
