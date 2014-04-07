@@ -1,9 +1,6 @@
 [submodule "Externals/cedar"]
 	path = Externals/cedar
 	url = git@github.com:pivotal/cedar.git
-[submodule "Externals/pebblekit"]
-	path = Externals/pebblekit
-	url = git@github.com:pebble/pebblekit.git
 [submodule "Externals/PivotalCoreKit"]
 	path = Externals/PivotalCoreKit
 	url = git@github.com:pivotal/PivotalCoreKit.git
