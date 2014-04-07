@@ -35,7 +35,6 @@
 		8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */; };
 		8473CA2B180DC40100961C86 /* UIAlertView+PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */; };
 		847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */; };
-		84868BE8182D1AA700DF1410 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84868BE7182D1AA700DF1410 /* Settings.bundle */; };
 		84C68E09182C868700DAE51A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C68E08182C868700DAE51A /* MainStoryboard.storyboard */; };
 		84D45176181E8D5B002A9D89 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D45175181E8D5B002A9D89 /* AudioToolbox.framework */; };
 		84D610AD1800770D00403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
@@ -258,7 +257,6 @@
 		8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PebCiti.m"; sourceTree = "<group>"; };
 		8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIAlertView+PebCitiSpec.mm"; sourceTree = "<group>"; };
 		847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCPebbleManagerSpec.mm; sourceTree = "<group>"; };
-		84868BE7182D1AA700DF1410 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		84C68E08182C868700DAE51A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		84D45175181E8D5B002A9D89 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		84D610A91800770D00403C60 /* PebCiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PebCiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -547,7 +545,6 @@
 			children = (
 				84D610B41800770D00403C60 /* PebCiti-Info.plist */,
 				84D610B51800770D00403C60 /* InfoPlist.strings */,
-				84868BE7182D1AA700DF1410 /* Settings.bundle */,
 				84D610B81800770D00403C60 /* main.m */,
 				84D610BA1800770D00403C60 /* PebCiti-Prefix.pch */,
 			);
@@ -921,7 +918,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E08ED418333AA800185633 /* release_notes.md in Resources */,
-				84868BE8182D1AA700DF1410 /* Settings.bundle in Resources */,
 				84D610B71800770D00403C60 /* InfoPlist.strings in Resources */,
 				84E08ED318333AA800185633 /* README.md in Resources */,
 				84C68E09182C868700DAE51A /* MainStoryboard.storyboard in Resources */,

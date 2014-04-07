@@ -834,32 +834,13 @@ describe(@"PCHomeViewController", ^{
                 UITableViewCell *cell = controller.tableView.visibleCells[3];
                 indexPath = [controller.tableView indexPathForCell:cell];
                 tableView = nice_fake_for([UITableView class]);
-            });
 
-            subjectAction(^{
                 [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
             });
 
-            context(@"when the Pebble SDK 2.0 setting is set", ^{
-                beforeEach(^{
-                    [NSUserDefaults standardUserDefaults] stub_method(@selector(boolForKey:)).with(@"pebble_sdk_2_0").and_return(YES);
-                });
-
-                it(@"should open Safari directed at the 2.0 .pbw file", ^{
-                    NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/SDK2.0/PebCiti.pbw"];
-                    UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
-                });
-            });
-
-            context(@"when the Pebble SDK 2.0 is off or has never been set", ^{
-                beforeEach(^{
-                    [NSUserDefaults standardUserDefaults] stub_method(@selector(boolForKey:)).with(@"pebble_sdk_2_0").and_return(NO);
-                });
-
-                it(@"should open Safari directed at the 1.X .pbw file", ^{
-                    NSURL *pbwURL = [NSURL URLWithString:@"http://masilotti.com/PebCiti/SDK1.X/PebCiti.pbw"];
-                    UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
-                });
+            it(@"should open Safari directed at the 2.0 .pbw file", ^{
+                NSURL *pbwURL = [NSURL URLWithString:@"pebble://appstore/52ab113cb8f6c20e31000019"];
+                UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
             });
 
             it(@"should then deselect the row that was selected", ^{
