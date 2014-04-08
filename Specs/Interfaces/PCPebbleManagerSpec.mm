@@ -78,7 +78,7 @@ describe(@"PCPebbleManager", ^{
                     uuid_t uuid;
                     [UUID getUUIDBytes:uuid];
                     NSData *UUIDData = [NSData dataWithBytes:uuid length:16];
-                    watch should have_received(@selector(appMessagesSetUUID:)).with(UUIDData);
+                    [PCPebbleCentral defaultCentral] should have_received(@selector(setAppUUID:)).with(UUIDData);
                 });
 
                 it(@"should tell the delegate it connected", ^{

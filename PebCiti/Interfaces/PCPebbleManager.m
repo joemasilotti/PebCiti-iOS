@@ -24,7 +24,7 @@
             __weak PCPebbleManager *weakSelf = self;
             [self.watch appMessagesGetIsSupported:^(PBWatch *watch, BOOL isAppMessagesSupported) {
                 if (isAppMessagesSupported) {
-                    [weakSelf.watch appMessagesSetUUID:[weakSelf UUIDData]];
+                    [[PCPebbleCentral defaultCentral] setAppUUID:[weakSelf UUIDData]];
                     [weakSelf.delegate pebbleManagerConnectedToWatch:weakSelf];
                     [self.watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
                         _focusIsBike = [[update objectForKey:@0] boolValue];

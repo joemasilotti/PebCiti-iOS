@@ -838,7 +838,7 @@ describe(@"PCHomeViewController", ^{
                 [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
             });
 
-            it(@"should open Safari directed at the 2.0 .pbw file", ^{
+            it(@"should open the Pebble app store directed at PebCiti", ^{
                 NSURL *pbwURL = [NSURL URLWithString:@"pebble://appstore/52ab113cb8f6c20e31000019"];
                 UIApplication.sharedApplication should have_received(@selector(openURL:)).with(pbwURL);
             });
@@ -849,8 +849,12 @@ describe(@"PCHomeViewController", ^{
 
             context(@"selecting any other row", ^{
                 beforeEach(^{
+                    [(id<CedarDouble>)[UIApplication sharedApplication] reset_sent_messages];
+                    [(id<CedarDouble>)tableView reset_sent_messages];
                     UITableViewCell *cell = controller.tableView.visibleCells[1];
                     indexPath = [controller.tableView indexPathForCell:cell];
+
+                    [controller tableView:tableView didSelectRowAtIndexPath:indexPath];
                 });
 
                 it(@"should not open Safari if any other cell is selected", ^{
