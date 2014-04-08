@@ -37,6 +37,9 @@
 		8473CA26180DC36B00961C86 /* UIAlertView+PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */; };
 		8473CA2B180DC40100961C86 /* UIAlertView+PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */; };
 		8476D1E218F4642E00D72B16 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8476D1E118F4642E00D72B16 /* libsqlite3.0.dylib */; };
+		8476D1FD18F464D700D72B16 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8476D1F718F464D700D72B16 /* libTestFlight.a */; };
+		8476D1FE18F464D700D72B16 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8476D1F818F464D700D72B16 /* README.md */; };
+		8476D1FF18F464D700D72B16 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 8476D1F918F464D700D72B16 /* release_notes.md */; };
 		847BD52B18009BE100B3D398 /* PCPebbleManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */; };
 		84C5ECEE18F407EB00878ED9 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C5ECEC18F407EB00878ED9 /* PebbleKit.framework */; };
 		84C5ECEF18F407EB00878ED9 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C5ECEC18F407EB00878ED9 /* PebbleKit.framework */; };
@@ -58,9 +61,6 @@
 		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
 		84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6113418020FF700403C60 /* PCPebbleCentral.m */; };
-		84E08ED218333AA800185633 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E08ECC18333AA800185633 /* libTestFlight.a */; };
-		84E08ED318333AA800185633 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECD18333AA800185633 /* README.md */; };
-		84E08ED418333AA800185633 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 84E08ECE18333AA800185633 /* release_notes.md */; };
 		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		84F51D6B1842CB450017A237 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51D6A1842CB450017A237 /* Crashlytics.framework */; };
 		84F51E991842DCA60017A237 /* PCAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F51E981842DCA60017A237 /* PCAnalytics.m */; };
@@ -304,6 +304,12 @@
 		8473CA25180DC36B00961C86 /* UIAlertView+PebCiti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PebCiti.m"; sourceTree = "<group>"; };
 		8473CA2A180DC40100961C86 /* UIAlertView+PebCitiSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIAlertView+PebCitiSpec.mm"; sourceTree = "<group>"; };
 		8476D1E118F4642E00D72B16 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		8476D1F718F464D700D72B16 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		8476D1F818F464D700D72B16 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		8476D1F918F464D700D72B16 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		8476D1FA18F464D700D72B16 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		8476D1FB18F464D700D72B16 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		8476D1FC18F464D700D72B16 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		847BD52A18009BE100B3D398 /* PCPebbleManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCPebbleManagerSpec.mm; sourceTree = "<group>"; };
 		84C5ECEC18F407EB00878ED9 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
 		84C5ECED18F407EB00878ED9 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleVendor.framework; sourceTree = "<group>"; };
@@ -330,12 +336,6 @@
 		84D6110F1800792700403C60 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		84D6113318020FF700403C60 /* PCPebbleCentral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPebbleCentral.h; sourceTree = "<group>"; };
 		84D6113418020FF700403C60 /* PCPebbleCentral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPebbleCentral.m; sourceTree = "<group>"; };
-		84E08ECC18333AA800185633 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		84E08ECD18333AA800185633 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		84E08ECE18333AA800185633 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		84E08ECF18333AA800185633 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		84E08ED018333AA800185633 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		84E08ED118333AA800185633 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		84F51D6A1842CB450017A237 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		84F51E971842DCA60017A237 /* PCAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCAnalytics.h; sourceTree = "<group>"; };
 		84F51E981842DCA60017A237 /* PCAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCAnalytics.m; sourceTree = "<group>"; };
@@ -366,7 +366,6 @@
 				84F51EB61842DE9B0017A237 /* CoreData.framework in Frameworks */,
 				84D45176181E8D5B002A9D89 /* AudioToolbox.framework in Frameworks */,
 				84F51D6B1842CB450017A237 /* Crashlytics.framework in Frameworks */,
-				84E08ED218333AA800185633 /* libTestFlight.a in Frameworks */,
 				84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */,
 				8462A9B8180E1EF400E66B4A /* MessageUI.framework in Frameworks */,
 				8462A9B4180E1ED500E66B4A /* libxml2.2.dylib in Frameworks */,
@@ -374,6 +373,7 @@
 				84C5ECF018F407EC00878ED9 /* PebbleVendor.framework in Frameworks */,
 				8423746218008F9900FB7610 /* libz.dylib in Frameworks */,
 				84C5ECEE18F407EB00878ED9 /* PebbleKit.framework in Frameworks */,
+				8476D1FD18F464D700D72B16 /* libTestFlight.a in Frameworks */,
 				8423746018008F9400FB7610 /* CoreMotion.framework in Frameworks */,
 				8423745E18008F9100FB7610 /* CoreBluetooth.framework in Frameworks */,
 				84D610AF1800770D00403C60 /* CoreGraphics.framework in Frameworks */,
@@ -537,6 +537,19 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		8476D1F618F464D700D72B16 /* TestFlightSDK */ = {
+			isa = PBXGroup;
+			children = (
+				8476D1F718F464D700D72B16 /* libTestFlight.a */,
+				8476D1F818F464D700D72B16 /* README.md */,
+				8476D1F918F464D700D72B16 /* release_notes.md */,
+				8476D1FA18F464D700D72B16 /* TestFlight+AsyncLogging.h */,
+				8476D1FB18F464D700D72B16 /* TestFlight+ManualSessions.h */,
+				8476D1FC18F464D700D72B16 /* TestFlight.h */,
+			);
+			path = TestFlightSDK;
+			sourceTree = "<group>";
+		};
 		8479893E1810805100FF9136 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,7 +668,7 @@
 				84F51D6A1842CB450017A237 /* Crashlytics.framework */,
 				84C5ECEC18F407EB00878ED9 /* PebbleKit.framework */,
 				84C5ECED18F407EB00878ED9 /* PebbleVendor.framework */,
-				84E08ECB18333AA700185633 /* TestFlightSDK */,
+				8476D1F618F464D700D72B16 /* TestFlightSDK */,
 				84612A4818F4637F00203F8A /* GoogleAnalytics */,
 			);
 			path = Externals;
@@ -702,19 +715,6 @@
 				84D6110F1800792700403C60 /* Specs-Prefix.pch */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		84E08ECB18333AA700185633 /* TestFlightSDK */ = {
-			isa = PBXGroup;
-			children = (
-				84E08ECC18333AA800185633 /* libTestFlight.a */,
-				84E08ECD18333AA800185633 /* README.md */,
-				84E08ECE18333AA800185633 /* release_notes.md */,
-				84E08ECF18333AA800185633 /* TestFlight+AsyncLogging.h */,
-				84E08ED018333AA800185633 /* TestFlight+ManualSessions.h */,
-				84E08ED118333AA800185633 /* TestFlight.h */,
-			);
-			path = TestFlightSDK;
 			sourceTree = "<group>";
 		};
 		84FD022B181088BE00D41A36 /* FakeResponses */ = {
@@ -1008,11 +1008,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84E08ED418333AA800185633 /* release_notes.md in Resources */,
+				8476D1FF18F464D700D72B16 /* release_notes.md in Resources */,
 				84D610B71800770D00403C60 /* InfoPlist.strings in Resources */,
-				84E08ED318333AA800185633 /* README.md in Resources */,
 				84C68E09182C868700DAE51A /* MainStoryboard.storyboard in Resources */,
 				84D610BF1800770D00403C60 /* Images.xcassets in Resources */,
+				8476D1FE18F464D700D72B16 /* README.md in Resources */,
 				84612AE018F4638000203F8A /* Readme.txt in Resources */,
 				84612AC118F4638000203F8A /* Changelog.txt in Resources */,
 				84612B0E18F4638000203F8A /* Readme.txt in Resources */,
@@ -1239,6 +1239,7 @@
 					"$(SRCROOT)/Externals/TestFlightSDK",
 					"$(SRCROOT)/Externals/GoogleAnalytics",
 					"$(PROJECT_DIR)/Externals/GoogleAnalytics",
+					"$(PROJECT_DIR)/Externals/TestFlightSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1263,6 +1264,7 @@
 					"$(SRCROOT)/Externals/TestFlightSDK",
 					"$(SRCROOT)/Externals/GoogleAnalytics",
 					"$(PROJECT_DIR)/Externals/GoogleAnalytics",
+					"$(PROJECT_DIR)/Externals/TestFlightSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
