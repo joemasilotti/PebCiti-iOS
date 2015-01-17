@@ -27,18 +27,12 @@ describe(@"PCStationList", ^{
         });
 
         describe(@"the network request", ^{
-            __block NSURLConnection *connection;
-
-            beforeEach(^{
-                connection = [NSURLConnection.connections lastObject];
-            });
-
             it(@"should ask the CitiBikeNYC api for the list of stations", ^{
-                connection.request.URL should equal([NSURL URLWithString:@"http://citibikenyc.com/stations/json"]);
+                [[NSURLConnection.connections.lastObject request] URL] should equal([NSURL URLWithString:@"http://citibikenyc.com/stations/json"]);
             });
 
             it(@"should be the connection's delegate", ^{
-                connection.delegate should be_same_instance_as(stationList);
+                [NSURLConnection.connections.lastObject delegate] should be_same_instance_as(stationList);
             });
 
             context(@"when the network request returns successfully", ^{
@@ -51,7 +45,7 @@ describe(@"PCStationList", ^{
 
                     subjectAction(^{
                         PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations.json"] success];
-                        [connection receiveResponse:successResponse];
+                        [NSURLConnection.connections.lastObject receiveResponse:successResponse];
                     });
 
                     it(@"should store the stations", ^{
@@ -143,10 +137,9 @@ describe(@"PCStationList", ^{
                         context(@"with valid JSON", ^{
                             beforeEach(^{
                                 [stationList requestStationList];
-                                connection = [NSURLConnection.connections lastObject];
                                 stationList.delegate = nice_fake_for(@protocol(PCStationListDelegate));
                                 PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations_retry.json"] success];
-                                [connection receiveResponse:successResponse];
+                                [NSURLConnection.connections.lastObject receiveResponse:successResponse];
                             });
 
                             it(@"should overwrite the stations with the new bike and dock counts", ^{
@@ -180,7 +173,7 @@ describe(@"PCStationList", ^{
                     beforeEach(^{
                         PSHKFakeHTTPURLResponse *successResponse = [[PSHKFakeResponses responsesForRequest:@"/stations_invalid.json"] success];
                         spy_on(stationList);
-                        [connection receiveResponse:successResponse];
+                        [NSURLConnection.connections.lastObject receiveResponse:successResponse];
                     });
 
                     it(@"should display an alert view", ^{
@@ -196,7 +189,8 @@ describe(@"PCStationList", ^{
             context(@"when the request encounters a network error", ^{
                 beforeEach(^{
                     spy_on(stationList);
-                    [stationList connection:connection didFailWithError:[NSError errorWithDomain:@"Network Error" code:3 userInfo:nil]];
+                    [stationList connection:NSURLConnection.connections.lastObject
+                           didFailWithError:[NSError errorWithDomain:@"Network Error" code:3 userInfo:nil]];
                 });
 
                 it(@"should display an alert view", ^{
@@ -212,7 +206,7 @@ describe(@"PCStationList", ^{
                 beforeEach(^{
                     spy_on(stationList);
                     PSHKFakeHTTPURLResponse *failureResponse = [PSHKFakeHTTPURLResponse responseFromFixtureNamed:@"/stations.json" statusCode:404];
-                    [connection receiveResponse:failureResponse];
+                    [NSURLConnection.connections.lastObject receiveResponse:failureResponse];
                 });
 
                 it(@"should display an alert view", ^{
