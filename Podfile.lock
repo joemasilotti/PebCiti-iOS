@@ -1,0 +1,52 @@
+PODS:
+  - Cedar (0.11.2)
+  - PivotalCoreKit/Core (0.1.1):
+    - PivotalCoreKit/Foundation/Core
+    - PivotalCoreKit/UIKit/Core
+  - PivotalCoreKit/CoreLocation/SpecHelper (0.1.1):
+    - PivotalCoreKit/CoreLocation/SpecHelper/Base (= 0.1.1)
+    - PivotalCoreKit/CoreLocation/SpecHelper/Extensions (= 0.1.1)
+  - PivotalCoreKit/CoreLocation/SpecHelper/Base (0.1.1)
+  - PivotalCoreKit/CoreLocation/SpecHelper/Extensions (0.1.1)
+  - PivotalCoreKit/Development (0.1.1):
+    - PivotalCoreKit/Core
+    - PivotalCoreKit/CoreLocation/SpecHelper
+    - PivotalCoreKit/Foundation/SpecHelper
+    - PivotalCoreKit/UIKit/SpecHelper
+  - PivotalCoreKit/Foundation/Core (0.1.1)
+  - PivotalCoreKit/Foundation/SpecHelper (0.1.1):
+    - PivotalCoreKit/Foundation/SpecHelper/Extensions (= 0.1.1)
+    - PivotalCoreKit/Foundation/SpecHelper/Fakes (= 0.1.1)
+    - PivotalCoreKit/Foundation/SpecHelper/Fixtures (= 0.1.1)
+    - PivotalCoreKit/Foundation/SpecHelper/Helpers (= 0.1.1)
+  - PivotalCoreKit/Foundation/SpecHelper/Extensions (0.1.1):
+    - PivotalCoreKit/Foundation/SpecHelper/Fakes
+    - PivotalCoreKit/Foundation/SpecHelper/Helpers
+  - PivotalCoreKit/Foundation/SpecHelper/Fakes (0.1.1):
+    - PivotalCoreKit/Foundation/SpecHelper/Fixtures
+  - PivotalCoreKit/Foundation/SpecHelper/Fixtures (0.1.1)
+  - PivotalCoreKit/Foundation/SpecHelper/Helpers (0.1.1)
+  - PivotalCoreKit/UIKit/Core (0.1.1):
+    - PivotalCoreKit/UIKit/Core/Core-arc (= 0.1.1)
+  - PivotalCoreKit/UIKit/Core/Core-arc (0.1.1)
+  - PivotalCoreKit/UIKit/SpecHelper (0.1.1):
+    - PivotalCoreKit/UIKit/SpecHelper/Extensions (= 0.1.1)
+    - PivotalCoreKit/UIKit/SpecHelper/Helpers (= 0.1.1)
+    - PivotalCoreKit/UIKit/SpecHelper/Matchers (= 0.1.1)
+    - PivotalCoreKit/UIKit/SpecHelper/Stubs (= 0.1.1)
+  - PivotalCoreKit/UIKit/SpecHelper/Extensions (0.1.1):
+    - PivotalCoreKit/UIKit/SpecHelper/Helpers
+  - PivotalCoreKit/UIKit/SpecHelper/Helpers (0.1.1)
+  - PivotalCoreKit/UIKit/SpecHelper/Matchers (0.1.1)
+  - PivotalCoreKit/UIKit/SpecHelper/Stubs (0.1.1):
+    - PivotalCoreKit/UIKit/SpecHelper/Helpers
+
+DEPENDENCIES:
+  - Cedar (= 0.11.2)
+  - PivotalCoreKit/Development (= 0.1.1)
+
+SPEC CHECKSUMS:
+  Cedar: 1c843e27d6e21972662028bade214a511d8495ae
+  PivotalCoreKit: c3cdedda73a2e3f22af2f0df5c575882f78035f7
+
+COCOAPODS: 0.35.0

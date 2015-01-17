@@ -22,8 +22,6 @@
 		843C3E901800958800EB9E94 /* PebCiti.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E8F1800958800EB9E94 /* PebCiti.m */; };
 		843C3E92180095AF00EB9E94 /* PebCitiSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */; };
 		843C3EA71800972600EB9E94 /* PCPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C3EA61800972600EB9E94 /* PCPebbleManager.m */; };
-		84612A1A18F45F1900203F8A /* libCedar-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610F01800791300403C60 /* libCedar-StaticLib.a */; };
-		84612A1C18F45F1900203F8A /* libCedar-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84612A1B18F45F1900203F8A /* libCedar-StaticLib.a */; };
 		84612AC118F4638000203F8A /* Changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84612A4A18F4637F00203F8A /* Changelog.txt */; };
 		84612AE018F4638000203F8A /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84612A7C18F4637F00203F8A /* Readme.txt */; };
 		84612B0C18F4638000203F8A /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84612ABE18F4638000203F8A /* libAdIdAccess.a */; };
@@ -61,20 +59,17 @@
 		84D611031800792600403C60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D610AC1800770D00403C60 /* Foundation.framework */; };
 		84D611091800792700403C60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D611071800792700403C60 /* InfoPlist.strings */; };
 		84D6113518020FF700403C60 /* PCPebbleCentral.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D6113418020FF700403C60 /* PCPebbleCentral.m */; };
-		84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813231801D39900183D89 /* libUIKit+PivotalSpecHelperStubs-StaticLib.a */; };
 		84F51D6B1842CB450017A237 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51D6A1842CB450017A237 /* Crashlytics.framework */; };
 		84F51E991842DCA60017A237 /* PCAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F51E981842DCA60017A237 /* PCAnalytics.m */; };
 		84F51EB61842DE9B0017A237 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51EB51842DE9A0017A237 /* CoreData.framework */; };
 		84F51EB81842DEA90017A237 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51EB71842DEA90017A237 /* SystemConfiguration.framework */; };
 		84F51EBA1842DEDF0017A237 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F51EB91842DEDF0017A237 /* AdSupport.framework */; };
-		84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A99C180DD48000E66B4A /* libFoundation+PivotalCore-StaticLib.a */; };
-		84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8462A9A0180DD48000E66B4A /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
-		84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844813211801D39900183D89 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
 		84FD026518118C5D00D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 		84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD026418118C5D00D41A36 /* CoreLocation.framework */; };
 		84FD027C18119EE400D41A36 /* PCStationList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FD027B18119EE400D41A36 /* PCStationList.m */; };
 		84FD029D1811A5B800D41A36 /* PCStationListSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84FD029C1811A5B800D41A36 /* PCStationListSpec.mm */; };
 		84FD02A01811C8B400D41A36 /* PCStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FD029F1811C8B400D41A36 /* PCStation.m */; };
+		9F5A8E12BE5ABE2AEB5C13F0 /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A6BB622706E064CB3A7984 /* libPods-Specs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,7 +258,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8404FF6E180085C60082F01E /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Cedar-iOS.framework"; sourceTree = "<group>"; };
+		47F5B4504F4AD809F99B61A5 /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
 		840E45FA18307460006DCF8D /* 200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 200.txt; sourceTree = "<group>"; };
 		840E45FB18307460006DCF8D /* 404.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 404.txt; sourceTree = "<group>"; };
 		842374551800864400FB7610 /* PCAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAppDelegateSpec.mm; sourceTree = "<group>"; };
@@ -351,6 +346,8 @@
 		84FD029C1811A5B800D41A36 /* PCStationListSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCStationListSpec.mm; sourceTree = "<group>"; };
 		84FD029E1811C8B400D41A36 /* PCStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCStation.h; sourceTree = "<group>"; };
 		84FD029F1811C8B400D41A36 /* PCStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCStation.m; sourceTree = "<group>"; };
+		B3E3AAF0E93F145CEAE66920 /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
+		D8A6BB622706E064CB3A7984 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,40 +383,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84612A1C18F45F1900203F8A /* libCedar-StaticLib.a in Frameworks */,
-				84612A1A18F45F1900203F8A /* libCedar-StaticLib.a in Frameworks */,
+				8423746518008FAF00FB7610 /* ExternalAccessory.framework in Frameworks */,
+				8423746718008FB800FB7610 /* CoreBluetooth.framework in Frameworks */,
+				84D611011800792600403C60 /* CoreGraphics.framework in Frameworks */,
+				84D611001800792600403C60 /* SenTestingKit.framework in Frameworks */,
+				84C5ECF118F407EC00878ED9 /* PebbleVendor.framework in Frameworks */,
+				84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */,
+				8423746818008FBC00FB7610 /* CoreMotion.framework in Frameworks */,
+				84D611031800792600403C60 /* Foundation.framework in Frameworks */,
+				8423746B18008FC800FB7610 /* MessageUI.framework in Frameworks */,
 				84C5ED0B18F4089800878ED9 /* CFNetwork.framework in Frameworks */,
 				84C5ECEF18F407EB00878ED9 /* PebbleKit.framework in Frameworks */,
-				84FD027818118C6200D41A36 /* CoreLocation.framework in Frameworks */,
-				84FD023D1811769300D41A36 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
-				84FD023C1811766E00D41A36 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
-				84C5ECF118F407EC00878ED9 /* PebbleVendor.framework in Frameworks */,
-				84FD02391811764700D41A36 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
-				8462A9B0180E1E9700E66B4A /* libxml2.2.dylib in Frameworks */,
-				84F05AA11801D4210096EA4B /* libUIKit+PivotalSpecHelperStubs-StaticLib.a in Frameworks */,
-				8423746B18008FC800FB7610 /* MessageUI.framework in Frameworks */,
-				8423746818008FBC00FB7610 /* CoreMotion.framework in Frameworks */,
-				8423746718008FB800FB7610 /* CoreBluetooth.framework in Frameworks */,
-				8423746618008FB300FB7610 /* libz.dylib in Frameworks */,
-				8423746518008FAF00FB7610 /* ExternalAccessory.framework in Frameworks */,
-				84D611011800792600403C60 /* CoreGraphics.framework in Frameworks */,
 				84D611021800792600403C60 /* UIKit.framework in Frameworks */,
-				84D611001800792600403C60 /* SenTestingKit.framework in Frameworks */,
-				84D611031800792600403C60 /* Foundation.framework in Frameworks */,
+				9F5A8E12BE5ABE2AEB5C13F0 /* libPods-Specs.a in Frameworks */,
+				8462A9B0180E1E9700E66B4A /* libxml2.2.dylib in Frameworks */,
+				8423746618008FB300FB7610 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8404FF6D180085AD0082F01E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8404FF6E180085C60082F01E /* Cedar-iOS.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
 		840E45F918307460006DCF8D /* stations_retry.json */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,6 +566,7 @@
 				84D610AB1800770D00403C60 /* Frameworks */,
 				84D610DC1800782900403C60 /* Externals */,
 				84D610AA1800770D00403C60 /* Products */,
+				917431149B80800D651E3C5B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -618,6 +603,7 @@
 				84D610B01800770D00403C60 /* UIKit.framework */,
 				84D610C51800770D00403C60 /* XCTest.framework */,
 				84D610FF1800792600403C60 /* SenTestingKit.framework */,
+				D8A6BB622706E064CB3A7984 /* libPods-Specs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -701,7 +687,6 @@
 				8479893E1810805100FF9136 /* Fixtures */,
 				843C3E91180095AF00EB9E94 /* PebCitiSpec.mm */,
 				842374551800864400FB7610 /* PCAppDelegateSpec.mm */,
-				8404FF6D180085AD0082F01E /* Frameworks */,
 				84D611051800792600403C60 /* Supporting Files */,
 			);
 			path = Specs;
@@ -764,6 +749,15 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		917431149B80800D651E3C5B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				47F5B4504F4AD809F99B61A5 /* Pods-Specs.debug.xcconfig */,
+				B3E3AAF0E93F145CEAE66920 /* Pods-Specs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -789,10 +783,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D611101800792700403C60 /* Build configuration list for PBXNativeTarget "Specs" */;
 			buildPhases = (
+				9BE1297C6F37BF1181A68040 /* Check Pods Manifest.lock */,
 				84D610F91800792600403C60 /* Sources */,
 				84D610FA1800792600403C60 /* Frameworks */,
 				84D610FB1800792600403C60 /* Resources */,
 				84D610FC1800792600403C60 /* ShellScript */,
+				AA1FD207D1378AAFD5FDE887 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -807,7 +803,7 @@
 			name = Specs;
 			productName = Specs;
 			productReference = 84D610FE1800792600403C60 /* Specs.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -816,6 +812,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PC;
+				LastTestingUpgradeCheck = 0610;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Masilotti.com;
 				TargetAttributes = {
@@ -1056,6 +1053,36 @@
 			shellPath = /bin/sh;
 			shellScript = "./Externals/Crashlytics.framework/run 73896b793d6e0ed4d486633b820e0ddffdc6625d";
 		};
+		9BE1297C6F37BF1181A68040 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA1FD207D1378AAFD5FDE887 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1224,22 +1251,24 @@
 		84D610D61800770D00403C60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/joemasilotti/Dropbox/dev/PebCiti/iOS/Externals,
-					"$(PROJECT_DIR)/Externals",
+					"$(PROJECT_DIR)/Externals/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/Externals/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Externals/TestFlightSDK",
-					"$(SRCROOT)/Externals/GoogleAnalytics",
-					"$(PROJECT_DIR)/Externals/GoogleAnalytics",
-					"$(PROJECT_DIR)/Externals/TestFlightSDK",
+					"$(PROJECT_DIR)/Externals/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1249,22 +1278,24 @@
 		84D610D71800770D00403C60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/joemasilotti/Dropbox/dev/PebCiti/iOS/Externals,
-					"$(PROJECT_DIR)/Externals",
+					"$(PROJECT_DIR)/Externals/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PebCiti/Supporting Files/PebCiti-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/Externals/**",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/PebCiti/Supporting Files/PebCiti-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/Externals/TestFlightSDK",
-					"$(SRCROOT)/Externals/GoogleAnalytics",
-					"$(PROJECT_DIR)/Externals/GoogleAnalytics",
-					"$(PROJECT_DIR)/Externals/TestFlightSDK",
+					"$(PROJECT_DIR)/Externals/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1273,6 +1304,7 @@
 		};
 		84D611111800792700403C60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47F5B4504F4AD809F99B61A5 /* Pods-Specs.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PebCiti.app/PebCiti";
 				CLANG_ENABLE_OBJC_ARC = NO;
@@ -1286,6 +1318,7 @@
 					"$(SRCROOT)/Externals/**",
 					"$(PROJECT_DIR)/Specs/Frameworks",
 					"$(PROJECT_DIR)/Specs/Frameworks",
+					"$(PROJECT_DIR)/Externals",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
@@ -1308,11 +1341,7 @@
 					"$(PROJECT_DIR)/Externals/cedar/build/Release-iphoneos",
 					"$(PROJECT_DIR)/Externals/PivotalCoreKit/Externals/Cedar/build/Debug-iphoneos",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-lstdc++",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -1321,6 +1350,7 @@
 		};
 		84D611121800792700403C60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3E3AAF0E93F145CEAE66920 /* Pods-Specs.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PebCiti.app/PebCiti";
 				CLANG_ENABLE_OBJC_ARC = NO;
@@ -1334,10 +1364,14 @@
 					"$(SRCROOT)/Externals/**",
 					"$(PROJECT_DIR)/Specs/Frameworks",
 					"$(PROJECT_DIR)/Specs/Frameworks",
+					"$(PROJECT_DIR)/Externals",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Supporting Files/Specs-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "FIXTURESDIR=\\\"$(SRCROOT)/Specs/Fixtures\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FIXTURESDIR=\\\"$(SRCROOT)/Specs/Fixtures\\\"",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$SRCROOT/Externals/cedar/**",
@@ -1353,11 +1387,7 @@
 					"$(PROJECT_DIR)/Externals/cedar/build/Release-iphoneos",
 					"$(PROJECT_DIR)/Externals/PivotalCoreKit/Externals/Cedar/build/Debug-iphoneos",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-lstdc++",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

@@ -22,3 +22,6 @@ UserInterfaceState.xcuserstate
 Breakpoints.xcbkptlist
 
 xcuserdata
+
+# Cocoapods
+Pods/
